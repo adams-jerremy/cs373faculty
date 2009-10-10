@@ -18,12 +18,13 @@
 
 *Graduate Students:* N/A
 
-*Classes:* Dean's Scholars Seminar, NSC110, Undergrad, Fall 2001-2004, 2008; Spring 2007-           2009
-           Natural Language Processing, CS378, Undergrad, Fall 2003
-           Artificial Intelligence, CS343, Undergrad, Fall 2006
-           Contemporary Issues in Computer Science, CS349, Undergrad, Spring 2009
-           Automata Theory, CS341, Undergrad, Fall 2009
-           Freshman Seminar, UGS302, Undergrad, Fall 2009
+*Classes:* 
+           * Dean's Scholars Seminar, NSC110, Undergrad, Fall 2001-2004, 2008; Spring 2007-2009
+           * Natural Language Processing, CS378, Undergrad, Fall 2003
+           * Artificial Intelligence, CS343, Undergrad, Fall 2006
+           * Contemporary Issues in Computer Science, CS349, Undergrad, Spring 2009
+           * Automata Theory, CS341, Undergrad, Fall 2009
+           * Freshman Seminar, UGS302, Undergrad, Fall 2009
 
 *Journals:* N/A
 
