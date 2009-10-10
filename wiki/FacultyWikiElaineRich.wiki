@@ -12,7 +12,7 @@
 
 *Type:* Senior Lecturer
 
-*Degrees:* Ph.D, Carnegie Mellon University, 1979
+*Degrees:* Ph.D in Computer Science, Carnegie Mellon University, 1979
 
 *Research Area:* Artificial Intelligence and Automata Theory 
 
