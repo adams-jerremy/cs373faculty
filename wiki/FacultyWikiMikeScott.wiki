@@ -12,15 +12,17 @@
 
 *Type:* Senior Lecturer
 
-*Degrees:* B.S. in Industrial Engineering, Stanford University, 
-           M.S. in Computer Science, Rennselaer Polytechnic Institute, 1998
+*Degrees:* 
+           * B.S. in Industrial Engineering, Stanford University, 
+           * M.S. in Computer Science, Rennselaer Polytechnic Institute, 1998
 
 *Research Area:* Computer science education
 
 *Graduate Students:* N/A
 
-*Classes:* Foundations of Computer Science, CS307, Undergrad, Fall 2009
-           Elements of Graphics and Visualization, CS324e, Undergrad, Fall 2009
+*Classes:* 
+           * Foundations of Computer Science, CS307, Undergrad, Fall 2009
+           * Elements of Graphics and Visualization, CS324e, Undergrad, Fall 2009
 
 *Journals:* N/A
 
