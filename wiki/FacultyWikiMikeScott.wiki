@@ -1,0 +1,31 @@
+*Name:* Mike Scott
+
+*Office:* T. S. Painter Hall 5.68
+
+*Phone:* (512) 471-9785
+
+*E-mail:* scottm@cs.utexas.edu
+
+*Website:* http://www.cs.utexas.edu/~scottm/
+
+*Office Hours:* MWF 3:15 - 4:45 pm
+
+*Type:* Senior Lecturer
+
+*Degrees:* B.S. in Industrial Engineering, Stanford University, 
+           M.S. in Computer Science, Rennselaer Polytechnic Institute, 1998
+
+*Research Area:* Computer science education
+
+*Graduate Students:* N/A
+
+*Classes:* Foundations of Computer Science, CS307, Undergrad, Fall 2009
+           Elements of Graphics and Visualization, CS324e, Undergrad, Fall 2009
+
+*Journals:* N/A
+
+*Conferences:* N/A
+
+*Books:* N/A
+
+*Awards:* N/A
