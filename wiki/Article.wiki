@@ -1,0 +1,11 @@
+= Article =
+
+* Attributes *
+  * JournalTitle
+  * ArticleTitle
+  * Year
+  * Date
+
+
+* Associations *
+  * FacultyMember, Many-to-One
