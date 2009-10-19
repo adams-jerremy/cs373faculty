@@ -1,0 +1,12 @@
+= Course Taught =
+
+* Attributes *
+  * CourseName
+  * CourseNumber
+  * CourseLevel
+    * Enumerated: Undergraduate, Graduate
+  * Year
+  * Semester
+
+* Associations *
+  * FacultyMember, Many-to-One
