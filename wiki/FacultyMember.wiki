@@ -8,7 +8,7 @@
     * Enumerated: Professor, Researcher, Lecturer
 
 * Associations *
-  * Name, One-to-One
+  * Name , One-to-One
   * Office, One-to-Many
     * Association Class: OfficeHours
   * website, Many-to-Many
