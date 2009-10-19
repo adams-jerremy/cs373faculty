@@ -1,17 +1,17 @@
 * name * Raymond J. Mooney
- 
+
 * office * 1.102 CSA
- 
+
 * phone * (512) 471-9558 
- 
+
 * e-mail * mooney@cs.utexas.edu
- 
+
 * website * http://www.cs.utexas.edu/~mooney/
- 
+
 * office hours * TTH 10-11 or by ppat
- 
+
 * type * Professor
- 
+
 * degrees earned: *
   * type, institution, and date
   * B.S. in Computer Engineering, University of Illinois at Urbana/Champaign, 1983
