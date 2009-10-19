@@ -1,0 +1,30 @@
+*Name:* Elaine Rich
+
+*Office:*  Taylor 3.126 
+
+*Phone:*  (512) 471-9706
+
+*Email:*  ear@cs.utexas.edu
+
+*Website:*  cs.utexas.edu/~ear
+
+*Office Hours:*  Tuesday 11:00 – 11:30 and Thursday  3:30 - 5:00
+
+*Type:*  Senior Lecturer
+
+*Degrees:*  Ph.D. 1979, Carnegie Mellon
+
+*Research Area:*  Artificial Intelligence and Automata Theory
+
+*Graduate Students:*  N/A
+
+*Classes:*  CS341: Automata (Fall)
+            CS349: Contemporary Issues in Computer Science (Spring)
+
+*Journals:* N/A
+
+*Conferences:* N/A
+
+*Books:* N/A
+
+*Awards:* N/A
