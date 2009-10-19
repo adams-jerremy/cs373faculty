@@ -12,7 +12,7 @@
 
 *type* Professor
 
-*degrees earned:* 
+* degrees earned: * 
 * type, institution, and date
 * PhD in Computer Science, UCLA, 1990
 * MS in Applied Mathematics, Helinski University of Technology, 1986
