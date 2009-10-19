@@ -1,13 +1,30 @@
-#summary One-sentence summary of this page.
+*name:* Greg Plaxton
 
-= Introduction =
+*office:* TAY 3.132
 
-Add your content here.
+*phone:* (512) 471-9751
 
+*e-mail:* plaxton@cs.utexas.edu
 
-= Details =
+*website:* http://www.cs.utexas.edu/~plaxton/
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+*office hours:* 
+
+*type:* professor
+
+*degrees earned:* 
+
+*research area:* computer vision and machine learning
+
+*graduate students:* Yong Jae Lee, Ph.D., N/A (thesis), N/A (date)
+                   Sudheendra Vijayanarasimhan, Ph.D., N/A (thesis), N/A (date)
+
+*classes:* Computer Vision, CS378, undergrad, Fall 2009
+
+*journals:* International Journal of Computer Vision-- Foreground Focus: Unsupervised Learning from Partially Matching Images; International Journal of Computer Vision-- Gaussian Processes for Object Categorization. 
+
+*conferences:* N/A
+
+*books:* N/A
+
+*awards:* National Science Foundation Faculty Early Career Development Award (NSF CAREER), Microsoft Research New Faculty Fellow, Best Student Paper Award
