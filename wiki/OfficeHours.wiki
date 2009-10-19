@@ -1,0 +1,11 @@
+= OfficeHours =
+
+* Attributes *
+  * Day
+  * BeginTime
+  * EndTime
+
+* Associations *
+  * Between:
+    * FacultyMember
+    * [Office]
