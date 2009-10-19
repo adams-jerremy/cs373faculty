@@ -1,0 +1,8 @@
+= Phone =
+
+* Attributes *
+  * PhoneNumber
+  * Location
+
+* Associations *
+  * FacultyMember, Many-to-One
