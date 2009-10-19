@@ -1,0 +1,17 @@
+    * name: Kristen Grauman
+    * office: CSA 114
+    * phone: (512) 471-9521
+    * e-mail: grauman@cs.utexas.edu
+    * website: http://www.cs.utexas.edu/~grauman/
+    * office hours: Wed 5-6 PM
+    * type (e.g. lecturer, professor, researcher): professor
+    * degrees earned: B.A. in Computer Science, Boston College, May 2001; Massachusetts Institute of Technology, S.M. in Computer Science, June 2003; Massachusetts Institute of Technology, Ph.D. in Computer Science, July 2006 
+    * research area: computer vision and machine learning
+    * graduate students: Yong Jae Lee, Ph.D., N/A (thesis), N/A (date); Sudheendra Vijayanarasimhan, Ph.D., N/A (thesis), N/A (date)
+    * classes: Computer Vision, CS378, undergrad, Fall 2009
+    * journals: International Journal of Computer Vision-- Foreground Focus: Unsupervised Learning from Partially Matching Images; International Journal of Computer Vision-- Gaussian Processes for Object Categorization. 
+    * conferences: IEEE Conference on Computer Vision and Pattern Recognition, June 2009, Miami, FL, What’s It Going to Cost You?: Predicting Eﬀort vs. Informativeness for Multi-Label Image Annotations.; 
+
+name, date, location, and presentation title
+    * books: N/A
+    * awards: National Science Foundation Faculty Early Career Development Award (NSF CAREER), Microsoft Research New Faculty Fellow, Best Student Paper Award
