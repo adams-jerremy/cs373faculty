@@ -1,0 +1,8 @@
+= Website =
+
+* Attributes *
+  * websiteURL
+  * description
+
+* Associations *
+  * [FacultyMember], Many-to-Many
