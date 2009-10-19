@@ -1,0 +1,11 @@
+= Degree =
+
+* Attributes *
+  * Institution
+  * DegreeType
+    * Enumerated: B.A., B.S., M.S., Ph.d.
+  * Major
+    * Enumerated: Computer Science, Computer Engineering, Electrical Engineering 
+
+* Associations *
+  * FacultyMember, Many-to-One
