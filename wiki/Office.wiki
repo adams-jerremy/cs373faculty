@@ -1,0 +1,9 @@
+= Office =
+
+* Attributes *
+  * Campus
+  * Building
+  * Room
+
+* Associations *
+  * FacultyMember, Many-to-One
