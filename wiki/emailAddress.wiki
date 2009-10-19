@@ -1,0 +1,7 @@
+= Email Address =
+
+* Attributes *
+  * emailAddress
+
+* Associations *
+  * [FacultyMember], Many-to-One
