@@ -12,7 +12,7 @@
 
 *type:* professor
 
-*degrees earned:* B.S., University of Illinois at Urbana-Champaign, 1975
+*degrees earned:* B.S., University of Illinois at Urbana-Champaign, 1975;
 M.S., Massachusetts Institute of Technology (MIT), 1977
 
 *research area:* Aeronautics and Astronautics
