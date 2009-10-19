@@ -1,13 +1,30 @@
-#summary One-sentence summary of this page.
+*name:* Glenn Downing
 
-= Introduction =
+*office:* PAI 5.60
 
-Add your content here.
+*phone:* (512) 388-1858
 
+*e-mail:* downing@cs.utexas.edu
 
-= Details =
+*website:* http://blogs.utexas.edu/gpd/
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+*office hours:* MF 1-2p
+
+*type:* professor
+
+*degrees earned:* B.S., University of Illinois at Urbana-Champaign, 1975
+M.S., Massachusetts Institute of Technology (MIT), 1977
+
+*research area:* Aeronautics and Astronautics
+
+*graduate students:* N/A
+
+*classes:* Object Oriented Programming, CS371p, undergrad, Fall 2009
+
+*journals:* Journal of Object Oriented Programming -- Being Lazy About Global-Object Initialization
+
+*conferences:* N/A
+
+*books:* Data Sharing in Scientific Simulations
+
+*awards:* Advisory Council Teaching Excellence Award, 2006; Teaching Excellence Award, 2002 
