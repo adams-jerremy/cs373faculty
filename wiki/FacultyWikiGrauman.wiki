@@ -10,8 +10,6 @@
     * graduate students: Yong Jae Lee, Ph.D., N/A (thesis), N/A (date); Sudheendra Vijayanarasimhan, Ph.D., N/A (thesis), N/A (date)
     * classes: Computer Vision, CS378, undergrad, Fall 2009
     * journals: International Journal of Computer Vision-- Foreground Focus: Unsupervised Learning from Partially Matching Images; International Journal of Computer Vision-- Gaussian Processes for Object Categorization. 
-    * conferences: IEEE Conference on Computer Vision and Pattern Recognition, June 2009, Miami, FL, What’s It Going to Cost You?: Predicting Eﬀort vs. Informativeness for Multi-Label Image Annotations.; 
-
-name, date, location, and presentation title
+    * conferences: N/A
     * books: N/A
     * awards: National Science Foundation Faculty Early Career Development Award (NSF CAREER), Microsoft Research New Faculty Fellow, Best Student Paper Award
