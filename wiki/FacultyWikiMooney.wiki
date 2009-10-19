@@ -1,16 +1,16 @@
- * name* Raymond J. Mooney
- * office* 1.102 CSA
- * phone* (512) 471-9558 
- * e-mail* mooney@cs.utexas.edu
- * website* http://www.cs.utexas.edu/~mooney/
- * office hours* TTH 10-11 or by ppat
- * type* Professor
+ * name * Raymond J. Mooney
+ * office * 1.102 CSA
+ * phone * (512) 471-9558 
+ * e-mail * mooney@cs.utexas.edu
+ * website * http://www.cs.utexas.edu/~mooney/
+ * office hours * TTH 10-11 or by ppat
+ * type * Professor
  * degrees earned: *
   * type, institution, and date
   * B.S. in Computer Engineering, University of Illinois at Urbana/Champaign, 1983
   * M.S. in Computer Science, University of Illinois at Urbana/Champaign, 1985
   * Ph.D. in Computer Science, University of Illinois at Urbana/Champaign, 1988 
- * research area:* Machine Learning
+ * research area: * Machine Learning
  * graduate students: *
   * name, type (Master’s, Ph.D.), theses/dissertation, and date
   * Yinon Bentor, PhD
@@ -21,7 +21,7 @@
   * name and article title
   * Machine Learning, Semi-supervised Graph Clustering: A Kernel Approach
   * Genome Biology, “Consolidating the Set of Known Human Protein-Protein Interactions in Preparation for Large-Scale Mapping of the Human Interactome"
- * conferences:*
+ * conferences: *
   * name, date, location, and presentation title
   * Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery in Databases, 2009, Bled, Slovenia, Learning to Disambiguate Search Queries from Short Sessions
   * Joint Conference of the 47th Annual Meeting of the Association for Computational Linguistics and the 4th International Joint Conference on Natural Language Processing of the Asian Federation of Natural Language Processing, 2009, Singapore, Learning a Compositional Semantic Parser using an Existing Syntactic Parser
