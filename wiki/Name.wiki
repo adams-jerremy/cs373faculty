@@ -3,7 +3,7 @@
 * Attributes *
   * EID
   * FirstName
-  `*` LastName
+  * LastName
   * Title
     * Enumerated: Dr. Mr. Ms. Mrs.
   * Suffix
