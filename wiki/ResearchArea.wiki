@@ -1,0 +1,7 @@
+= Research Area =
+
+* Attributes *
+  * ResearchArea
+
+* Associations *
+  * FacultyMember, Many-to-One
