@@ -1,0 +1,14 @@
+= Graduate Student =
+
+* Attributes *
+  * DegreeType
+    * Enumerated: B.A., B.S., M.S., Ph.D.
+  * Major
+    * Enumerated: Computer Science, Computer Engineering, Electrical Engineering etc.
+  * DissertationTopic
+  * StartDate
+  * EndDate
+
+* Associations *
+  * FacultyMember, Many-to-One
+  * Name, One-to-One
