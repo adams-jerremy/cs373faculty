@@ -1,0 +1,11 @@
+= Name =
+
+* Attributes *
+  * BookTitle
+  * Publisher
+  * Date
+  * Coauthor
+
+
+* Associations *
+  * FacultyMember, Many-to-One
