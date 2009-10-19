@@ -1,0 +1,9 @@
+= Award =
+
+* Attributes *
+  * AwardName
+  * AwardType
+
+
+* Associations *
+  * FacultyMember, Many-to-One
