@@ -20,6 +20,7 @@ M.S., Massachusetts Institute of Technology (MIT), 1977
 *graduate students:* N/A
 
 *classes:* Object Oriented Programming, CS371p, undergrad, Fall 2009
+           Software Engineering, CS373, undergrad, Fall 2009 
 
 *journals:* Journal of Object Oriented Programming -- Being Lazy About Global-Object Initialization
 
