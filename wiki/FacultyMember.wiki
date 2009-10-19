@@ -1,0 +1,17 @@
+= Faculty Member =
+
+* Attributes *
+  * FacultyID
+    * Surrogate Primary Key
+  * HiredDate
+  * FacultyType
+    * Enumerated: Professor, Researcher, Lecturer
+
+* Associations *
+  * Name, One-to-One
+  * Office, One-to-Many
+    * Association Class: OfficeHours
+  * website, Many-to-Many
+  * emailAddress, One-to-Many
+  * Phone, One-to-Many
+  * 
