@@ -1,0 +1,14 @@
+= Name =
+
+* Attributes *
+  * EID
+  * FirstName
+  * LastName
+  * Title
+    * Enumerated: Dr. Mr. Ms. Mrs.
+  * Suffix
+    * Enumerated: Jr.
+
+
+* Associations *
+  * FacultyMember, One-to-One
