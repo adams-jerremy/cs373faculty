@@ -1,0 +1,46 @@
+*name:* Yin Zhang
+
+*office:* ACES 5.248
+
+*phone:* (512) 232-7496
+
+*e-mail:* yzhang@cs.utexas.edu
+
+*website:* http://www.cs.utexas.edu/~yzhang/
+
+*office hours:* TTh 1-2p
+
+*type:* professor
+
+*degrees earned:* B.S. in Computer Science, Peking University at Beijing, 1997;
+M.S. in Computer Science, Cornell University, 1999;
+Ph.D. in Computer Science, Cornell University, 2001
+
+*research area:* Computer Networks
+
+*graduate students:* Tae Won Cho, UT Austin (2005–present)
+• Yi Li, UT Austin (2005–present) • Ajay A. Mahimkar, UT Austin (2005–present) • Upendra B. Shevade (2007–present) • Han hee Song, UT Austin (2005–present) • Kirill Levchenko, U. C. San Diego (Summer 2004) • Kartikeya Chandrayana, RPI (Summer 2003) • Sumeet Singh, U.C. San Diego (Summer 2003) • Kashi Vishwanath, Duke (Summer 2002) • Yan Chen, U.C. Berkeley (Summer 2002)
+
+*classes:* CS386M: Communication Networks [Fall 2005, Spring 2007, Spring 2008, Fall 2008, Fall 2009]
+CS378: Advanced Computer Networks [Spring 2009]
+CS356: Computer Networks [Fall 2007]
+CS378: Network Measurement and Intrusion Detection [Fall 2006]
+CS395T: Advanced Topics in Computer Networks [Spring 2006]
+CS395T: Network Measurement and Inference [Spring 2005]
+
+*journals:*  1. Han Hee Song, Lili Qiu and Yin Zhang, “NetQuest: A Flexible Framework for Large-Scale Network Mea-
+surement,” in IEEE/ACM Transactions on Networking, vol. 17, no. 1, pp. 106–119, February 2009.
+2. Ying Zhang, Zihui Ge, Suhas Diggavi, Z. Morley Mao, Matthew Roughan, Vinay Vaishampayan, Wal- ter Willinger, and Yin Zhang, “Internet Traffic and Multiresolution Analysis,” IMS Collections, Volume 4, “Markov Processes and Related Topics: A Festschrift for Thomas G. Kurtz,” Stewart N. Ethier, Jin Feng, Richard H. Stockbridge, Editors, Editors, 2008.
+3. Robert Schweller, Zhichun Li, Yan Chen, Yan Gao, Ashish Gupta, Elliot Parsons, Yin Zhang, Peter Dinda, Ming-Yang Kao and Gokhan Memik, “Reversible Sketches: Enabling Monitoring and Analysis over High- speed Data Streams,” in IEEE/ACM Transactions on Networking, vol. 15, no. 5, pp. 1059–1072, October 2007.
+4. Lili Qiu, Yang Richard Yang, Yin Zhang and Scott Shenker, “On Selfish Routing in Internet-like Environ- ments,” in IEEE/ACM Transactions on Networking, vol. 14, no. 4, pp. 725–738, August 2006.
+5. Matthew Roughan and Yin Zhang, “Secure Distributed Data Mining and its Application in Large-Scale Network Measurements,” in ACM SIGCOMM Computer Communication Review (CCR), January 2006.
+6. Yin Zhang, Matthew Roughan, Carsten Lund and David Donoho, “Estimating Point-to-Point and Point-to- Multipoint Traffic Matrices: An Information-Theoretic Approach,” in IEEE/ACM Transactions on Network- ing, vol. 13, no. 5, pp. 947–960, October 2005.
+7. Lili Qiu, Yin Zhang and Srinivasan Keshav, “Understanding the Performance of Many TCP Flows,” Com- puter Networks, vol. 37, no. 3–4, pp. 277–306, November 2001.
+8. Li-ang Zhang and Yin Zhang, “Approximation for Knapsack Problems with Multiple Constraints,” Journal of Computer Science and Technology, vol. 14, no. 4, July 1999, Allerton Press, Inc.
+9. Yin Zhang and Zhuoqun Xu, “Concurrent Manipulation of Expanded AVL Trees,” Journal of Computer Science and Technology, vol. 13, no. 4, July 1998, Allerton Press, Inc.
+*conferences:* N/A
+
+*books:* N/A
+
+*awards:* Faculty Fellowship #9 in Computer Sciences, The University of Texas at Austin, 2008 – 2009. • IEEE Senior Member, 2007. • National Science Foundation Faculty Early Career Award, 2006. • Two SIGCOMM 2003 papers selected for fast-track publication by IEEE/ACM Transactions on Networking. • Research Excellence Award, AT&T Labs–Research, 2001.
+• Best Student Paper Award, 9th USENIX Security Symposium, 2000. • Gold Medal, 33rd International Mathematical Olympiad (IMO), 1992. • First Prize, Chinese High School Mathematics Competition, 1991.
