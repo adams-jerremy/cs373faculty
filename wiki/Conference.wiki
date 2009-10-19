@@ -1,0 +1,10 @@
+= Conference =
+
+* Attributes *
+  * ConferenceName
+  * Date
+  * Location
+  * PresentationTitle
+
+* Associations *
+  * FacultyMember, Many-to-One
