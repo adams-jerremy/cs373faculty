@@ -1,34 +1,36 @@
-    * name Risto Miikkulainen
-    * office Taylor Hall 4.142A
-    * phone (512) 471-9571
-    * e-mail risto@cs.utexas.edu
-    * website http://www.cs.utexas.edu/users/risto/
-    * office hours Wed 7-7:30 & by appt
-    * type Professor
-    * degrees earned: 
-	*type, institution, and date
-	#		PhD in Computer Science, UCLA, 1990
-	#		MS in Applied Mathematics, Helinski University of Technology, 1986
-    * research area: Neural Networks
-    * graduate students: 
-		name, type (Master’s, Ph.D.), theses/dissertation, and date
-		Austin Waters, PhD
-		Igor Karpov, PhD, 
-		Nate Kohl, PhD, Learning in Fractured Problems for Constructive Neural Network Algorithms, 2009
-    * classes: 
-		name, course no., type (undergrad, grad), and semester
-		Computational Intelligence in Game Design II, 54880, CS378, Undergrad, Fall 09
-		Neural Networks, 54975, CS394N, Graduate, Fall 09
-    * journals: 
-		name and article title
-		Neural Computation, Computational Predictions on the Receptive Fields and Organization of V2 for Shape Processing.
-		Journal of Machine Learning Research, Accelerated Neural Evolution through Cooperatively Coevolved Synapses.
-    * conferences: name, date, location, and presentation title
-		Proceedings of the IEEE Symposium on Computational Intelligence and Games, 2008, Piscataway NJ, Transfer of Evolved Pattern-Based Heuristics in Games
-		Proceedings of the Fourth Artificial Intelligence and Interactive Digital Entertainment Conference, 2008, Stanford CA, Constructing Complex NPC Behavior via Multi-Objective Neuroevolution.
-    * books: name and co-authors
-		Computational Maps in the Visual Cortex, Bednar, J. A., Choe, Y., and Sirosh, J.
-		Lateral Interactions in the Cortex: Structure and Function, Sirosh, J., and Choe, Y
-    * awards: name and type
-		Best Paper Award in Artificial Life, Evolutionary Robotics, Adaptive Behavior, and Evolvable Hardware, Paper
-		Best Paper Award in Generative and Developmental Systems, Paper
+     name Risto Miikkulainen
+     office Taylor Hall 4.142A
+     phone (512) 471-9571
+     e-mail risto@cs.utexas.edu
+     website http://www.cs.utexas.edu/users/risto/
+     office hours Wed 7-7:30 & by appt
+     type Professor
+     degrees earned: 
+			* type, institution, and date
+			* PhD in Computer Science, UCLA, 1990
+			* MS in Applied Mathematics, Helinski University of Technology, 1986
+     research area: Neural Networks
+     graduate students: 
+		* name, type (Master’s, Ph.D.), theses/dissertation, and date
+		* Austin Waters, PhD
+		* Igor Karpov, PhD, 
+		* Nate Kohl, PhD, Learning in Fractured Problems for Constructive Neural Network Algorithms, 2009
+     classes: 
+		* name, course no., type (undergrad, grad), and semester
+		* Computational Intelligence in Game Design II, 54880, CS378, Undergrad, Fall 09
+		* Neural Networks, 54975, CS394N, Graduate, Fall 09
+     journals: 
+		* name and article title
+		* Neural Computation, Computational Predictions on the Receptive Fields and Organization of V2 for Shape Processing.
+		* Journal of Machine Learning Research, Accelerated Neural Evolution through Cooperatively Coevolved Synapses.
+     conferences: name, date, location, and presentation title
+		* Proceedings of the IEEE Symposium on Computational Intelligence and Games, 2008, Piscataway NJ, Transfer of Evolved Pattern-Based Heuristics in Games
+		* Proceedings of the Fourth Artificial Intelligence and Interactive Digital Entertainment Conference, 2008, Stanford CA, Constructing Complex NPC Behavior via Multi-Objective Neuroevolution.
+     books: name and co-authors
+		* Computational Maps in the Visual Cortex, Bednar, J. A., Choe, Y., and Sirosh, J.
+		* Lateral Interactions in the Cortex: Structure and Function, Sirosh, J., and Choe, Y
+     awards: name and type
+		* Best Paper Award in Artificial Life, Evolutionary Robotics, Adaptive Behavior, and Evolvable Hardware, Paper
+		* Best Paper Award in Generative and Developmental Systems, Paper
+		
+		
