@@ -12,3 +12,4 @@
 
 * Associations *
   * FacultyMember, One-to-One
+  * GraduateStudent, One-to-One
