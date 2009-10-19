@@ -14,4 +14,11 @@
   * website, Many-to-Many
   * emailAddress, One-to-Many
   * Phone, One-to-Many
-  * 
+  * Degree, One-to-Many
+  * ResearchArea, One-to-Many
+  * GraduateStudent, One-to-Many
+  * CourseTaught, One-to-Many
+  * Conference, One-to-Many
+  * Article, One-to-Many
+  * Book, One-to-Many
+  * Award, One-to-Many
