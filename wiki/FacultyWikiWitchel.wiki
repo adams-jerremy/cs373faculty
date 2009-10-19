@@ -1,0 +1,31 @@
+*Name:* Emmett Witchel
+
+*Office:*  ACES 6.240
+
+*Phone:*  (512) 232-7889
+
+*Email:*  witchel@cs.utexas.edu
+
+*Website:*  cs.utexas.edu/~witchel
+
+*Office Hours:* -
+
+*Type:*  Associate Professor
+
+*Degrees:*  Ph.D., Massachusetts Institute of Technology, January 2004
+
+*Research Area:*  Computer architecture and how the architecture is used by operating systems and compilers
+
+*Graduate Students:*  N/A
+
+*Classes:*  CS372: Introduction to Operating Systems (Fall, Spring), undergrad
+
+*Journals:* "Operating System Transactions", Proceedings of the  22nd ACM Symposium on Operating Systems Principles
+            "Is Transactional Memory Programming Actually Easier?", Proceedings of the  8th Annual Workshop on Duplicating, Deconstructing, and Debunking
+
+*Conferences:* N/A
+
+*Books:* N/A
+
+*Awards:* Honorable Mention, ACM Doctoral Disseration Award
+          Winner, MIT George M. Sprowls award for outstanding doctoral dissertation from the Department of Electrical Engineering and Computer Science
