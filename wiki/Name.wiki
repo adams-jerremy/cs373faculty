@@ -1,9 +1,9 @@
 = Name =
 
 * Attributes *
-  * EID
-  * FirstName
-  * LastName
+  * `EID`
+  * `FirstName`
+  * `LastName`
   * Title
     * Enumerated: Dr. Mr. Ms. Mrs.
   * Suffix
