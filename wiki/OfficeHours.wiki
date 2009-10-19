@@ -1,4 +1,4 @@
-= OfficeHours =
+= Office Hours =
 
 * Attributes *
   * Day
