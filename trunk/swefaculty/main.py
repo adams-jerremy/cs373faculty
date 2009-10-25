@@ -14,11 +14,14 @@ class Faculty(db.Model):
 
 class MainPage(webapp.RequestHandler):
     def get(self):
-        link = '<a href="{url}">{url_linktext}</a>'
+        link = '<a href="%s">%s</a>'
         if users.get_current_user():
-            link = link.format(url = users.create_logout_url(self.request.uri), url_linktext = 'Logout')
+            url = users.create_logout_url(self.request.uri)
+            linktext = 'Logout'
         else:
-            link = link.format(url = users.create_login_url(self.request.uri),url_linktext = 'Login')    
+            url = users.create_login_url(self.request.uri)
+            linktext = 'Login'
+        link = link % (url,linktext)    
 
         self.response.out.write('<html><body>')
 
@@ -29,7 +32,7 @@ class MainPage(webapp.RequestHandler):
                 self.response.out.write('<b>%s</b> wrote:' % fac.author.nickname())
             else:
                 self.response.out.write('An anonymous person wrote:')
-            self.response.out.write('<blockquote>{name} {phone} {email}</blockquote>'.format(name = cgi.escape(fac.name), phone = cgi.escape(fac.phone), email = cgi.escape(fac.email)))
+            self.response.out.write('<blockquote>%s %s %s</blockquote>'% (cgi.escape(fac.name), cgi.escape(fac.phone), cgi.escape(fac.email)))
 
         # Write the submission form and the footer of the page
         self.response.out.write("""
