@@ -1,31 +1,96 @@
-*Name:* Emmett Witchel
+<faculty_member>
 
-*Office:*  ACES 6.240
 
-*Phone:*  (512) 232-7889
+   <faculty_firstname>Emmett</faculty_firstname>
+   <faculty_lastname>Witchel</faculty_lastname>
 
-*Email:*  witchel@cs.utexas.edu
 
-*Website:*  cs.utexas.edu/~witchel
+       <office>
+               <building>ACES</building>
+               <room>6.240</room>
+       </office>
 
-*Office Hours:* -
 
-*Type:*  Associate Professor
+       <phone_number>5122327889</phone_number>
 
-*Degrees:*  Ph.D., Massachusetts Institute of Technology, January 2004
 
-*Research Area:*  Computer architecture and how the architecture is used by operating systems and compilers
+       <email>witchel@cs.utexas.edu</email>
 
-*Graduate Students:*  N/A
 
-*Classes:*  CS372: Introduction to Operating Systems (Fall, Spring), undergrad
+       <website>http://www.cs.utexas.edu/~witchel</website>
 
-*Journals:* "Operating System Transactions", Proceedings of the  22nd ACM Symposium on Operating Systems Principles
-            "Is Transactional Memory Programming Actually Easier?", Proceedings of the  8th Annual Workshop on Duplicating, Deconstructing, and Debunking
 
-*Conferences:* N/A
+       <faculty_type>Associate Professor</faculty_type>
 
-*Books:* N/A
 
-*Awards:* Honorable Mention, ACM Doctoral Disseration Award
-          Winner, MIT George M. Sprowls award for outstanding doctoral dissertation from the Department of Electrical Engineering and Computer Science
+       <research_areas> 
+               <research_area>Computer Architecture</research_area>
+       </research_areas>
+
+
+       <office_hours>
+       </office_hours>
+
+
+       <degrees>
+               <degree>
+                       <degree_type>PHD</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>Massachusetts Institute of Technology</institution>
+                       <degree_date>2004</degree_date>
+               </degree>
+       </degrees>
+
+
+       <conferences>
+       </conferences>
+
+
+       <journals>
+               <journal>
+                       <journal_name>Proceedings of the 22nd ACM Symposium on Operating Systems Principles</journal_name>
+                       <article_title>Operating System Transactions</article_title>
+                       <journal_date>2009</journal_date>
+               </journal>
+	       <journal>
+                       <journal_name>Proceedings of the 8th Annual Workshop on Duplicating, Deconstructing, and Debunking</journal_name>
+                       <article_title>Is Transactional Memory Programming Actually Easier?</article_title>
+                       <journal_date>2009</journal_date>
+               </journal>
+       </journals>
+
+
+       <graduate_students>
+       </graduate_students>
+
+
+       <classes>
+               <class>
+                       <class_name>Introduction To Operating Systems</class_name>
+                       <course_number>CS372</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Spring 2009</semester>
+                       <unique>54250</unique>
+               </class>
+       </classes>
+
+
+       <awards>
+               <award>
+                       <award_name>Honorable Mention, ACM Doctoral Disseration Award</award_name>
+                       <award_type>Honorable Mention</award_type>
+                       <award_date></award_date>
+               </award>
+	       <award>
+                       <award_name>MIT George M. Sprowls Award</award_name>
+                       <award_type>Award</award_type>
+                       <award_date></award_date>
+               </award>
+       </awards>
+
+
+       <books>
+       </books>
+
+
+</faculty_member>
