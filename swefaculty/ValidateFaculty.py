@@ -1,19 +1,28 @@
 import re
 import string
+import datetime
 
 # ------------
 # phone_number
 # ------------
 
+yearLimit = 8+ datetime.datetime.now().year
+
+def award(aws,aw):
+    return aw not in aws
+
+def book(bs,b):
+    return b not in bs
+
 def conference(confs,name,location,title,date):
     for conf in confs:
         if conf.name == name and conf.title == title and conf.location == location and conf.date == date : return False;
-    return int(date)>1900
+    return yearLimit>int(date)>1900
 
 def article(articles,title,journal,date):
     for article in articles:
         if article.title == title and article.journal == journal and article.date == date: return False;
-    return int(date)>1900
+    return yearLimit>int(date)>1900
 
 def course(cs,c):
     return c not in cs
@@ -28,7 +37,7 @@ def degree(degrees,type,inst,date):
     if type=="" or inst =="" or date == "": return False;
     for degree in degrees:
         if degree.type == type and degree.institution == inst and degree.date == date: return False;
-    return int(date)>1900
+    return yearLimit>int(date)>1900
 
 def officeHour(day,begin,end):
     if day=="" or begin =="" or end == "": return False;
@@ -37,7 +46,7 @@ def officeHour(day,begin,end):
     return int(begin) < int(end)
 
 def phone_number (phone) :
-    return not re.search('^\d\d\d\d\d\d\d\d\d\d$', phone) is None
+    return not re.search('^(1|1\s*-)?\s*((\(\d\d\d\))|(\d\d\d))\s*-?\s*\d\d\d\s*-?\s*\d\d\d\d\s*((ext|x|ext.)\s*\d+)?$', phone) is None
 
 def name(name):
     return name=='valid'
@@ -57,6 +66,7 @@ def office(building, location):
             or (building == 'ENS' and -1<int(floor)<8 )
             
 def main():
+    print phone_number("1214541439x0")
     print office("TAY","4.11")
     print office("TAY","4.")
     print office("TAY",".11")
