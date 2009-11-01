@@ -1,52 +1,147 @@
-* name * Raymond J. Mooney
+<faculty_member>
 
-* office * 1.102 CSA
 
-* phone * (512) 471-9558 
+   <faculty_firstname>Raymond</faculty_firstname>
+   <faculty_lastname>Mooney</faculty_lastname>
 
-* e-mail * mooney@cs.utexas.edu
 
-* website * http://www.cs.utexas.edu/~mooney/
+       <office>
+               <building>CSA</building>
+               <room>1.102</room>
+       </office>
 
-* office hours * TTH 10-11 or by ppat
 
-* type * Professor
+       <phone_number>5124719558</phone_number>
 
-* degrees earned: *
-  * type, institution, and date
-  * B.S. in Computer Engineering, University of Illinois at Urbana/Champaign, 1983
-  * M.S. in Computer Science, University of Illinois at Urbana/Champaign, 1985
-  * Ph.D. in Computer Science, University of Illinois at Urbana/Champaign, 1988 
-  
-* research area: * Machine Learning
 
-* graduate students: *
-  * name, type (Master’s, Ph.D.), theses/dissertation, and date
-  * Yinon Bentor, PhD
-  
-* classes: *
-  * name, course no., type (undergrad, grad), and semester
-  * Natural Language Processing, 54935, CS388, Graduate, Fall 09
-  
-* journals: *
-  * name and article title
-  * Machine Learning, Semi-supervised Graph Clustering: A Kernel Approach
-  * Genome Biology, “Consolidating the Set of Known Human Protein-Protein Interactions in Preparation for Large-Scale Mapping of the Human Interactome"
-  
-* conferences: *
-  * name, date, location, and presentation title
-  * Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery in Databases, 2009, Bled, Slovenia, Learning to Disambiguate Search Queries from Short Sessions
-  * Joint Conference of the 47th Annual Meeting of the Association for Computational Linguistics and the 4th International Joint Conference on Natural Language Processing of the Asian Federation of Natural Language Processing, 2009, Singapore, Learning a Compositional Semantic Parser using an Existing Syntactic Parser
-  
-* books: *
-  * name and co-authors
-  * A General Explanation-Based Learning Mechanism and its Application to Narrative Understanding
-  * Proceedings of the Seventh International Conference on Machine Learning Porter, B.W.
- 
-* awards: *
-  * name and type
-  * Best Paper Award, 45th Annual Meeting of the Association for Computational Linguistics, Paper
-  * Best Research Paper Award, Tenth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, Paper
+       <email>mooney@cs.utexas.edu</email>
 
-  
- 
+
+       <website>http://www.cs.utexas.edu/~mooney/</website>
+
+
+       <faculty_type>Professor</faculty_type>
+
+
+       <research_areas> 
+               <research_area>Machine Learning</research_area>
+       </research_areas>
+
+
+       <office_hours> 
+               <office_hour> 
+                       <day>Tuesday</day> 
+                       <start>10:00 AM</start> 
+                       <end>11:00 AM</end> 
+               </office_hour> 
+	       <office_hour> 
+                       <day>Thursday</day> 
+                       <start>10:00 AM</start> 
+                       <end>11:00 AM</end> 
+               </office_hour>
+       </office_hours>
+
+
+       <degrees>
+               <degree>
+                       <degree_type>BS</degree_type>
+                       <degree_name>Computer Engineering</degree_name>
+                       <institution>University of Illinois at Urbana/Champaign</institution>
+                       <degree_date>1983</degree_date>
+               </degree>
+               <degree>
+                       <degree_type>MS</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>University of Illinois at Urbana/Champaign</institution>
+                       <degree_date>1985</degree_date>
+               </degree>
+               <degree>
+                       <degree_type>PHD</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>University of Illinois at Urbana/Champaign</institution>
+                       <degree_date>1988</degree_date>
+               </degree>
+       </degrees>
+
+
+       <conferences> 
+               <conference> 
+                       <conference_name>Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery in Databases</conference_name> 
+                       <conference_date>2009</conference_date> 
+                       <location>Slovenia</location> 
+                       <title>Learning to Disambiguate Search Queries from Short Sessions</title> 
+               </conference> 
+               <conference> 
+                       <conference_name>Joint Conference of the 47th Annual Meeting of the Association for Computational Linguistics and the 4th International Joint Conference on Natural Language Processing of the Asian Federation of Natural Language Processing</conference_name> 
+                       <conference_date>2009</conference_date> 
+                       <location>Singapore</location> 
+                       <title>Learning a Compositional Semantic Parser using an Existing Syntactic Parser</title> 
+               </conference> 
+       </conferences>
+
+
+       <journals>
+               <journal>
+                       <journal_name>Machine Learning</journal_name>
+                       <article_title>Semi-supervised Graph Clustering: A Kernel Approach</article_title>
+                       <journal_date></journal_date>
+               </journal>
+	       <journal>
+                       <journal_name>Genome Biology</journal_name>
+                       <article_title>Consolidating the Set of Known Human Protein-Protein Interactions in Preparation for Large-Scale Mapping of the Human Interactome</article_title>
+                       <journal_date></journal_date>
+               </journal>
+       </journals>
+
+
+       <graduate_students> 
+               <graduate_student> 
+                       <student_firstname>Yinon</student_firstname> 
+                       <student_lastname>Bentor</student_lastname> 
+                       <student_type>PHD</student_type> 
+                       <dissertation></dissertation> 
+                       <student_date></student_date> 
+               </graduate_student> 
+       </graduate_students>
+
+
+       <classes>
+               <class>
+                       <class_name>Natural Language Processing</class_name>
+                       <course_number>CS388</course_number>
+                       <class_type>Graduate</class_type>
+                       <semester>Fall 2009</semester>
+                       <unique>54935</unique>
+               </class>
+       </classes>
+
+
+       <awards>
+               <award>
+                       <award_name>Best Paper Award, 45th Annual Meeting of the Association for Computational Linguistics</award_name>
+                       <award_type>Award</award_type>
+                       <award_date></award_date>
+               </award>
+	       <award>
+                       <award_name>Best Research Paper Award, Tenth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</award_name>
+                       <award_type>Award</award_type>
+                       <award_date></award_date>
+               </award>
+       </awards>
+
+
+       <books> 
+               <book> 
+                       <book_name>A General Explanation-Based Learning Mechanism and its Application to Narrative Understanding</book_name> 
+                       <coauthors> 
+                       </coauthors> 
+               </book> 
+               <book> 
+                       <book_name>Proceedings of the Seventh International Conference on Machine Learning Porter, B.W.</book_name> 
+                       <coauthors> 
+                       </coauthors> 
+               </book>
+       </books>
+
+
+</faculty_member>
