@@ -71,14 +71,14 @@
                        <course_number>CS341</course_number>
                        <class_type>Undergraduate</class_type>
                        <semester>Fall 2009</semester>
-                       <unique>54210</unique>
+                       <unique>54780</unique>
                </class>
 	       <class>
                        <class_name>Contemporary Issues in Computer Science</class_name>
                        <course_number>CS349</course_number>
                        <class_type>Undergraduate</class_type>
-                       <semester>Fall 2009</semester>
-                       <unique>54240</unique>
+                       <semester>Spring 2009</semester>
+                       <unique>54195</unique>
                </class>
        </classes>
 
