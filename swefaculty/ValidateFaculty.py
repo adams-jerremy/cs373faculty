@@ -1,8 +1,15 @@
 import re
+import string
 
 # ------------
 # phone_number
 # ------------
+
+def officeHour(day,begin,end):
+    if day=="" or begin =="" or end == "": return False;
+    begin = string.replace(begin,":","")
+    end = string.replace(end,":","")
+    return int(begin) < int(end)
 
 def phone_number (phone) :
     return not re.search('^\d\d\d\d\d\d\d\d\d\d$', phone) is None
@@ -16,6 +23,8 @@ def website(website):
     return re.search('^(https?)://(\w+\.)+(com|net|org|gov|edu|mil|biz|info|mobi|name|aero|jobs|museum|[a-zA-Z][a-zA-Z])$',website) is not None
 
 def office(building, location):
+    if location == ""  or building == "": return building == location;
+    if re.search('\.',location) is None: return False;
     floor, room = location.split('.')
     return (building == 'TAY' and 0 < int(floor) < 7)\
             or (building == 'PAI' and 0 < int(floor) < 6)\
@@ -23,6 +32,8 @@ def office(building, location):
             or (building == 'ENS' and -1<int(floor)<8 )
             
 def main():
+    print hours("8:30","9:30")
+    
     print "(",
     for i in xrange(0,24):
         print '"',
