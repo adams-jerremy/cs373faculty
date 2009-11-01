@@ -12,6 +12,9 @@ import sys
 import importer
 import string
 
+"""
+This function reads from internal data structures, formats the information in xml and stores it in a file.
+"""
 def export(f) :
 
     filename = string.strip(f.faculty_firstname) + ".xml"

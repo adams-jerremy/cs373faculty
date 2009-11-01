@@ -12,6 +12,9 @@ import unittest
 import string
 
 class TestFaculty2 (unittest.TestCase) :
+    """
+    This method tests importer.py.
+    """
     def test_import (self) :
         f = importer.Faculty()
         f.process("IETest.txt")
@@ -31,7 +34,10 @@ class TestFaculty2 (unittest.TestCase) :
         self.assert_(f.classes == [("Intro to Operating Systems", "CS373H", "Undergraduate", "Spring 2010", "55075")])
         self.assert_(f.awards == [("Award for Being Great", "Award", "2007")])
         self.assert_(f.books == [("Book of Stuff", [("John", "Smithington")])])
-        
+   
+    """
+    This method tests exporter.py.
+    """
     def test_export(self) :
         f = importer.Faculty()
         f.faculty_firstname = "Joe"

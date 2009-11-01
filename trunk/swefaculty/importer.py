@@ -11,6 +11,9 @@ from BeautifulSoup import BeautifulSoup
 import sys
 import exporter
 
+"""
+Simple Faculty class that holds onto faculty data frmom an xml file.
+"""
 class Faculty() :
     faculty_firstname = ""
     faculty_lastname = ""
@@ -29,13 +32,16 @@ class Faculty() :
     awards = []
     books = []
     
-    def __init__ (self) :
-        return
-    
+    """
+    This method takes in the file name from the command line and calls process().
+    """
     def input(self) :
         filename = sys.argv[1]
         self.process(filename)
     
+    """
+    This method parses the given xml file and stores the data into the appropriate containers.
+    """
     def process (self, filename) :
         f = open(filename)
         xml = ""
