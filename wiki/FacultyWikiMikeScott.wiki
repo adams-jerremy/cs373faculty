@@ -79,7 +79,14 @@
                        <course_number>CS307</course_number> 
                        <class_type>Undergraduate</class_type> 
                        <semester>Fall 2009</semester> 
-                       <unique>54025</unique> 
+                       <unique>54575</unique> 
+               </class>
+               <class> 
+                       <class_name>Elements of Graphics & Visualization</class_name> 
+                       <course_number>CS324e</course_number> 
+                       <class_type>Undergraduate</class_type> 
+                       <semester>Fall 2009</semester> 
+                       <unique>54735</unique> 
                </class>
        </classes> 
 
