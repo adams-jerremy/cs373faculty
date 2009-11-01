@@ -8,7 +8,9 @@ options = {"facTypes":("","Professor","Lecturer","Researcher"),
            "buildings":("","TAY","PAI","ACES","ENS"),
            "researchAreas":("","AI","Compilers","OS","Robotics","Algorithms"),
            "gradStudents":("","Student1(st0001)","Student2(st0002)"),
-           "courses":("","55555","55556")
+           "courses":("","55555","55556"),
+           "books":("","AwesomeBook","Anotherbook","LessAwesomeBook"),
+           "awards":("","Awards","SuperAwesomeAward")
            }
 
 class Faculty:
@@ -28,6 +30,8 @@ class Faculty:
         self.courses = []
         self.articles = []
         self.conferences = []
+        self.books= []
+        self.awards = []
         
 class Conference:
     conferences = ("","Conference","AnotherConference","aThird")
@@ -224,7 +228,13 @@ class MainPage (webapp.RequestHandler) :
             self.response.out.write(dropDown('conferenceLocation',Conference.locations,False))
             self.response.out.write(textInputField('conferenceTitle'))
             self.response.out.write(textInputField('conferenceDate'))
-            
+            self.response.out.write('<br/>Books<br/>')
+            self.response.out.write(textBox(fac.books))
+            self.response.out.write(dropDown('book',options['books'],False))
+            self.response.out.write('<br/>Awards<br/>')
+            self.response.out.write(textBox(fac.awards))
+            self.response.out.write(dropDown('award',options['awards'],False))
+            self.response.out.write('<br/>')
         else:
             MainPage.type = "Login"
             self.response.out.write('ID:')
@@ -263,6 +273,8 @@ class MainPage (webapp.RequestHandler) :
             confLoc = cgi.escape(self.request.get('conferenceLocation'))
             confTitle = cgi.escape(self.request.get('conferenceTitle'))
             confDate = cgi.escape(self.request.get('conferenceDate'))
+            book = cgi.escape(self.request.get('book'))
+            award = cgi.escape(self.request.get('award'))
             
             if ValidateFaculty.name(name):
                 fac.name = name
@@ -324,7 +336,16 @@ class MainPage (webapp.RequestHandler) :
                     fac.conferences.append(Conference(confName,confLoc,confTitle,confDate))
                 else:
                     self.response.out.write('Invalid Conference.<br />')        
-            
+            if book != "":
+                if ValidateFaculty.book(fac.books,book) :
+                    fac.books.append(book)
+                else:
+                    self.response.out.write('Invalid book.<br />')
+            if award != "":
+                if ValidateFaculty.award(fac.awards,award) :
+                    fac.awards.append(award)
+                else:
+                    self.response.out.write('Invalid Award.<br />')
         self.get()
 
 
