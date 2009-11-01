@@ -1,0 +1,12 @@
+= Variables Initialized =
+
+*Strings:* faculty_firstname, faculty_lastname, phone_number, email, website, faculty_type
+
+*Tuples:* office
+
+*Lists:* research_areas, office_hours, degrees, conferences, journals, graduate_students, classes, awards, books
+
+
+= How It Works =
+
+The importer begins by opening the filename it is given.  Next, it reads each line and appends it to a String called xml; it stops when there are no more lines to read.  After that, BeautifulStoneSoup is called for xml and assigned to a variable called facxml.  Finally the values of the aforementioned variables are assigned the appropriate values (taken from facxml).
