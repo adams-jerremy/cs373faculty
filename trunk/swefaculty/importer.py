@@ -83,7 +83,6 @@ class Faculty() :
             for ca in bk.coauthors.findAll("coauthor"):
                 coauthors.append((ca.coauthor_firstname.string, ca.coauthor_lastname.string))
             self.books.append((bk.book_name.string, coauthors))
-        print self.books
         
 if __name__ == "__main__" : 
     f = Faculty()
