@@ -17,9 +17,9 @@ options = {"facTypes":("","Professor","Lecturer","Researcher"),
            "books":("","AwesomeBook","Anotherbook","LessAwesomeBook"),
            "awards":("","Awards","SuperAwesomeAward")
            }
-'''
+"""
 Simple class for holding onto faculty data
-'''
+"""
 class Faculty:
 
     def __init__(self):
@@ -39,9 +39,9 @@ class Faculty:
         self.conferences = []
         self.books= []
         self.awards = []
-'''
+"""
 Simple class for holding onto conference data
-'''        
+"""        
 class Conference:
     conferences = ("","Conference","AnotherConference","aThird")
     locations = ("","Location","Burbank","Singapore","Fiji","Stalingrad")
@@ -53,9 +53,9 @@ class Conference:
     def __len__(self):
         return len(self.title)+len(self.name)+len(self.date)+len(self.location)+len("at  in , ")
     
-'''
+"""
 Simple class for holding onto article data
-'''        
+"""        
 class Article:
     journals = ("","Scientific American","Applied Computing", "Robotic Murder Monthly")
     def __init__(self,t,j,d):
@@ -65,9 +65,9 @@ class Article:
     def __len__(self):
         return len(self.title)+len(self.journal)+len(self.date)+len(" in , ")
     
-'''
+"""
 Simple class for holding onto degree data
-'''        
+"""        
 class Degree:
     types = ("","B.S.","B.A.","M.S.","M.A.","Ph.D.")
     institutions = ("","UT","Less Important")
@@ -78,9 +78,9 @@ class Degree:
     def __len__(self):
         return len(self.type)+len(self.institution)+len(self.date)+len(" from in ")    
 
-'''
+"""
 Simple class for holding onto officeHour data
-'''        
+"""        
 class OfficeHour:
     days = ("","M","T","W","R","F")
     times = ("","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30")
@@ -90,16 +90,16 @@ class OfficeHour:
         self.endTime = e
     def __len__(self):
         return len(self.day)+len(self.beginTime)+len(self.endTime)+len(" from in ")
-'''
+"""
 function to check if any of the values passed in are filled
-'''
+"""
 def anyFilled(*t):
     for e in t:
         if e!="": return True;
         
-'''
+"""
 Function for making 'generic' text boxes
-'''
+"""
 
 def textBox(t):
     s = '<textarea rows ="'
@@ -113,9 +113,9 @@ def textBox(t):
     s+='</textarea>'
     return s
 
-'''
+"""
 function for making conference text boxes- a little more involved than regular textboxes
-'''
+"""
 
 def conferenceTextBox(f):
     s = '<textarea rows ="'
@@ -135,9 +135,9 @@ def conferenceTextBox(f):
     s+='</textarea>'
     return s    
 
-'''
+"""
 function for making article text boxes- a little more involved than regular textboxes
-'''
+"""
 def articleTextBox(f):
     s = '<textarea rows ="'
     s+= str(len(f.articles)+1)
@@ -154,9 +154,9 @@ def articleTextBox(f):
     s+='</textarea>'
     return s
     
-'''
+"""
 function for making office hour text boxes- a little more involved than regular textboxes
-'''
+"""
 def officeHoursTextBox(f):
     s = '<textarea rows ="'
     s+= str(len(f.articles)+1)
@@ -173,9 +173,9 @@ def officeHoursTextBox(f):
     s+='</textarea>'
     return s
 
-'''
+"""
 function for making degree text boxes- a little more involved than regular textboxes
-'''
+"""
 def degreesTextBox(f):
     s = '<textarea rows ="'
     s+= str(len(f.degrees)+1)
@@ -194,9 +194,9 @@ def degreesTextBox(f):
 
     
 
-'''
+"""
 Function for making generic drop down lists
-'''
+"""
 def dropDown(name,options,preselect,selected=""):
     s = '<select name="'
     s+=name
@@ -210,24 +210,24 @@ def dropDown(name,options,preselect,selected=""):
     s+='</select>' 
     return s
 
-'''
+"""
 Genericly create a textinput
-'''
+"""
 
 def textInputField(id,value=''):
     return '<input type="text" name="'+id+'" value = "' +value+ '" />'
 
-'''
+"""
 Handler for faculty page
-'''
+"""
 
 class MainPage (webapp.RequestHandler) :
     id = ""
     facs = {}
     type = ""
-    '''
+    """
     Takes care of main page
-    '''
+    """
     def get (self) :
         self.response.out.write('<form action="/faculty" method="post">')
         if MainPage.facs.has_key(MainPage.id):
@@ -295,9 +295,9 @@ class MainPage (webapp.RequestHandler) :
         
         
         
-    '''
+    """
     takes care of submissions
-    '''
+    """
     def post (self) :
         if MainPage.type == "Login":
             MainPage.id = cgi.escape(self.request.get('FacID'))
