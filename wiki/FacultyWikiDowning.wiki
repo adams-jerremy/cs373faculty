@@ -1,31 +1,120 @@
-*name:* Glenn Downing
+<faculty_member>
 
-*office:* PAI 5.60
 
-*phone:* (512) 388-1858
+   <faculty_firstname>Glenn</faculty_firstname>
+   <faculty_lastname>Downing</faculty_lastname>
 
-*e-mail:* downing@cs.utexas.edu
 
-*website:* http://blogs.utexas.edu/gpd/
+       <office>
+               <building>PAI</building>
+               <room>5.60</room>
+       </office>
 
-*office hours:* MF 1-2p
 
-*type:* professor
+       <phone_number>5123881858</phone_number>
 
-*degrees earned:* B.S., University of Illinois at Urbana-Champaign, 1975;
-M.S., Massachusetts Institute of Technology (MIT), 1977
 
-*research area:* Aeronautics and Astronautics
+       <email>downing@cs.utexas.edu</email>
 
-*graduate students:* N/A
 
-*classes:* Object Oriented Programming, CS371p, undergrad, Fall 2009
-           Software Engineering, CS373, undergrad, Fall 2009 
+       <website>http://blogs.utexas.edu/gpd/</website>
 
-*journals:* Journal of Object Oriented Programming -- Being Lazy About Global-Object Initialization
 
-*conferences:* N/A
+       <faculty_type>Professor</faculty_type>
 
-*books:* Data Sharing in Scientific Simulations
 
-*awards:* Advisory Council Teaching Excellence Award, 2006; Teaching Excellence Award, 2002 
+       <research_areas> 
+               <research_area>Aeronautics</research_area>
+               <research_area>Astronautics</research_area>
+       </research_areas>
+
+
+       <office_hours>
+               <office_hour>
+                       <day>Monday</day>
+                       <start>12:00 PM</start>
+                       <end>1:00 PM</end>
+               </office_hour>
+	       <office_hour>
+                       <day>Friday</day>
+                       <start>12:00 PM</start>
+                       <end>1:00 PM</end>
+               </office_hour>
+       </office_hours>
+
+
+       <degrees>
+               <degree>
+                       <degree_type>BS</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>University of Illinois at Urbana-Champaign</institution>
+                       <degree_date>1975</degree_date>
+               </degree>
+	       <degree>
+                       <degree_type>MS</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>Massachusetts Institute of Technology</institution>
+                       <degree_date>1977</degree_date>
+               </degree>
+       </degrees>
+
+
+       <conferences>
+       </conferences>
+
+
+       <journals>
+               <journal>
+                       <journal_name>Journal of Object Oriented Programming</journal_name>
+                       <article_title>Being Lazy About Global-Object Initialization</article_title>
+                       <journal_date>1996</journal_date>
+               </journal>
+       </journals>
+
+
+       <graduate_students>
+       </graduate_students>
+
+
+       <classes>
+               <class>
+                       <class_name>Object-Oriented Programming</class_name>
+                       <course_number>CS371p</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Fall 2009</semester>
+                       <unique>54850</unique>
+               </class>
+	       <class>
+                       <class_name>Software Engineering</class_name>
+                       <course_number>CS373</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Fall 2009</semester>
+                       <unique>54870</unique>
+               </class>
+       </classes>
+
+
+       <awards>
+               <award>
+                       <award_name>Advisory Council Teaching Excellence Award</award_name>
+                       <award_type>Award</award_type>
+                       <award_date>2006</award_date>
+               </award>
+	       <award>
+                       <award_name>Teaching Excellence Award</award_name>
+                       <award_type>Award</award_type>
+                       <award_date>2002</award_date>
+               </award>
+       </awards>
+
+
+       <books>
+               <book>
+                       <book_name>Data Sharing in Scientific Simulations</book_name>
+                       <coauthors>
+                       </coauthors>
+               </book>
+       </books>
+
+
+</faculty_member>
