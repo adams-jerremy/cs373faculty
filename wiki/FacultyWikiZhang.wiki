@@ -100,7 +100,7 @@
                        <class_name>Communication Networks</class_name>
                        <course_number>CS386m</course_number>
                        <class_type>Graduate</class_type>
-                       <semester>Fall 2000</semester>
+                       <semester>Fall 2009</semester>
                        <unique>54925</unique>
                </class>
 	       <class>
