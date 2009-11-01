@@ -1,35 +1,99 @@
-*Name:* Elaine Rich
+<faculty_member>
 
-*Office:* T.U. Taylor Hall 3.126
 
-*Phone:* (512) 471-9706
+   <faculty_firstname>Elaine</faculty_firstname>
+   <faculty_lastname>Rich</faculty_lastname>
 
-*E-mail:* ear@cs.utexas.edu
 
-*Website:* http://www.cs.utexas.edu/~ear/
+       <office>
+               <building>TAY</building>
+               <room>3.126</room>
+       </office>
 
-*Office Hours:* Tuesday 11:00 – 11:30 and Thursday  3:30 - 5:00
 
-*Type:* Senior Lecturer
+       <phone_number>5124719706</phone_number>
 
-*Degrees:* Ph.D in Computer Science, Carnegie Mellon University, 1979
 
-*Research Area:* Artificial Intelligence and Automata Theory 
+       <email>ear@cs.utexas.edu</email>
 
-*Graduate Students:* N/A
 
-*Classes:* 
-           * Dean's Scholars Seminar, NSC110, Undergrad, Fall 2001-2004, 2008; Spring 2007-2009
-           * Natural Language Processing, CS378, Undergrad, Fall 2003
-           * Artificial Intelligence, CS343, Undergrad, Fall 2006
-           * Contemporary Issues in Computer Science, CS349, Undergrad, Spring 2009
-           * Automata Theory, CS341, Undergrad, Fall 2009
-           * Freshman Seminar, UGS302, Undergrad, Fall 2009
+       <website>http://www.cs.utexas.edu/~ear</website>
 
-*Journals:* N/A
 
-*Conferences:* N/A
+       <faculty_type>Senior Lecturer</faculty_type>
 
-*Books:* Automata, Computability and Complexity: Theory and Applications
 
-*Awards:* N/A
+       <research_areas> 
+               <research_area>Automata Theory</research_area>
+               <research_area>Artificial Intelligence</research_area>
+       </research_areas>
+
+
+       <office_hours>
+               <office_hour>
+                       <day>Tuesday</day>
+                       <start>11:00 AM</start>
+                       <end>11:30 AM</end>
+               </office_hour>
+	       <office_hour>
+                       <day>Thursday</day>
+                       <start>3:30 PM</start>
+                       <end>5:00 PM</end>
+               </office_hour>
+       </office_hours>
+
+
+       <degrees>
+               <degree>
+                       <degree_type>PhD</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>Carnegie Mellon University</institution>
+                       <degree_date>1979</degree_date>
+               </degree>
+       </degrees>
+
+
+       <conferences>
+       </conferences>
+
+
+       <journals>
+       </journals>
+
+
+       <graduate_students>
+       </graduate_students>
+
+
+       <classes>
+               <class>
+                       <class_name>Automata Theory</class_name>
+                       <course_number>CS341</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Fall 2009</semester>
+                       <unique>54210</unique>
+               </class>
+	       <class>
+                       <class_name>Contemporary Issues in Computer Science</class_name>
+                       <course_number>CS349</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Fall 2009</semester>
+                       <unique>54240</unique>
+               </class>
+       </classes>
+
+
+       <awards>
+       </awards>
+
+
+       <books>
+               <book>
+                       <book_name>Automata, Computability and Complexity: Theory and Applications</book_name>
+                       <coauthors>
+                       </coauthors>
+               </book>
+       </books>
+
+
+</faculty_member>
