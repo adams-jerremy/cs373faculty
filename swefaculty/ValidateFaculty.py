@@ -5,6 +5,21 @@ import string
 # phone_number
 # ------------
 
+def course(cs,c):
+    return c not in cs
+
+def graduateStudent(ss,s):
+    return s not in ss
+
+def researchArea(ras,ra):
+    return ra not in ras
+
+def degree(degrees,type,inst,date):
+    if type=="" or inst =="" or date == "": return False;
+    for degree in degrees:
+        if degree.type == type and degree.institution == inst and degree.date == date: return False;
+    return int(date)>1900
+
 def officeHour(day,begin,end):
     if day=="" or begin =="" or end == "": return False;
     begin = string.replace(begin,":","")
