@@ -1,33 +1,95 @@
-*Name:* Mike Scott
+<faculty_member> 
 
-*Office:* T. S. Painter Hall 5.68
 
-*Phone:* (512) 471-9785
+   <faculty_firstname>Mike</faculty_firstname> 
+   <faculty_lastname>Scott</faculty_lastname> 
 
-*E-mail:* scottm@cs.utexas.edu
 
-*Website:* http://www.cs.utexas.edu/~scottm/
+       <office> 
+               <building>PAI</building> 
+               <room>5.68</room> 
+       </office> 
 
-*Office Hours:* Monday, Wednesday, and Friday 3:15 - 4:45
 
-*Type:* Senior Lecturer
+       <phone_number>5124719785</phone_number> 
 
-*Degrees:* 
-           * B.S. in Industrial Engineering, Stanford University, 
-           * M.S. in Computer Science, Rennselaer Polytechnic Institute, 1998
 
-*Research Area:* Computer science education
+       <email>scottm@cs.utexas.edu</email> 
 
-*Graduate Students:* N/A
 
-*Classes:* 
-           * Foundations of Computer Science, CS307, Undergrad, Fall 2009
-           * Elements of Graphics and Visualization, CS324e, Undergrad, Fall 2009
+       <website>http://www.cs.utexas.edu/~scottm/</website> 
 
-*Journals:* N/A
 
-*Conferences:* N/A
+       <faculty_type>Senior Lecturer</faculty_type> 
 
-*Books:* N/A
 
-*Awards:* N/A
+       <research_areas> 
+               <research_area>Computer Science education</research_area>  
+       </research_areas> 
+
+
+       <office_hours> 
+               <office_hour> 
+                       <day>Monday</day> 
+                       <start>3:15 PM</start> 
+                       <end>4:45 PM</end> 
+               </office_hour>
+	       <office_hour> 
+                       <day>Wednesday</day> 
+                       <start>3:15 PM</start> 
+                       <end>4:45 PM</end> 
+               </office_hour>
+	       <office_hour> 
+                       <day>Friday</day> 
+                       <start>3:15 PM</start> 
+                       <end>4:45 PM</end> 
+               </office_hour>
+       </office_hours> 
+
+
+       <degrees> 
+               <degree> 
+                       <degree_type>BS</degree_type> 
+                       <degree_name>Industrial Engineering</degree_name> 
+                       <institution>Stanford University</institution> 
+                       <degree_date>1996</degree_date> 
+               </degree>
+	       <degree> 
+                       <degree_type>MS</degree_type> 
+                       <degree_name>Computer Science</degree_name> 
+                       <institution>Rennselaer Polytechnic Institute</institution> 
+                       <degree_date>1998</degree_date> 
+               </degree>
+       </degrees> 
+
+
+       <conferences>  
+       </conferences> 
+
+       <journals> 
+       </journals> 
+
+       <graduate_students>
+       </graduate_students> 
+
+
+       <classes> 
+               <class> 
+                       <class_name>Foundations of Computer Science</class_name> 
+                       <course_number>CS307</course_number> 
+                       <class_type>Undergraduate</class_type> 
+                       <semester>Fall 2009</semester> 
+                       <unique>54025</unique> 
+               </class>
+       </classes> 
+
+
+       <awards>
+       </awards> 
+
+
+       <books>
+       </books> 
+
+
+</faculty_member>
