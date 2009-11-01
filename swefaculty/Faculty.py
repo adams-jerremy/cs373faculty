@@ -4,6 +4,13 @@ from google.appengine.ext import webapp
 
 import ValidateFaculty
 
+options = {"facTypes":("","Professor","Lecturer","Researcher"),
+           "buildings":("","TAY","PAI","ACES","ENS"),
+           "researchAreas":("","AI","Compilers","OS","Robotics","Algorithms"),
+           "gradStudents":("","Student1(st0001)","Student2(st0002)"),
+           "courses":("","55555","55556")
+           }
+
 class Faculty:
 
     def __init__(self):
@@ -12,67 +19,101 @@ class Faculty:
         self.building = ""
         self.room = ""
         self.email = ""
-        self.website = ""
+        self.website = "http://"
         self.officeHours = []
+        self.type = ""
+        self.degrees = []
+        self.researchAreas = []
+        self.gradStudents = []
+        self.courses = []
+        
+class Degree:
+    types = ("","B.S.","B.A.","M.S.","M.A.","Ph.D.")
+    institutions = ("","UT","Less Important")
+    def __init__(self,t,i,d):
+        self.type = t
+        self.institution = i
+        self.date = d
+        
         
 class OfficeHour:
     days = ("","M","T","W","R","F")
     times = ("","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30")
-    def __init__(self):
-        self.day = ""
-        beginTime = ""
-        endTime = ""
+    def __init__(self,day,b,e):
+        self.day = day
+        self.beginTime = b
+        self.endTime = e
 
-def officeHourDayDropDown():
-    s = '<select name="officeHrDay">'
-    for d in OfficeHour.days :
-        s+='<option value="'
-        s+=d
-        s+='">'
-        s+=d
-        s+='</option>'
-    s+='</select>' 
+def textBox(t):
+    s = '<textarea rows ="'
+    s+= str(len(t)+1)
+    s+= '" cols="25" readonly="readonly">'
+    for o in t:
+        s+=o
+        s+='\n'
+    s+='</textarea>'
     return s
-
-def officeHourTimeDropDown(t):
-    s = '<select name="'+t+'">'
-    for t in OfficeHour.times :
-        s+='<option value="'
-        s+=t
-        s+='">'
-        s+=t
-        s+='</option>'
-    s+='</select>' 
+    
+def researchAreasTextBox(f):
+    s = '<textarea rows ="'
+    s+= str(len(f.researchAreas)+1)
+    s+= '" cols="25" readonly="readonly">'
+    for ra in f.researchAreas:
+        s+=ra
+        s+='\n'
+    s+='</textarea>'
+    return s
+    
+def officeHoursTextBox(f):
+    s = '<textarea rows ="'
+    s+= str(len(f.officeHours)+1)
+    s+= '" cols="25" readonly="readonly">'
+    for officeHour in f.officeHours:
+        s+=officeHour.day
+        s+= ' from '
+        s+=officeHour.beginTime
+        s+= ' to '
+        s+=officeHour.endTime
+        s+='\n'
+    s+='</textarea>'
+    return s
+def degreesTextBox(f):
+    s = '<textarea rows ="'
+    s+= str(len(f.degrees)+1)
+    s+= '" cols="25" readonly="readonly">'
+    for degree in f.degrees:
+        s+=degree.type
+        s+= ' degree from '
+        s+=degree.institution
+        s+= ' in '
+        s+=degree.date
+        s+='\n'
+    s+='</textarea>'
     return s
 
     
-def officeHoursTextBox(f):
-    s = '<textarea rows ="' + len(f.officeHours)+1+'" cols="25" readonly="readonly">'
-#    for officeHour in f.officeHours:
-#        s+=officeHour.day
-#        s+= ' from '
-#        s+=officeHour.beginTime
-#        s+= ' to '
-#        s+=officeHour.endTime
-    s+='</textarea>'
-    return '<textarea rows="3" cols="25" readonly="readonly">this is in the text areas</textarea>'
-
-def buildingDropDown(facultyMember):
-    buildings = ("TAY","PAI","ACES","ENS")
-    s = '<select name="building">'
-    for b in buildings :
+    
+def dropDown(name,options,preselect,selected=""):
+    s = '<select name="'
+    s+=name
+    s+='">'
+    for o in options:
         s+='<option value="'
-        s+=b
-        s+=('" selected>' if b==facultyMember.building else '">')
-        s+=b
+        s+=o
+        s+=('" selected>' if preselect and o==selected else '">')
+        s+=o
         s+='</option>'
     s+='</select>' 
     return s
+
+def textInputField(id,value=''):
+    return '<input type="text" name="'+id+'" value = "' +value+ '" />'
+
 
 class MainPage (webapp.RequestHandler) :
     id = ""
     facs = {}
-    type = "" 
+    type = ""
     def get (self) :
         self.response.out.write('<form action="/faculty" method="post">')
         if MainPage.facs.has_key(MainPage.id):
@@ -81,26 +122,46 @@ class MainPage (webapp.RequestHandler) :
             self.response.out.write(MainPage.id);
             fac = MainPage.facs[MainPage.id]
             self.response.out.write('<br />Faculty Name<br />')
-            self.response.out.write('<input type="text" name="name" value = "' +fac.name+ '" />')
+            self.response.out.write(textInputField('name',fac.name))
             self.response.out.write('<br/>Faculty Office Building<br/>')
-            self.response.out.write(buildingDropDown(fac))
+            self.response.out.write(dropDown('building',options["buildings"],True,fac.building))
             self.response.out.write('<br/>Faculty Room Number<br/>')
-            self.response.out.write('<input type="text" name="room" value = "' +fac.room+ '" />')
+            self.response.out.write(textInputField('room',fac.room))
             self.response.out.write('<br/>Faculty Phone<br/>')
-            self.response.out.write('<input type="text" name="phone" value = "' +fac.phone+ '" />')
+            self.response.out.write(textInputField('phone',fac.phone))
             self.response.out.write('<br/>Faculty email<br/>')
-            self.response.out.write('<input type="text" name="email" value = "' +fac.email+ '" />')
+            self.response.out.write(textInputField('email',fac.email))
             self.response.out.write('<br/>Faculty website<br/>')
-            self.response.out.write('<input type="text" name="website" value = "' +fac.website+ '" />')
+            self.response.out.write(textInputField('website',fac.website))
             self.response.out.write('<br/>Faculty Office Hours<br/>')
             self.response.out.write(officeHoursTextBox(fac))
+            self.response.out.write(dropDown('officeHourDay',OfficeHour.days,False))
+            self.response.out.write(dropDown('beginTime',OfficeHour.times,False))
+            self.response.out.write(dropDown('endTime',OfficeHour.times,False))
+            self.response.out.write('<br/>Faculty Type<br/>')
+            self.response.out.write(dropDown('facType',options["facTypes"],True,fac.type))
+            self.response.out.write('<br/>Degrees<br/>')
+            self.response.out.write(degreesTextBox(fac))
+            self.response.out.write(dropDown('degreeType',Degree.types,False))
+            self.response.out.write(dropDown('degreeInst',Degree.institutions,False))
+            self.response.out.write(textInputField('degreeYear'))
+            self.response.out.write('<br/>Research Areas<br/>')
+            self.response.out.write(textBox(fac.researchAreas))
+            self.response.out.write(dropDown('researchArea',options['researchAreas'],False))
+            self.response.out.write('<br/>Graduate Students<br/>')
+            self.response.out.write(textBox(fac.gradStudents))
+            self.response.out.write(dropDown('gradStudent',options['gradStudents'],False))
+            self.response.out.write('<br/>Courses<br/>')
+            self.response.out.write(textBox(fac.courses))
+            self.response.out.write(dropDown('course',options['courses'],False))
             
         else:
             MainPage.type = "Login"
             self.response.out.write('ID:')
-            self.response.out.write('<input type="text" name="FacID"  />')
+            self.response.out.write(textInputField('FacID'))
         self.response.out.write('<input type="submit" value="Submit" /> </form><br />')
         self.response.out.write('<form action="/" method="get"><input type="submit" value="Logout!"></form>')
+        
         
     def post (self) :
         if MainPage.type == "Login":
@@ -115,14 +176,24 @@ class MainPage (webapp.RequestHandler) :
             phone = cgi.escape(self.request.get('phone'))
             email = cgi.escape(self.request.get('email'))
             website = cgi.escape(self.request.get('website'))
+            officeHourDay = cgi.escape(self.request.get('officeHourDay'))
+            officeHourBegin = cgi.escape(self.request.get('beginTime'))
+            officeHourEnd = cgi.escape(self.request.get('endTime'))
+            facType = cgi.escape(self.request.get('facType'))
+            degreeType = cgi.escape(self.request.get('degreeType'))
+            degreeInst = cgi.escape(self.request.get('degreeInst'))
+            degreeYear = cgi.escape(self.request.get('degreeYear'))
+            researchArea = cgi.escape(self.request.get('researchArea'))
+            gradStudent = cgi.escape(self.request.get('gradStudent'))
+            course = cgi.escape(self.request.get('course'))
             
             if ValidateFaculty.name(name):
                 fac.name = name
             else:
                 self.response.out.write('Invalid name<br />')
             
-            fac.building = building
             if ValidateFaculty.office(building, room) :
+                fac.building = building
                 fac.room = room
             else :
                 self.response.out.write('Invalid Office.<br />')
@@ -139,6 +210,33 @@ class MainPage (webapp.RequestHandler) :
                 fac.website = website
             else :
                 self.response.out.write('Invalid Website.<br />')
+            if officeHourDay!="" or officeHourBegin!="" or officeHourEnd !="":
+                if ValidateFaculty.officeHour(officeHourDay,officeHourBegin,officeHourEnd) :
+                    fac.officeHours.append(OfficeHour(officeHourDay,officeHourBegin,officeHourEnd))
+                else:
+                    self.response.out.write('Invalid Office Hour.<br />')
+            fac.type = facType
+            if degreeType!="" or degreeInst!="" or degreeYear !="":
+                if ValidateFaculty.degree(fac.degrees,degreeType,degreeInst,degreeYear) :
+                    fac.degrees.append(Degree(degreeType,degreeInst,degreeYear))
+                else:
+                    self.response.out.write('Invalid Degree.<br />')
+            if researchArea!="":
+                if ValidateFaculty.researchArea(fac.researchAreas,researchArea) :
+                    fac.researchAreas.append(researchArea)
+                else:
+                    self.response.out.write('Invalid Research Area.<br />')
+            if gradStudent != "":
+                if ValidateFaculty.graduateStudent(fac.gradStudents,gradStudent) :
+                    fac.gradStudents.append(gradStudent)
+                else:
+                    self.response.out.write('Invalid Grad Student.<br />')
+            if course != "":
+                if ValidateFaculty.course(fac.courses,course) :
+                    fac.courses.append(course)
+                else:
+                    self.response.out.write('Invalid Course.<br />')        
+            
         self.get()
 
 if __name__ == "__main__":
