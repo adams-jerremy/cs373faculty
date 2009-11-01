@@ -1,413 +1,168 @@
-*Name:* Mohamed G. Gouda
-
-*Office:* Taylor 3.112
-
-*Phone:* (512) 471-9532 (ofc)
-         (512) 345-6134 (home)
-
-*Email:*  gouda@cs.utexas.edu
-
-*Website:*  www.cs.utexas.edu/~gouda
-
-*Office Hours:*  Monday 3:30 - 4:30 PM
-
-*Type:*  Professor
-
-*Degrees:*  B.S. Engineering, Cairo University, Cairo, Egypt, 1968
-            B.S. Mathemtics, Cairo University, Cairo, Egypt, 1968
-            M.A. Mathematics, York University, Ontario, Canada, 1972
-            M.Math. Computer Science, University of Waterloo, Canada, 1973
-            Ph.D. Computer Science, University of Waterloo, Canada, 1973
-
-*Research Area:*  Programming Methodology, Concurrent and Distributed Computing, Fault-Tolerant Computing, Secure Computing, Network Protocols, Sensor Networks, Formal Methods
-
-*Graduate Students:* Yan Li, Ph.D. Computer Science, May 2010.  "Trust Systems in Peer-to-Peer Networks"
-
-*Classes:*  CS337 Theory in Programming Practice
-            CS356 Computer Networks
-            CS386M Communication Networks
-            CS386S Network Protocol Security
-            CS395T Convergence of Computing Systems
-
-*Journals:*  
-(with A. X. Liu) " Complete Redundancy Removal for Packet Classifiers in TCAMs", IEEE Transaction on Parallel and Distributed Systems, to appear. 
-
-(with A. X. Liu) " Firewall Policy Queries", IEEE Transaction on Parallel and Distributed Systems, Vol. 20, 2009.
-
-(with Rida Bazzi and Young-Ri Choi) " Hop chains: Secure routing and the establishment of distinct identities", Theoretical Computer Science, Volume 410, Issues 6-7, Principles of Distributed Systems, 28 February 2009, Pages 467-480,
-
-(with A. X. Liu) " Diverse Firewall Design", IEEE Transaction on Parallel and Distributed Systems, Vol. 19, No. 9, pages 1237-1251, 2008.
-
-(with A. X. Liu) " Formal Specification and Verification of a Secure Micropayment Protocol ", International Journal of Network Security, Vol. 7, No. 1, pages 82-88, 2008.
-
-(with M. H. Karaata) " A Stabilizing Deactivation/Reactivation Protocol", IEEE Transactions on Computers, Vol. 56, No. 7, pages 881-888, 2007.
-
-(with A. X. Liu, L. M. Leung, and M. A. Alam) " SPP: An Anti-phishing Single Password Protocol", Journal of Computer Networks (Elsevier), Vol. 51, No. 13, pages 3715-3726, 2007.
-
-(with F. F. Haddix) " The Alternator," Distributed Computing, Vol. 20, No. 1, pages 21-28, 2007.
-
-(with H. Zhang, Y. Choi, and A. Arora) " Reliable Bursty Convergecast in Wireless Sensor Network," Computer Communications (Elsevier), Vol. 30, pages 2560-2576, 2007.
-
-(with A. X. Liu) " Structured Firewall Design," Computer Networks, Vol. 51, pp. 1106-1120, 2007. 
-
-(with E. Jung and E. S. Elmallah) " Optimal Dispersal of Certificate Chains," IEEE Transactions on Parallel and Distributed Systems, Vol. 18, No. 4, pp. 474-484, April 2007. 
-
-(with E. Jung) " Stabilizing Certificate Dispersal," AIAA Journal of Aerospace Computing, Information, and Communication, Vol. 3, pp. 487-497, 2006. 
-
-(with E. Jung and A. X. Liu) " Key bundles and parcels: Secure communication in many groups," Computer Networks, Elsevier, Vol. 50, No. 11, pp. 1781-1789, 2006. 
-
-(with C.-T. Huang and E. N. Elnozahy) " Convergence of IPsec in presence of resets," Journal of High Speed Networks, Vol. 15, No. 2, pp. 173-183, 2006.
-
-(with Y. Choi, H. Zhang, and A. Arora) "Stabilization of Grid Routing in Sensor Networks," AIAA Journal of Aerospace Computing, Information, and Communication, Vol. 3, pp. 214-233, May 2006. 
-
-(with S. Kulkarni and A. Arora) "Secret Instantiation in Ad Hoc Networks," Special Issue of Elsevier Journal of Computer Communications on Dependable Wireless Sensor Networks, Vol. 29, pp. 200-215, 2006. 
-
-"Guest Editorial: Self-Stabilizing Systems, Part 2,"Special Issue of Journal of High Speed Networks on Self-Stabilizing Systems, Part 2, Guest Editors: C. Johnen and M. G. Gouda, Vol. 14, No. 2, pp. 107, 2005.
-
-"Guest Editorial: Self-Stabilizing Systems, Part 1,"Special Issue of Journal of High Speed Networks on Self-Stabilizing Systems, Part 1, Guest Editors: C. Johnen and M. G. Gouda, Vol. 14, No. 1, pp. 1-2, 2005. 
-
-(with J. Cobb and D. Sidhu) "Hello again: Stabilization of the Hello protocol in OSPF,"Special Issue of Journal of High Speed Networks on Self-Stabilizing Systems, Part 1, Guest Editors: C. Johnen and M. G. Gouda, Vol. 14, No. 1, pp. 39-57, 2005.
-
-(with A. Arora, P. Dutta, S. Bapat, V. Kulathumani, H. Zhang, V. Naik, V. Mittal, H. Cao, M. Demirbas, Y.-R. Choi, T. Herman, S. Kulkarni, U. Arumugam, M. Nesterenko, A. Vora, and M. Miyashita) "A Line in the Sand: A Wireless Sensor Network for Target Detection, Classification, and Tracking,"Computer Networks, Vol. 46, pp. 605-634, 2004. 
-
-(with M. Schneider) "Maximizable Routing Metrics,"IEEE/ACM Transactions on Networking, Vol. 11, No. 4, pp. 663-675, August 2003. 
-
-(with C.-T. Huang) "A Secure Address Resolution Protocol,"Computer Networks,Vol. 41, No. 1, pp. 57–71, January 2003. 
-
-(with E. N. Elnozahy, C.-T. Huang, and T. M. McGuire) "Hop Integrity in Computer Networks," IEEE/ACM Transactions on Networking , Vol. 10, No. 3, pp. 308–319, June 2002. 
-
-(with J. A. Cobb) "Stabilization of General Loop-Free Routing," Journal of Parallel and Distributed Computing, Vol. 62, pp. 922-944, 2002. 
-
-"Multiphase Stabilization," IEEE Transactions on Software Engineering, Vol. 28, No. 2, pp. 201-208, February 2002. 
-
-"Elements of Security: Closure, Convergence, and Protection," Information Processing Letters, Vol. 77, pp. 109-114, 2001.
-
-(with T. M. McGuire) "Alert Communication Primitives above TCP," Journal of High Speed Networks, Vol. 9, No. 2, pp. 139-150, 2000. 
-
-(with C. K. Wong and S. S. Lam) "Secure Group Communications Using Key Graphs," IEEE/ACM Transactions on Networking, Vol. 8, No. 1, pp. 16-30, February 2000. 
-
-(with S. Dolev and M. Schneider) "Memory Requirements for Silent Stabilization," Acta Informatica, Vol. 36, pp. 447-462, 1999. 
-
-(with J. A. Cobb and A. Elnahas) "Time-Shift Scheduling: Fair Scheduling of Flows in High-Speed Networks," IEEE/ACM Transactions on Networking, Vol. 6, No. 3, pp. 274-285, June 1998. 
-
-(with J. A. Cobb) "Flow Theory," IEEE/ACM Transactions on Networking, Vol. 5, No. 5, pp. 661-674, October 1997. 
-
-(with D. H. Steves and C. Edmondson-Yurkanan) "Properties of Secure Transaction Protocols," Computer Networks and ISDN, Vol. 29, pp. 1809-1821, October 1997. 
-
-(with J. A. Cobb) "The Request-Reply Family of Group Routing Protocols," IEEE Transactions on Computers, Vol. 46, No. 6, pp. 659-672, June 1997. 
-
-"Network Protocols between Exact Specifications and Pragmatic Implementations," ACM Computing Surveys, Vol. 28A, No. 4, December 1996. 
-
-(with A. Arora and G. Vargahese) "Self-Stabilization by Tree Correction," Chicago Journal of Theoretical Computer Science, 1996. 
-
-(with A. Arora and G. Vargahese) "Constraint Satisfaction as a Basis for Designing Non-Masking Fault-Tolerance," Journal of High-Speed Networks, Vol. 5, No. 3, pp. 293-306, 1996. 
-
-(with F. Haddix) "The Stabilizing Token Ring in Three Bits," Journal of Parallel and Distributed Computing, Vol. 35, No. 1, pp. 43-48, May 1996. 
-
-(with H. M. Wahab) "Systems of Recall Broadcast," Information Sciences, Vol. 90, No. 1-4, pp. 1-18, 1996. 
-
-(with S. E. Chodrow) "Implementation of the Sentry System," Software-Practice and Experience, Vol. 25, No. 4, pp. 373-387, April 1995. 
-
-(with A. N. Netravali and K. Sabnani) "A Periodic State Exchange Protocol and its Verification," IEEE Transactions on Communications, Vol. 43, No. 9, pp. 2475-2484, September 1995. 
-
-"Stabilizing Observers," Information Processing Letters, Vol. 52, pp. 99-103, 1994. 
-
-(with A. Arora) "Distributed Reset," IEEE Transactions on Computers, Vol. 43, No. 9, pp. 1026-1038, September 1994. 
-
-(with A. K. Singh) "Rankers: A Classification of Synchronization Problems," Science of Computing Programming, 1994. 
-
-(with J. H. Anderson and A. K. Singh) "The Elusive Atomic Register," JACM, Vol. 41, No. 2, pp. 311-339, March 1994. 
-
-"Protocol Veification Made Simple," Computer Networks and ISDN Systems, Vol. 25, pp. 969-980, 1993. 
-
-(with A. Arora) "Closure and Convergence: A Foundation for Fault-Tolerant Computing," IEEE Transactions on Software Engineering, Special Issue on Software Reliability, Vol. 19, No. 3, pp. 1015-1027, November 1993. 
-
-(with J. E. Burns and R. E. Miller) "Stabilization and Pseudostabilization," Distributed Computing, Special Issue on Self-Stabilization, Vol. 7, No. 1, pp. 35-42, November 1993. 
-
-(with A. Arora, P. Attie, and M. Evangelist) "Convergence of Iteration Systems," Distributed Computing, Special Issue on Self-Stabilization, Vol. 7, No. 1, pp. 43-53, November 1993. 
-
-(with J. Anderson) "A Criterion for Atomicity," Formal Aspects of Computing: The International Journal of Formal Methods, Vol. 4, No. 3, pp. 273-298, May 1992. 
-
-(with A. Arora and S. Dolev) "Maintaining Digital Clocks in Step," Parallel Processing Letters, Vol. 1, No. 1, pp. 11-18, September 1991. 
-
-(with T. Herman) "Adaptive Programming," IEEE Transactions on Software Engineering, Vol. 17, No. 9, pp. 911-921, September 1991. 
-
-(with N. Multari) "Stabilizing Communication Protocols," IEEE Transactions on Computers, Special Issue on Protocol Engineering, Vol. 40, No. 4, pp. 448-458, April 1991. 
-
-(with G. M. Brown and R. E. Miller) "Block Acknowledgement: Redisigning the Window Protocol," IEEE Transactions on Communications, Vol. 39, No. 4, pp. 524-532, April 1991. 
-
-(with J. H. Anderson) "A New Explanation of the Glitch Phenomenon," Acta Informatica, Vol. 28, pp. 297-309, 1991. 
-
-(with C. K. Chang) "On the Minimum Requirements for Independent Recovery in Distributed Systems," Information Processing Letters, Vol. 37, pp. 1-7, 1991. 
-
-(with R. R. Howell and L. E. Rosier) "The Instability of Self-Stabilization," Acta Informatica, Vol. 27, pp. 697-724, 1990. 
-
-(with J. C. Browne, A. Emerson, D. Miranker, A. Mok, and L. Rosier) "Bounded-Time Fault-Tolerant Rule-Based Systems," Telematics and Informatics, Vol. 7, Nos. 3-4, pp. 441-454, 1990. 
-
-(with T. Herman) "Stabilizing Unision," Information Processing Letters, Vol. 35, pp. 171-175, 1990. 
-
-(with G. M. Brown and C. L. Wu) "Token Systems that Self-Stabilize," IEEE Transactions on Computers, Vol. 38, No. 6, pp. 845-852, June 1989. 
-
-(with J. H. Anderson) "Atomic Semantics of Non-atomic Programs," Information Processing Letters, Vol. 28, pp. 99-103, 1988. 
-
-(with E. M. Gurari, T. H. Lai, and L. E. Rosier) "On Deadlock Detection in Systems of Communicating Finite State Machines," Computers and Artificial Intelligence, Vol. 6, No. 3, pp. 209-228, 1987. 
-
-(with C. K. Chang) "Proving Liveness for Networks of Communicating Finite State Machines," ACM Transactions on Programming Languages and Systems, pp. 154-182, January 1986. 
-
-(with C. H. Chow and S. S. Lam) "A Discipline for Constructing Multiphase Communication Protocols," ACM Transactions on Computing Systems, pp. 315-343, November 1985. 
-
-(with H. S. Lee) "Proving Liveness and Termination of Systolic Arrays Using Communicating Finite State Machines," IEEE Transactions on Software Engineering, Vol. SE-11, No. 10, pp. 1240-1251, October 1985. 
-
-(with L. E. Rosier) "Priority Networks of Communicating Finite State Machines," SIAM Journal on Computing, Vol. 14, No. 3, pp. 569-584, August 1985. 
-
-(with J. Y. Han) "Protocol Validation by Fair Progress State Exploration," Computer Networks, Vol. 9, No. 5, pp. 353-362, May 1985. 
-
-"On a Simple Protocol Whose Proof Is Not: The State Machine Approach," IEEE Transactions on Communication, Vol. COM-33, No. 4, pp. 380-382, April 1985. 
-
-(with E. G. Manning and Y. T. Yu) "On the Progress of Communication between Two Finite State Machines," Informations and Control, Vol. 63, No. 3, December 1984. 
-
-"Closed Covers: To Verify Progress for Communicating Finite State Machines," IEEE Transactions on Software Engineering, Vol. SE-10, No. 6, pp. 846-855, November 1984. 
-
-(with Y. T. Yu) "Synthesis of Communicating Finite State Machines with Guaranteed Progress," IEEE Transactions on Communications, Vol. COM-32, No. 7, pp. 779-788, July 1984. 
-
-(with Y. T. Yu) "Protocol Validation by Maximal Progress State Exploration," IEEE Transactions on Communications, Vol. COM-32, No. 1, pp. 94-97, January 1984. 
-
-(with Y. T. Yu) "Unboundedness Detection for a Class of Communicating Finite Machines," Information Processing Letters, Vol. 17, pp. 235-240, December 1983. 
-
-(with Y. T. Yu) "Deadlock Detection for a Class of Communicating Finite State Machines," IEEE Transanctions on Communications, Vol. COM-30, No. 12, pp. 2514-2518, December 1982.
-
-*Conferences:*
-
-(With Y. Li) "Sources and Monitors: A Trust Model for Peer-to-Peer Networks", in Proceedings of the 17th IEEE International Conference on Computer Communicati ons and Networks (ICCCN-08), 2008. [Link]
-
-(With A. Dalton, W. McCartney, K. GhoshDastidar, J. Hallstrom, N. Sridhar, T. Herman, W. Leal, and A. Arora) "DESALa: An Implementation of the Dynamic Embedded Sensor-Actuator Language", in Proceedings of the 17th IEEE International Conference on Computer Communicati ons and Networks (ICCCN-08), 2008. [Link]
-
-(With A. Liu, and M. Jafry) "Verification of Distributed Firewalls", in Proceedings of the IEEE Globalcom-08, Computer and Communications Network Security Symposium, 2008. [Link]
-
-(With T. Choi, S. Son, and J. Cobb) "Pharewell to Phishing", in 10th International Symposium on Stabilization, Safety, and Security of Distributed Systems(SSS 2008), 2008. [Link]
-
-(With J. Cobb) "Stabilization of Max-Min Fair Networks without Per-Flow State", in 10th International Symposium on Stabilization, Safety, and Security of Distributed Systems(SSS 2008), 2008. [Link]
-
-(With Y. R. Choi) "Stabilization of Flood Sequencing Protocols in Sensor Networks", in 9th International Symposium on Stabilization, Safety, and Security of Distributed Systems(SSS 2007), 2007. [Link]
-
-(With Y. Li) "The Truth System: Can a System of Lying Processes Stabilize?", in 9th International Symposium on Stabilization, Safety, and Security of Distributed Systems(SSS 2007), 2007. [Link]
-
-(With E. Wong, P. Balasubramanian, L. Alvisi, V. Shmatikov) "Truth in advertising: Lightweight verification of route integrity", in Proceedings of the 26th ACM Annual Symposium on the Principles of Distributed Computing (PODC 2007), 2007. [Link]
-
-(With A. Arora, J. Hallstrom, T. Herman, W. Leal, and N. Sridhar) "A State-Based Language for Sensor-Actuator Networks", in Proceedings of the International Workshop on Wireless Sensor Network Architecutre (WWSNA-07), 2007. [Link]
-
-(With R. Bazzi and Y. Choi) "Hop Chains: Secure Routing and the Establishment of Distinct Identities", in Proceedings of the 10th International Conference on Principles of Distributed Systems (OPODIS-06), 2006. [Link]
-
-(With Y. Choi, H. Abdel-Wahab, and E. Elmallah) "The Disciplined Flood Protocols in Sensor Networks", in Proceedings of the 2nd International Computer Engineering Conference Engineering the Information Society (ICENCO-06), 2006. [Link]
-
-(With E. Jung) "Rating Certificates", in Proceedings of the 15th IEEE International Conference on Computer Communicati ons and Networks (ICCCN-06), 2006. [Link]
-
-(With S. Kulkarni and E. Elmallah) "Logarithmic Keying of Communication Networks", in Proceedings of the 8th International Symposium on Stabilization, Safety, and Security of Distributed Systems. (SSS-06), 2006. [Link] 
-
-(With J. Cobb and C. Huang) "Fault Masking in Tri-redundant Systems", in Proceedings of the 8th International Symposium on Stabilization, Safety, and Security of Distributed Systems. (SSS-06), 2006. [Link] 
-
-(With A. Aiyer and L. Alvisi) "Key Grids: A Protocol Family for Assigning Symmetric Keys", in Proceedings of the 14th IEEE International Conference on Network Protocols (ICNP-06), 2006. [Link] 
-
-(With Y. Choi) "A State-based Model of Sensor Protocols", in Proceedings of the 9th International Conference on Principles of Distributed Systems (OPODIS-05), 2005. [Link] 
-
-(With E. Jung) "Self-stabilizing Certificate Dispersal", in Proceedings of the 7th Symposium on Self Stabilizing Systems (SSS-05), 2005. [Link]
-
-(With A. Liu, J. Kovacs, and C.-T. Huang) "A Secure Cookie Protocol", in Proceedings of the 14th IEEE International Conference on Computer Communicati ons and Networks (ICCCN-05), 2005. [Link]
-
-(With A. Arora et al.) "ExScal: Elements of an Extrem Scale Wireless Sensor Network", in Proceedings of 1th IEEE International Conference on Embedded and Real-Time Computing Systems and Applications (RTCSA 2005), 2005. [Link] 
-
-(With A. Liu) "Complete Redundancy Detection in Firewalls", in Proceedings of 19th Annual IFIP WG 11.3 Working Conference on Data and Applications Security, Storrs, Connecticut, August 2005. [Link] 
-
-(With A. Liu) "Single Password, Multiple Accounts", in Proceedings of the 3rd Applied Cryptography and Network Security Conference (industry track), New York City, New York, June 2005 [Link]
-
-(With B. Kuipers, A. Liu, and A. Gautam) "Zmail: Zero-Sum Free Market Control of Spam", in Proceedings of the 4th International Workshop on Assurance in Distributed Systems and Networks (ADSN-05), Columbus, Ohio, June 2005 [Link]
-
-(With A. Liu) "A Model of Stateful Firewalls and its Properties", in Proceedings of the IEEE International Conference on Dependable Systems and Networks (DSN-05), Yokohama, Japan, June 2005. [Link]
-
-(With H. Zhang, A. Arora, and Y. Choi) "Reliable Bursty Convergecast in Wireless Sensor Networks", in Proceedings of the 6th ACM International Symposium on Mobile Ad Hoc Networking and Computing (MobiHoc 2005), 2005. [Link] 
-
-(With A. Liu, H. Ma, and A. Ngu) "Firewall Queries", in Proceedings of the 8th International Conference on Principles of Distributed Systems (OPODIS 2004), Grenoble, France, December 2004. [Link] 
-
-(With Y. Choi and A. Arora) "Sentries and Sleepers in Sensor Networks", in Proceedings of the 8th International Conference on Principles of Distributed Systems (OPODIS 2004), Grenoble, France, December 2004. [Link] 
-
-(With E. Jung and E. Elmallah) "Optimal Dispersal of Special Certificate Graphs", in Proceedings of the IEEE Global Telecommunications Conference (Globecom 04), Dallas, Texas, November 2004. [Link] 
-
-(With E. Jung and E. Elmallah) "Optimal Dispersal of Certificate Chains", in Proceedings of the 18th International Symposium on Distributed Computing (DISC 04), October 2004. [Link] 
-
-(With A. X. Liu) "Formal Specification and Verification of a Micropayment Protocol", in Proceedings of the 13th IEEE International Conference on Computer Communications and Networks (ICCCN-04), Chicago, Illinois, October 2004. [Link] 
-
-(With A. X. Liu) "Diverse Firewall Design", in Proceedings of the IEEE International Conference on Dependable Systems and Networks (DSN-04), Florence, Italy, June 2004. [Link]
-
-(With S. Kulkarni and A. Arora) "Security Instantiation for Mobile Networks", in Proceedings of the Workshop on Dependability Issues in Wireless Ad Hoc Networks and Sensor Networks (DIWANS), Florence, Italy, June 2004. [Link] 
-
-(With A. X. Liu) "Firewall Design: Consistency, Completeness and Compactness", in Proceedings of the 24th IEEE International Conference on Distributed Computing Systems (ICDCS-04), Tokyo, Japan, March 2004. [Link] 
-
-(With E. Jung) "Certificate Dispersal in Ad-Hoc Networks", in Proceedings of the 24th IEEE International Conference on Distributed Computing Systems (ICDCS-04), Tokyo, Japan, March 2004. [Link] 
-
-(with M. Demirbas and A. Arora) "A Pursuer-Evader Game for Sensor Networks," in Proceedings of the International Symposium on Self-Stabilizing Systems, Lecture Notes in Computer Science 2704, S.-T. Huang and T. Herman (Eds.), pp. 1-16, Springer-Verlag, Berlin Heidelberg, 2003. [Link]
-
-(with J. A. Cobb and R. Musunuri) "A Stabilizing Solution to the Stable Path Problem," in Proceedings of the International Symposium on Self-Stabilizing Systems, Lecture Notes in Computer Science 2704, S.-T. Huang and T. Herman (Eds.), pp. 169-183, Springer-Verlag, Berlin Heidelberg, 2003. [Link]
-
-(with Y.-R. Choi, M. C. Kim and A. Arora) "The Mote Connectivity Protocol," in Proceedings of the International Conference on Computer Communication and Networks (ICCCN-03), 2003. [Link]
-
-(with E. Jung and A. X. Liu), "Key Bundles and Parcels: Secure Communication in Many Groups," in Proceedings of the International Workshop on Networked Group Communications (NGC-03), 2003. [Link] 
-
-(with V. Naik, A. Arora and S. Bapat) "Whisper: A Local Secret Maintenance Protocol," in Proceedings of the Workshop on Principles of Dependable Systems (PoDSy- 03), 2003. [Link] 
-
-(with C.-T. Huang and E. N. Elnozahy) "Convergence of IPsec in Presence of Resets," in Proceedings of the 2nd International Workshop on Assurance in Distributed Systems and Networks, Providence, Rhode Island, May 2003. [Link]
-
-(with C.-T. Huang and E. N. Elnozahy) "Key Trees and the Security of Interval Multicast," Proceedings of the IEEE International Conference on Distributed Computing Systems, 2002. [Link] 
-
-(with C.-T. Huang) "An Anti-Replay Window Protocol with Controlled Shift," Proceedings of the IEEE International Conference on Computer Communications and Networks, 2001. [Link] 
-
-"The Theory of Weak Stabilization," Proceedings of the Workshop on Self-Stabilizing Systems, Springer-Verlag Lecture Notes in Computer Science, 2001. [Link]
-
-(with J. A. Cobb) "Stabilization of Routing in Directed Networks," Proceedings of the Workshop on Self-Stabilizing Systems, Springer-Verlag Lecture Notes in Computer Science, 2001. [Link]
-
-(with C.-T. Huang and A. Arora) "On the Security and Vulnerability of PING," Proceedings of the Workshop on Self-Stabilizing Systems, Springer-Verlag Lecture Notes in Computer Science, 2001. [Link]
-
-(with X. Li, Y. Yang, and S. Lam) "Batch Rekeying for Secure Group Communications," Proceedings of Tenth International World Wide Web Conference, 2001. [Link]
-
-(with E. N. Elnozahy, C.-T. Huang, and T. M. McGuire) "Hop Integrity in Computer Networks," Proceedings of the IEEE International Conference on Network Protocols, 2000. [Link] 
-
-(with C.-T. Huang and E. Li) "Anti-Replay Window Protocols for Secure IP," Proceedings of the IEEE International Conference on Computer Communications and Networks, 2000. [Link]
-
-(with F. Haddix) "The Alternator," Proceedings of the Workshop on Self-Stabilizing Systems, IEEE Computer Society, 1999. [Link]
-
-(with M. Schneider) "Stabilization of Maximal Metric Trees," in Proceedings of the Workshop on Self-Stabilizing Systems, IEEE Computer Society, 1999. [Link]
-
-(with M. Schneider) "Maximizable Routing Metrics," Proceedings of the IEEE International Conference on Network Protocols, 1998. [Link]
-
-(with T. M. McGuire) "Accelerated Heartbeat Protocols," Proceedings of the IEEE International Conference on Distributed Computing Systems, 1998. [Link]
-
-(with C. K. Wong and S. S. Lam) "Secure Group Communications Using Key Graphs," Proceedings of the ACM SIGCOMM Conference, 1998. [Link]
-
-(with M. Schneider) "Maximizable Routing Metrics," Proceedings of the IEEE International Conference on Network Protocols, 1998. [Link] 
-
-(with D. H. Steves and C. Edmondson-Yurkanan) "Properties of Secure Transaction Protocols," Proceedings of the Joint Europen Networking Conference, 1997. [Link]
-
-(with S. Dolev and M. Schneider) "Memory Requirements for Silent Stabilization," Proceedings of the ACM Symposium on Principles of Distributed Computing, 1996. [Link]
-
-(with J. A. Cobb) "Group Routing without Group Routing Tables," Proceedings of the IEEE International Conference on Distributed Computing Systems, pp. 344-351, 1996. [Link]
-
-(with S. Chodrow) "Sentries for the Execution of Concurrent Programs," Proceedings of the IEEE International Conference on Distributed Computing Systems, pp. 11-18, 1996. [Link]
-
-(with D. H. Steves and C. Edmondson-Yurkanan) "A Protocol for Secure Transactions," Proceedings of the USENIX Workshop on Electronic Commerce, 1996. [Link] 
-
-(with J. A. Cobb) "Ordered Delivery over One Way Virtual Circuits," Proceedings of the IEEE Symposium on Advances in Computers and Communications, 1995. 
-
-(with M. Schneider) " Maximum Flow Routing," Proceedings of the Workshop on Self-Stabilizing Systems, 1995. [Link] 
-
-(with A. Arora and G. Vargahese) "Self-Stabilization by Tree Correction," Proceedings of the Workshop on Self-Stabilizing Systems, 1995. [Link] 
-
-(with J. A. Cobb and A. Elnahas) "Flow Timestamps," Proceedings of the Joint Conference on Information Sciences, 1995. [Link] 
-
-(with H. Abdel-Wahab) "Message Recall in Electronic Mail System," Proceedings of the Joint Conference on Information Sciences, 1994. [Link]
-
-(with M. Schneider) "Stabilization of Maximum Flow Trees," Proceedings of the Joint Conference on Information Sciences, 1994. [Link]
-
-(with J. A. Cobb and C. Edmondson-Yurkanan) "Universal Mobile Addressing in the Internet," Proceedings of the Joint Conference on Information Sciences, 1994. [Link]
-
-(with J. A. Cobb and P. Agrawal) "Protocol Synchronization with Sparse Timestamps," Proceedings of the IFIP Symposium on Protocol Specification, Testing, and Verification, Chapman and Hall, pp. 169-184, 1994. [Link]
-
-(with J. C. Browne, A. Emerson, D. P. Mirankar, A. Mok, R. Bayardo Jr., S. Chodrow, D. Gadbois, F. Haddix, T. W. Hetherington, L. Obermeyer) "A New Approach to Modularity," Proceedings of the 6th International Conference on Tools with Artificial Intelligence, IEEE Press, 18-25, 1994. [Link] 
-
-(with H. Abdel-Wahab) "Recall Broadcast," Proceedings of the IEEE Global Data Networks, 1993. [Link]
-
-(with J. A. Cobb) "Flow Theory: Verification of Rate-Reservation Protocols," Proceedings of the IEEE International Conference on Network Protocols, 1993. [Link]
-
-"The Two Dimensional Window Protocol," Proceedings of the IFIP Symposium on Protocol Specification, Testing, and Verification XII, published as IFIP Transactions, North-Holland, pp. 365-379, 1992. [Link]
-
-(with A. Arora) "Closure and Convergence: A Formulation of Fault- Tolerant Computing," Proceedings of the 22nd International Symposium on Fault-Tolerant Computing Systems, pp. 396-403, 1992. [Link]
-
-(with M. Abadir) "The Stabilizing Computer," Proceedings of the International Conference on Parallel and Distributed Systems, Taiwan, pp. 90-96, 1992. [Link] 
-
-(with J. Anderson and J. Yang) "The Granularity of Waiting," Proceedings of the Sixth International Workshop on Distributed Algorithms, published as Lecture Notes on Computer Science, Springer-Verlag, 1992. [Link]
-
-(with J. Couvreur and N. Francez) "Asynchronous Unison," Proceedings of the 12th International Conference on Distributed Computing Systems, Tokyo, pp. 486-493, 1992. [Link]
-
-(with S. Chodrow) "The Sentry System," Proceedings of the 11th Symposium on Relaible Distributed Systems, pp. 230-237, 1992. [Link]
-
-(with A. Arora and S. Dolev) "Maintaining Digital Clocks in Step," Proceedings of the Fifth International Workshop on Distributed Algorithms, published as Lecture Notes on Computer Science, Springer- Verlag, 1991. [Link]
-
-(with A. Arora and T. Herman) "Composite Routing Protocols," Proceedings of the Second IEEE Symposium on Parallel and Distributed Processing, December 1990. [Link]
-
-(with M. Evangelist) "Convergence/Response Tradeoffs in Concurrent Systems," Proceedings of the Second IEEE Symposium on Parallel and Distributed Processing, December 1990. [Link]
-
-(with A. Arora) "Distributed Reset," Proceedings of the Tenth Conference on Foundations of Software Technology and Theoretical Computer Science, LNCS 472, Springer-Verlag, December 1990. [Link]
-
-(with A. Arora, P. Attie, and M. Evangelist) "Convergence of Iteration Systems," Proceedings of Concur `90: Theories of Concurrency, LNCS 458, Springer-Verlag, August 1990. [Link] 
-
-(with J. Burns, and R. Miller) "On Relaxing Interleaving Assumptions," Proceedings of the MCC Workshop on Self-Stabilization, Austin, Texas, November 1989. [Link] 
-
-(with G. M. Brown and R. E. Miller) "Block Acknowledgment: Redesigning the Window Protocol," Proceedings of the ACM SIGCOMM Symposium, 1989. [Link]
-
-(with R. Howell and L. E. Rosier) "System Simulation and the Sensitivity of Self-Stabilization," Proceedings of the International Symposium on Mathematical Foundations of Computer Science, 1989. 
-
-"Inevitable Properties of Programs," Proceedings of the First Workshop on Automatic Verification Methods for Finite State Systems, Grenoble, France, 1989. 
-
-(with N. Maxemchuck, U. Mukherji, and K. Sabani) "Delivery and Discrimination: The Seine Protocol," Proceedings of the ACM SIGCOMM Symposium, 1988. [Link] 
-
-(with J. H. Anderson and A. K. Singh) "The Elusive Atomic Register Revisited," Proceedings of the Sixth ACM Symposium on Principles of Distributed Computing, August 1987. [Link]
-
-(with A. R. K. Sastry) "Broadcasting Finite State Machines," Proceedings of the IEEE INFOCOM Conference, 1986. [Link]
-
-(with L. E. Rosier, H. C. Yen) "A Theory of Closed Covers: To Decide Progress of Communicating Finite State Machines," Proceedings of the Twenty-Third Annual Allerton Conference on Communication, Control, and Computing, 1985. 
-
-(with K. S. The) "Modeling Physical Layer Protocols Using Communicating Finite State Machines," Proceedings of the Nineth Data Communications Symposium, September 1985. [Link]
-
-(with M. Molloy) "Modeling and Analysis of LAN Protocols Using Labeled Petrinets," Proceedings of the Sixth Workshop on Applications and Theory of Petrinets, Springer-Verlag, LCNS, 1985. 
-
-(with C. K. Chang and L. E. Rosier) "Deciding Liveness for Special Classes of Communicating Finite State Machines," Proceedings of the Twenty Second Annual Allerton Conference, September 1984. [Link] 
-
-(with C. K. Chang) "A Technique for Proving Liveness of Communicating Finite State Machines," Proceedings of the Third ACM Symposium on Principles of Distributed Computing, August 1984. [Link]
-
-(with L. E. Rosier) "Communicating Finite State Machines with Priority Channels," Proceedings of the Eleventh International Colloquium on Automata, Languages, and Programming (ICALP), July 1984. 
-
-(with C. H. Chow and S. S. Lam) "On Constructing Multiphase Communication Protocols," Proceedings of the Fourth IFIP Workshop on Protocol Specification, Testing, and Verification, North-Holland, 1984. [Link] 
-
-(with C. H. Chow and S. S. Lam) "On the undecidability of detecting Livelocks in Networks of Communicating Finite State Machines," Proceedings of the Fourth IFIP Workshop on Protocol Specification Testing and Verification, pp. 47-56, North-Holland, 1984. [Link] 
-
-(with C. H. Chow and S. S. Lam) "An Exercise in Constructing Multiphase Communication Protocols," Proceedings of the ACM SIGCOMM Symposium, pp. 42-47, June 1984. [Link]
-
-(with H. Y. Hwang and U. Dayal) "Using Semiouterjoins to Process Queries in Multidatabase Systems," Proceedings of the Symposium on Principles of Database Systems, pp. 153-162, April 1984. [Link]
-
-(with L. E. Rosier) "Deciding Progress for a Class of Communicating Finite State Machines," Proceedings of the Eighteenth Annual Conference on Information Sciences and Systems, Princeton University, pp. 663-667, March 1984. 
-
-"An Example for Constructing Communicating Machines by Step-Wise Refinement," Proceedings of the Third IFIP Workshop on Protocol Specification Testing and Verification, pp. 63-76, North-Holland, 1983. 
-
-(with Y. T. Yu) "Maximal Progress State Exploration," Proceedings of the ACM SIGCOMM Symposium, pp. 68-75, March 1983. [Link] 
-
-(with Y. T. Yu) "Deadlock Detection for a Class of Communicating Finite State Machines," Proceedings of the Second IFIP Workshop on Protocol Specification Testing and Verification, p. 319, North-Holland, 1982. [Link] 
-
-(with U. Dayal) "Optimal Semijoin Schedules for Query Processing in Local Distributed Database Systems," Proceedings of the ACM SIGMOD Conference, May 1981. [Link]
-
-(with Y. T. Yu) "A Methodology for Designing Deadlock-Free and Bounded Protocols," Proceedings of the First IFIP Workshop on Protocol Specification Testing and Verification, 1981. 
-
-"Analysis of Realtime Control Systems by the Model of Packet Nets," Proceedings of the National Computer Conference, pp. 469-479, 1979.
-
-*Books:*
-
-M. G. Gouda, Convergence of Computing Systems, in progress 2008. 
-
-C.-T. Huang and M. G. Gouda, Hop Integrity in the Internet, Advances in Information Security Series, Springer, 2006. 
-
-T. M. McGuire and M. G. Gouda, The Austin Protocol Compiler, Advances in Information Security Series, Springer, 2005. 
-
-M. G. Gouda, Elements of Network Protocol Design, John Wiley and Sons, 1998. 
-
-*Awards:*
-
-The 2006 Teaching Excellence Award, The College of Natural Sciences, The University of Texas at Austin, 2006.
-
-The 2004 William C. Carter Award, IEEE Technical Committee on Fault-Tolerant Computing (TC-FTC) and IFIP Working Group on Dependable Computing and Fault Tolerance (WG 10.4), 2004.
-
-Fellow of the IBM Center for Advanced Studies in Austin, Texas, 2002–2003.
-
-The 2001 William R. Bennett Best Paper Award, IEEE Communication Society, for the paper “Secure Group Communications Using Key Graphs,” coauthored with C. K. Wong and S. S. Lam, published in the IEEE/ACM Transactions on Networking, Vol. 8, No. 1, pp. 16–30, February 2000.
-
-IBM Faculty Partnership Award for the academic year 2001–2002.
-
-IBM Faculty Partnership Award for the academic year 2000–2001.
-
-The 1993 Kuwait Award in Basic Sciences. 
+<faculty_member>
+
+
+   <faculty_firstname>Mohamed</faculty_firstname>
+   <faculty_lastname>Gouda</faculty_lastname>
+
+
+       <office>
+               <building>TAY</building>
+               <room>3.112</room>
+       </office>
+
+
+       <phone_number>5124719532</phone_number>
+
+
+       <email>gouda@cs.utexas.edu</email>
+
+
+       <website>http://www.cs.utexas.edu/~gouda</website>
+
+
+       <faculty_type>Professor</faculty_type>
+
+
+       <research_areas> 
+               <research_area>Programming Methodology</research_area>
+               <research_area>Concurrent and Distributed Computing</research_area>
+               <research_area>Fault-Tolerant Computing</research_area>
+               <research_area>Secure Computing</research_area>
+               <research_area>Network Protocols</research_area>
+               <research_area>Sensor Networks</research_area>
+               <research_area>Formal Methods</research_area>
+       </research_areas>
+
+
+       <office_hours> 
+               <office_hour> 
+                       <day>Monday</day> 
+                       <start>3:30 PM</start> 
+                       <end>4:30 PM</end> 
+               </office_hour>
+       </office_hours>
+
+
+       <degrees>
+               <degree>
+                       <degree_type>BS</degree_type>
+                       <degree_name>Engineering</degree_name>
+                       <institution>Cairo University</institution>
+                       <degree_date>1968</degree_date>
+               </degree>
+               <degree>
+                       <degree_type>MA</degree_type>
+                       <degree_name>Mathematics</degree_name>
+                       <institution>York University</institution>
+                       <degree_date>1972</degree_date>
+               </degree>
+               <degree>
+                       <degree_type>PHD</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>University of Waterloo</institution>
+                       <degree_date>1973</degree_date>
+               </degree>
+       </degrees>
+
+
+       <conferences> 
+               <conference> 
+                       <conference_name>Proceedings of the 17th IEEE International Conference on Computer Communicati ons and Networks</conference_name> 
+                       <conference_date>2008</conference_date> 
+                       <location></location> 
+                       <title>Sources and Monitors: A Trust Model for Peer-to-Peer Networks</title> 
+               </conference>
+               <conference> 
+                       <conference_name>Proceedings of the IEEE Globalcom-08, Computer and Communications Network Security Symposium</conference_name> 
+                       <conference_date>2008</conference_date> 
+                       <location></location> 
+                       <title>Verification of Distributed Firewalls</title> 
+               </conference>
+       </conferences>
+
+
+       <journals>
+               <journal>
+                       <journal_name>IEEE Transaction on Parallel and Distributed Systems</journal_name>
+                       <article_title>Complete Redundancy Removal for Packet Classifiers in TCAMs</article_title>
+                       <journal_date>2009</journal_date>
+               </journal>
+	       <journal>
+                       <journal_name>IEEE Transaction on Parallel and Distributed Systems</journal_name>
+                       <article_title>Diverse Firewall Design</article_title>
+                       <journal_date>2008</journal_date>
+               </journal>
+       </journals>
+
+
+       <graduate_students> 
+               <graduate_student> 
+                       <student_firstname>Yan</student_firstname> 
+                       <student_lastname>Li</student_lastname> 
+                       <student_type>PHD</student_type> 
+                       <dissertation>Trust Systems in Peer-to-Peer Networks</dissertation> 
+                       <student_date>2010</student_date> 
+               </graduate_student>
+       </graduate_students>
+
+
+       <classes>
+               <class>
+                       <class_name>Theory In Programming Practice</class_name>
+                       <course_number>CS337</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Fall 2008</semester>
+                       <unique>55625</unique>
+               </class>
+               <class>
+                       <class_name>Computer Networks</class_name>
+                       <course_number>CS356</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Spring 2009</semester>
+                       <unique>54220</unique>
+               </class>
+       </classes>
+
+
+       <awards>
+               <award>
+                       <award_name>The 2006 Teaching Excellence Award</award_name>
+                       <award_type>Award</award_type>
+                       <award_date>2006</award_date>
+               </award>
+	       <award>
+                       <award_name>The 2004 William C. Carter Award</award_name>
+                       <award_type>Award</award_type>
+                       <award_date>2004</award_date>
+               </award>
+       </awards>
+
+
+       <books> 
+               <book> 
+                       <book_name>Hop Integrity in the Internet, Advances in Information Security Series</book_name> 
+                       <coauthors> 
+                               <coauthor> 
+                                       <coauthor_firstname>Chin-Tser</coauthor_firstname> 
+                                       <coauthor_lastname>Huang</coauthor_lastname> 
+                               </coauthor>
+                       </coauthors> 
+               </book>
+               <book> 
+                       <book_name>The Austin Protocol Compiler, Advances in Information Security Series</book_name> 
+                       <coauthors> 
+                               <coauthor> 
+                                       <coauthor_firstname>Tommy</coauthor_firstname> 
+                                       <coauthor_lastname>McGuire</coauthor_lastname> 
+                               </coauthor>
+                       </coauthors> 
+               </book>
+               <book> 
+                       <book_name>Elements of Network Protocol Design</book_name> 
+                       <coauthors>
+                       </coauthors> 
+               </book>
+       </books> 
+
+
+</faculty_member>
