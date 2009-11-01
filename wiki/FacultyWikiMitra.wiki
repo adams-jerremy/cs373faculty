@@ -1,30 +1,100 @@
-*Name:* Shyamal Mitra
+<faculty_member>
 
-*Office:*  Painter 5.52
 
-*Phone:*  (512) 471-9708
+   <faculty_firstname>Shyamal</faculty_firstname>
+   <faculty_lastname>Mitra</faculty_lastname>
 
-*Email:*  mitra@cs.utexas.edu
 
-*Website:*  cs.utexas.edu/~mitra
+       <office>
+               <building>PAI</building>
+               <room>5.52</room>
+       </office>
 
-*Office Hours:*  MWF 10-11 AM
 
-*Type:*  Lecturer
+       <phone_number>5124719708</phone_number>
 
-*Degrees:*  Ph.D. 1988, University of Texas at Austin
 
-*Research Area:*  Grid Computing, Numerical Computation, Computer Science Education
+       <email>mitra@cs.utexas.edu</email>
 
-*Graduate Students:*  N/A
 
-*Classes:*  CS303E: Elements of Computers and Programming
-            CS329E: Elements of Web Programming
+       <website>http://www.cs.utexas.edu/~mitra</website>
 
-*Journals:* -
 
-*Conferences:* -
+       <faculty_type>Lecturer</faculty_type>
 
-*Books:* -
 
-*Awards:* -
+       <research_areas> 
+               <research_area>Grid Computing</research_area>
+               <research_area>Numerical Computation</research_area>
+               <research_area>Computer Science Education</research_area>
+       </research_areas>
+
+
+       <office_hours> 
+               <office_hour> 
+                       <day>Monday</day> 
+                       <start>10:00 AM</start> 
+                       <end>11:00 AM</end> 
+               </office_hour>
+               <office_hour> 
+                       <day>Wednesday</day> 
+                       <start>10:00 AM</start> 
+                       <end>11:00 AM</end> 
+               </office_hour>
+               <office_hour> 
+                       <day>Friday</day> 
+                       <start>10:00 AM</start> 
+                       <end>11:00 AM</end> 
+               </office_hour>
+       </office_hours>
+
+
+       <degrees>
+               <degree>
+                       <degree_type>PHD</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>University of Texas at Austin</institution>
+                       <degree_date>1988</degree_date>
+               </degree>
+       </degrees>
+
+
+       <conferences>
+       </conferences>
+
+
+       <journals>
+       </journals>
+
+
+       <graduate_students>
+       </graduate_students>
+
+
+       <classes>
+               <class>
+                       <class_name>Elements of Computers and Programming</class_name>
+                       <course_number>CS303E</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Fall 2009</semester>
+                       <unique>54510</unique>
+               </class>
+               <class>
+                       <class_name>Elements of Web Programming</class_name>
+                       <course_number>CS329E</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Fall 2009</semester>
+                       <unique>54745</unique>
+               </class>
+       </classes>
+
+
+       <awards>
+       </awards>
+
+
+       <books>
+       </books> 
+
+
+</faculty_member>
