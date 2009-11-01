@@ -26,6 +26,28 @@ class Faculty:
         self.researchAreas = []
         self.gradStudents = []
         self.courses = []
+        self.articles = []
+        self.conferences = []
+        
+class Conference:
+    conferences = ("","Conference","AnotherConference","aThird")
+    locations = ("","Location","Burbank","Singapore","Fiji","Stalingrad")
+    def __init__(self,name,location,title,date):
+        self.name = name
+        self.location = location
+        self.title = title
+        self.date = date
+    def __len__(self):
+        return len(self.title)+len(self.name)+len(self.date)+len(self.location)+len("at  in , ")
+
+class Article:
+    journals = ("","Scientific American","Applied Computing", "Robotic Murder Monthly")
+    def __init__(self,t,j,d):
+        self.title = t
+        self.journal = j
+        self.date = d
+    def __len__(self):
+        return len(self.title)+len(self.journal)+len(self.date)+len(" in , ")
         
 class Degree:
     types = ("","B.S.","B.A.","M.S.","M.A.","Ph.D.")
@@ -34,7 +56,8 @@ class Degree:
         self.type = t
         self.institution = i
         self.date = d
-        
+    def __len__(self):
+        return len(self.type)+len(self.institution)+len(self.date)+len(" from in ")    
         
 class OfficeHour:
     days = ("","M","T","W","R","F")
@@ -43,31 +66,65 @@ class OfficeHour:
         self.day = day
         self.beginTime = b
         self.endTime = e
+    def __len__(self):
+        return len(self.day)+len(self.beginTime)+len(self.endTime)+len(" from in ")
+
+def anyFilled(*t):
+    for e in t:
+        if e!="": return True;
 
 def textBox(t):
     s = '<textarea rows ="'
     s+= str(len(t)+1)
-    s+= '" cols="25" readonly="readonly">'
+    s+= '" cols="'
+    s+= str(max(map(len,t)) if len(t)>0 else 25)
+    s+='" readonly="readonly">'
     for o in t:
         s+=o
         s+='\n'
     s+='</textarea>'
     return s
-    
-def researchAreasTextBox(f):
+
+def conferenceTextBox(f):
     s = '<textarea rows ="'
-    s+= str(len(f.researchAreas)+1)
-    s+= '" cols="25" readonly="readonly">'
-    for ra in f.researchAreas:
-        s+=ra
+    s+= str(len(f.conferences)+1)
+    s+= '" cols="'
+    s+= str(max(map(len,f.conferences)) if len(f.conferences)>0 else 25)
+    s+='" readonly="readonly">'
+    for conf in f.conferences: #name location title date
+        s+=conf.title
+        s+= ' at '
+        s+=conf.name
+        s+= ' in '
+        s+=conf.location
+        s+=', '
+        s+=conf.date
+        s+='\n'
+    s+='</textarea>'
+    return s    
+
+def articleTextBox(f):
+    s = '<textarea rows ="'
+    s+= str(len(f.articles)+1)
+    s+= '" cols="'
+    s+= str(max(map(len,f.articles)) if len(f.articles)>0 else 25)
+    s+='" readonly="readonly">'
+    for article in f.articles:
+        s+=article.title
+        s+= ' in '
+        s+=article.journal
+        s+= ', '
+        s+=article.date
         s+='\n'
     s+='</textarea>'
     return s
     
 def officeHoursTextBox(f):
     s = '<textarea rows ="'
-    s+= str(len(f.officeHours)+1)
-    s+= '" cols="25" readonly="readonly">'
+    s+= str(len(f.articles)+1)
+    s+= '" cols="'
+    s+= str(max(map(len,f.officeHours)) if len(f.officeHours)>0 else 25)
+    s+='" readonly="readonly">'
     for officeHour in f.officeHours:
         s+=officeHour.day
         s+= ' from '
@@ -80,7 +137,9 @@ def officeHoursTextBox(f):
 def degreesTextBox(f):
     s = '<textarea rows ="'
     s+= str(len(f.degrees)+1)
-    s+= '" cols="25" readonly="readonly">'
+    s+= '" cols="'
+    s+= str(max(map(len,f.degrees)) if len(f.degrees)>0 else 25)
+    s+='" readonly="readonly">'
     for degree in f.degrees:
         s+=degree.type
         s+= ' degree from '
@@ -154,6 +213,17 @@ class MainPage (webapp.RequestHandler) :
             self.response.out.write('<br/>Courses<br/>')
             self.response.out.write(textBox(fac.courses))
             self.response.out.write(dropDown('course',options['courses'],False))
+            self.response.out.write('<br/>Articles<br/>')
+            self.response.out.write(articleTextBox(fac))
+            self.response.out.write(dropDown('journal',Article.journals,False))
+            self.response.out.write(textInputField('articleTitle'))
+            self.response.out.write(textInputField('articleYear'))
+            self.response.out.write('<br/>Conferences<br/>')
+            self.response.out.write(conferenceTextBox(fac))
+            self.response.out.write(dropDown('conference',Conference.conferences,False))
+            self.response.out.write(dropDown('conferenceLocation',Conference.locations,False))
+            self.response.out.write(textInputField('conferenceTitle'))
+            self.response.out.write(textInputField('conferenceDate'))
             
         else:
             MainPage.type = "Login"
@@ -186,6 +256,13 @@ class MainPage (webapp.RequestHandler) :
             researchArea = cgi.escape(self.request.get('researchArea'))
             gradStudent = cgi.escape(self.request.get('gradStudent'))
             course = cgi.escape(self.request.get('course'))
+            articleTitle = cgi.escape(self.request.get('articleTitle'))
+            journal = cgi.escape(self.request.get('journal'))
+            articleYear = cgi.escape(self.request.get('articleYear'))
+            confName = cgi.escape(self.request.get('conference'))
+            confLoc = cgi.escape(self.request.get('conferenceLocation'))
+            confTitle = cgi.escape(self.request.get('conferenceTitle'))
+            confDate = cgi.escape(self.request.get('conferenceDate'))
             
             if ValidateFaculty.name(name):
                 fac.name = name
@@ -235,9 +312,21 @@ class MainPage (webapp.RequestHandler) :
                 if ValidateFaculty.course(fac.courses,course) :
                     fac.courses.append(course)
                 else:
-                    self.response.out.write('Invalid Course.<br />')        
+                    self.response.out.write('Invalid Course.<br />')
+
+            if articleTitle!="" or articleYear!="" or journal !="":
+                if ValidateFaculty.article(fac.articles,articleTitle,journal,articleYear) :
+                    fac.articles.append(Article(articleTitle,journal,articleYear))
+                else:
+                    self.response.out.write('Invalid Article.<br />') 
+            if anyFilled(confName,confLoc,confTitle,confDate):
+                if ValidateFaculty.conference(fac.conferences,confName,confLoc,confTitle,confDate) :
+                    fac.conferences.append(Conference(confName,confLoc,confTitle,confDate))
+                else:
+                    self.response.out.write('Invalid Conference.<br />')        
             
         self.get()
+
 
 if __name__ == "__main__":
     main()

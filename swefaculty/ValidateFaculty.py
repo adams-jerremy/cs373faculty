@@ -5,6 +5,16 @@ import string
 # phone_number
 # ------------
 
+def conference(confs,name,location,title,date):
+    for conf in confs:
+        if conf.name == name and conf.title == title and conf.location == location and conf.date == date : return False;
+    return int(date)>1900
+
+def article(articles,title,journal,date):
+    for article in articles:
+        if article.title == title and article.journal == journal and article.date == date: return False;
+    return int(date)>1900
+
 def course(cs,c):
     return c not in cs
 
@@ -39,7 +49,7 @@ def website(website):
 
 def office(building, location):
     if location == ""  or building == "": return building == location;
-    if re.search('\.',location) is None: return False;
+    if re.search('\d+\.\d+',location) is None: return False;
     floor, room = location.split('.')
     return (building == 'TAY' and 0 < int(floor) < 7)\
             or (building == 'PAI' and 0 < int(floor) < 6)\
@@ -47,7 +57,9 @@ def office(building, location):
             or (building == 'ENS' and -1<int(floor)<8 )
             
 def main():
-    print hours("8:30","9:30")
+    print office("TAY","4.11")
+    print office("TAY","4.")
+    print office("TAY",".11")
     
     print "(",
     for i in xrange(0,24):
