@@ -1,0 +1,3 @@
+= How It Works =
+
+exporter.py consists of one method, export, which take a file, f, as its argument.  It initializes a string of a filename which is given the contents: string.strip(f.faculty_firstname) + ".xml"; after that, a string called xml is initialized.  In the following 64 lines of code, xml is constantly appended with faculty data to give it the format of what would be written on an xml file.  Finally, a file is opened (filename), BeautifulSoup is called on xml and saved into variable called soup, and lastly, soup.prettify() is written to file.
