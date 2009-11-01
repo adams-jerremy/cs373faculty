@@ -1,32 +1,128 @@
-*name:* Kristen Grauman
+<faculty_member>
 
-*office:* CSA 114
 
-*phone:* (512) 471-9521
+   <faculty_firstname>Kristen</faculty_firstname>
+   <faculty_lastname>Grauman</faculty_lastname>
 
-*e-mail:* grauman@cs.utexas.edu
 
-*website:* http://www.cs.utexas.edu/~grauman/
+       <office>
+               <building>CSA</building>
+               <room>114</room>
+       </office>
 
-*office hours:* Wed 5-6 PM
 
-*type:* professor
+       <phone_number>5124719521</phone_number>
 
-*degrees earned:* B.A. in Computer Science, Boston College, May 2001; Massachusetts Institute of Technology 
-            S.M. in Computer Science, June 2003
-            Massachusetts Institute of Technology, Ph.D. in Computer Science, July 2006 
 
-*research area:* computer vision and machine learning
+       <email>grauman@cs.utexas.edu</email>
 
-*graduate students:* Yong Jae Lee, Ph.D., N/A (thesis), N/A (date)
-                   Sudheendra Vijayanarasimhan, Ph.D., N/A (thesis), N/A (date)
 
-*classes:* Computer Vision, CS378, undergrad, Fall 2009
+       <website>http://www.cs.utexas.edu/~grauman/</website>
 
-*journals:* International Journal of Computer Vision-- Foreground Focus: Unsupervised Learning from Partially Matching Images; International Journal of Computer Vision-- Gaussian Processes for Object Categorization. 
 
-*conferences:* N/A
+       <faculty_type>Professor</faculty_type>
 
-*books:* N/A
 
-*awards:* National Science Foundation Faculty Early Career Development Award (NSF CAREER), Microsoft Research New Faculty Fellow, Best Student Paper Award
+       <research_areas> 
+               <research_area>Machine Learning</research_area>
+	       <research_area>Computer Vision</research_area>
+       </research_areas>
+
+
+       <office_hours> 
+               <office_hour> 
+                       <day>Wednesday</day> 
+                       <start>5:00 PM</start> 
+                       <end>6:00 PM</end> 
+               </office_hour>
+       </office_hours>
+
+
+       <degrees>
+               <degree>
+                       <degree_type>BA</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>Boston College</institution>
+                       <degree_date>2001</degree_date>
+               </degree>
+               <degree>
+                       <degree_type>MS</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>Massachusetts Institute of Technology</institution>
+                       <degree_date>2003</degree_date>
+               </degree>
+               <degree>
+                       <degree_type>PHD</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>Massachusetts Institute of Technology</institution>
+                       <degree_date>2006</degree_date>
+               </degree>
+       </degrees>
+
+
+       <conferences> 
+       </conferences>
+
+
+       <journals>
+               <journal>
+                       <journal_name>International Journal of Computer Vision</journal_name>
+                       <article_title>Foreground Focus: Unsupervised Learning from Partially Matching Images</article_title>
+                       <journal_date></journal_date>
+               </journal>
+	       <journal>
+                       <journal_name>International Journal of Computer Vision</journal_name>
+                       <article_title>Gaussian Processes for Object Categorization</article_title>
+                       <journal_date></journal_date>
+               </journal>
+       </journals>
+
+
+       <graduate_students> 
+               <graduate_student> 
+                       <student_firstname>Yong Jae</student_firstname> 
+                       <student_lastname>Lee</student_lastname> 
+                       <student_type>PHD</student_type> 
+                       <dissertation></dissertation> 
+                       <student_date></student_date> 
+               </graduate_student> 
+               <graduate_student> 
+                       <student_firstname>Sudheendra</student_firstname> 
+                       <student_lastname>Vijayanarasimhan</student_lastname> 
+                       <student_type>PHD</student_type> 
+                       <dissertation></dissertation> 
+                       <student_date></student_date> 
+               </graduate_student>
+       </graduate_students>
+
+
+       <classes>
+               <class>
+                       <class_name>Computer vision</class_name>
+                       <course_number>CS378</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Fall 2009</semester>
+                       <unique>54875</unique>
+               </class>
+       </classes>
+
+
+       <awards>
+               <award>
+                       <award_name>National Science Foundation Faculty Early Career Development Award</award_name>
+                       <award_type>Award</award_type>
+                       <award_date></award_date>
+               </award>
+	       <award>
+                       <award_name>Best Student Paper Award</award_name>
+                       <award_type>Award</award_type>
+                       <award_date></award_date>
+               </award>
+       </awards>
+
+
+       <books>
+       </books>
+
+
+</faculty_member>
