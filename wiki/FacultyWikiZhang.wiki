@@ -1,46 +1,134 @@
-*name:* Yin Zhang
+<faculty_member>
 
-*office:* ACES 5.248
 
-*phone:* (512) 232-7496
+   <faculty_firstname>Yin</faculty_firstname>
+   <faculty_lastname>Zhang</faculty_lastname>
 
-*e-mail:* yzhang@cs.utexas.edu
 
-*website:* http://www.cs.utexas.edu/~yzhang/
+       <office>
+               <building>ACES</building>
+               <room>5.248</room>
+       </office>
 
-*office hours:* TTh 1-2p
 
-*type:* professor
+       <phone_number>5122327496</phone_number>
 
-*degrees earned:* B.S. in Computer Science, Peking University at Beijing, 1997;
-M.S. in Computer Science, Cornell University, 1999;
-Ph.D. in Computer Science, Cornell University, 2001
 
-*research area:* Computer Networks
+       <email>yzhang@cs.utexas.edu</email>
 
-*graduate students:* Tae Won Cho, UT Austin (2005–present)
-• Yi Li, UT Austin (2005–present) • Ajay A. Mahimkar, UT Austin (2005–present) • Upendra B. Shevade (2007–present) • Han hee Song, UT Austin (2005–present) • Kirill Levchenko, U. C. San Diego (Summer 2004) • Kartikeya Chandrayana, RPI (Summer 2003) • Sumeet Singh, U.C. San Diego (Summer 2003) • Kashi Vishwanath, Duke (Summer 2002) • Yan Chen, U.C. Berkeley (Summer 2002)
 
-*classes:* CS386M: Communication Networks [Fall 2005, Spring 2007, Spring 2008, Fall 2008, Fall 2009]
-CS378: Advanced Computer Networks [Spring 2009]
-CS356: Computer Networks [Fall 2007]
-CS378: Network Measurement and Intrusion Detection [Fall 2006]
-CS395T: Advanced Topics in Computer Networks [Spring 2006]
-CS395T: Network Measurement and Inference [Spring 2005]
+       <website>http://www.cs.utexas.edu/~yzhang/</website>
 
-*journals:*  1. Han Hee Song, Lili Qiu and Yin Zhang, “NetQuest: A Flexible Framework for Large-Scale Network Mea-
-surement,” in IEEE/ACM Transactions on Networking, vol. 17, no. 1, pp. 106–119, February 2009.
-2. Ying Zhang, Zihui Ge, Suhas Diggavi, Z. Morley Mao, Matthew Roughan, Vinay Vaishampayan, Wal- ter Willinger, and Yin Zhang, “Internet Traffic and Multiresolution Analysis,” IMS Collections, Volume 4, “Markov Processes and Related Topics: A Festschrift for Thomas G. Kurtz,” Stewart N. Ethier, Jin Feng, Richard H. Stockbridge, Editors, Editors, 2008.
-3. Robert Schweller, Zhichun Li, Yan Chen, Yan Gao, Ashish Gupta, Elliot Parsons, Yin Zhang, Peter Dinda, Ming-Yang Kao and Gokhan Memik, “Reversible Sketches: Enabling Monitoring and Analysis over High- speed Data Streams,” in IEEE/ACM Transactions on Networking, vol. 15, no. 5, pp. 1059–1072, October 2007.
-4. Lili Qiu, Yang Richard Yang, Yin Zhang and Scott Shenker, “On Selfish Routing in Internet-like Environ- ments,” in IEEE/ACM Transactions on Networking, vol. 14, no. 4, pp. 725–738, August 2006.
-5. Matthew Roughan and Yin Zhang, “Secure Distributed Data Mining and its Application in Large-Scale Network Measurements,” in ACM SIGCOMM Computer Communication Review (CCR), January 2006.
-6. Yin Zhang, Matthew Roughan, Carsten Lund and David Donoho, “Estimating Point-to-Point and Point-to- Multipoint Traffic Matrices: An Information-Theoretic Approach,” in IEEE/ACM Transactions on Network- ing, vol. 13, no. 5, pp. 947–960, October 2005.
-7. Lili Qiu, Yin Zhang and Srinivasan Keshav, “Understanding the Performance of Many TCP Flows,” Com- puter Networks, vol. 37, no. 3–4, pp. 277–306, November 2001.
-8. Li-ang Zhang and Yin Zhang, “Approximation for Knapsack Problems with Multiple Constraints,” Journal of Computer Science and Technology, vol. 14, no. 4, July 1999, Allerton Press, Inc.
-9. Yin Zhang and Zhuoqun Xu, “Concurrent Manipulation of Expanded AVL Trees,” Journal of Computer Science and Technology, vol. 13, no. 4, July 1998, Allerton Press, Inc.
-*conferences:* N/A
 
-*books:* N/A
+       <faculty_type>Professor</faculty_type>
 
-*awards:* Faculty Fellowship #9 in Computer Sciences, The University of Texas at Austin, 2008 – 2009. • IEEE Senior Member, 2007. • National Science Foundation Faculty Early Career Award, 2006. • Two SIGCOMM 2003 papers selected for fast-track publication by IEEE/ACM Transactions on Networking. • Research Excellence Award, AT&T Labs–Research, 2001.
-• Best Student Paper Award, 9th USENIX Security Symposium, 2000. • Gold Medal, 33rd International Mathematical Olympiad (IMO), 1992. • First Prize, Chinese High School Mathematics Competition, 1991.
+
+       <research_areas> 
+               <research_area>Computer Networks</research_area>
+       </research_areas>
+
+
+       <office_hours>
+               <office_hour>
+                       <day>Tuesday</day>
+                       <start>1:00 PM</start>
+                       <end>2:00 PM</end>
+               </office_hour>
+	       <office_hour>
+                       <day>Thursday</day>
+                       <start>1:00 PM</start>
+                       <end>2:00 PM</end>
+               </office_hour>
+       </office_hours>
+
+
+       <degrees>
+               <degree>
+                       <degree_type>BS</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>Peking University at Beijing</institution>
+                       <degree_date>1997</degree_date>
+               </degree>
+	       <degree>
+                       <degree_type>MS</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>Cornell University</institution>
+                       <degree_date>1999</degree_date>
+               </degree>
+               <degree>
+                       <degree_type>PHD</degree_type>
+                       <degree_name>Computer Science</degree_name>
+                       <institution>Cornell University</institution>
+                       <degree_date>2001</degree_date>
+               </degree>
+       </degrees>
+
+
+       <conferences>
+       </conferences>
+
+
+       <journals>
+               <journal>
+                       <journal_name>IEEE/ACM Transactions on Networking</journal_name>
+                       <article_title>NetQuest: A Flexible Framework for Large-Scale Network Measurement</article_title>
+                       <journal_date>2009</journal_date>
+               </journal>
+       </journals>
+
+
+       <graduate_students> 
+               <graduate_student> 
+                       <student_firstname>Yin</student_firstname> 
+                       <student_lastname>Li</student_lastname> 
+                       <student_type></student_type> 
+                       <dissertation></dissertation> 
+                       <student_date>2005-Present</student_date> 
+               </graduate_student>
+	       <graduate_student> 
+                       <student_firstname>Kashi</student_firstname> 
+                       <student_lastname>Vishwanath</student_lastname> 
+                       <student_type></student_type> 
+                       <dissertation></dissertation> 
+                       <student_date>2002</student_date> 
+               </graduate_student>
+       </graduate_students>
+
+
+       <classes>
+               <class>
+                       <class_name>Communication Networks</class_name>
+                       <course_number>CS386m</course_number>
+                       <class_type>Graduate</class_type>
+                       <semester>Fall 2000</semester>
+                       <unique>54925</unique>
+               </class>
+	       <class>
+                       <class_name>Advanced Computer Networks</class_name>
+                       <course_number>CS378</course_number>
+                       <class_type>Undergraduate</class_type>
+                       <semester>Spring 2009</semester>
+                       <unique>54275</unique>
+               </class>
+       </classes>
+
+
+       <awards>
+               <award>
+                       <award_name>National Science Foundation Faculty Early Career Award</award_name>
+                       <award_type>Award</award_type>
+                       <award_date>2006</award_date>
+               </award>
+	       <award>
+                       <award_name>IEEE Senior Member</award_name>
+                       <award_type>Award</award_type>
+                       <award_date>2007</award_date>
+               </award>
+       </awards>
+
+
+       <books>
+       </books>
+
+
+</faculty_member>
