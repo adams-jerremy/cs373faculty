@@ -1,0 +1,22 @@
+= Before class MainPage =
+
+*Variables Declared:*
+
+_Admin_:  Admin is a dictionary, and a temporary store for the "database" information read in by the Admin page.  When the database is running with the web interface, this data will be stored in the real database.
+
+_textstore_:  textstore is a global variable for passing messages between get and post.
+
+_javascript_:  javascript takes drop down lists in the Admin page and stuffs them into the text input fields for easy editing. 
+
+
+= MainPage =
+
+*Methods:*
+
+_printfield_:  The function printfield prints out the intput field and the select drop down box for each input field on the admin page.  The function takes in the field_title displayed next to the input field, used for display purposes only, and the field_name, which is important because it must match the field_name in the javascript, the post function, and every where else.
+
+_get_: The fuction get prints out the web page.  First the javascript, then a page title and the big form that makes up the page.  Finally the result of the Validation from    post() is printed out at the bottom - it was stored in textstore.
+
+_go_:  The fuction "go" processes each field on the Admin page.  It runs when the "Submit" button is pressed.  If the "Remove" checkbox was checked, the user wants to remove any text inputs in the text fields from the database so we attempt to do so and save a result string in textstore for printing by "get".  If Remove was not checked, we check to see if the input string was valid for that field (determined by the second input to "go", validator, which is a function).  The input field is either added to the database or an error message is put into textstore.
+
+_post_:  The function "post" checks each input field and then runs "get".  Each field is checked with the "go" function, which takes in the name of the input field to be checked (must match "field_name" for the fields that are set up in the "get" function) and the Validator function to be used to check the input.
