@@ -12,9 +12,9 @@ Exporter : http://code.google.com/p/cs373faculty/wiki/Exporter
 
 *Tables:*
 
-FacultyMember : http://code.google.com/p/cs373faculty/wiki/FacultyMember
+Faculty Member : http://code.google.com/p/cs373faculty/wiki/FacultyMember
 
-OfficeHours : http://code.google.com/p/cs373faculty/wiki/OfficeHours
+Office Hours : http://code.google.com/p/cs373faculty/wiki/OfficeHours
 
 Article : http://code.google.com/p/cs373faculty/wiki/Article
 
@@ -24,13 +24,13 @@ Book : http://code.google.com/p/cs373faculty/wiki/Book
 
 Award : http://code.google.com/p/cs373faculty/wiki/Award
 
-CourseTaught : http://code.google.com/p/cs373faculty/wiki/CourseTaught
+Course Taught : http://code.google.com/p/cs373faculty/wiki/CourseTaught
 
 Name : http://code.google.com/p/cs373faculty/wiki/Name
 
-GraduateStudent : http://code.google.com/p/cs373faculty/wiki/GraduateStudent
+Graduate Student : http://code.google.com/p/cs373faculty/wiki/GraduateStudent
 
-ResearchArea : http://code.google.com/p/cs373faculty/wiki/ResearchArea
+Research Area : http://code.google.com/p/cs373faculty/wiki/ResearchArea
 
 Degree : http://code.google.com/p/cs373faculty/wiki/Degree
 
