@@ -1,0 +1,39 @@
+= Before class MainPage =
+
+*Variables, Classes, and Methods:*
+
+_options_:  Holds the values of various enumerated fields (such as faculty types and buildings where faculty members may hold office hours).
+
+_Faculty_:  A simple class for holding onto faculty data (such as their name, phone number, e-mail, office, etc.).
+
+_Conference_: A simple class for holding onto conference data.
+
+_Article_: A simple class for holding onto article data.
+
+_Degree_: A simple class for holding onto degree data.
+
+_OfficeHour_: A simple class for holding onto OfficeHour data.
+
+_anyFilled_:  A function to check if any of the values passed in are filled.
+
+_textBox_:  A function for making 'generic' text boxes.
+
+_conferenceTextBox_:  A function for making conference text boxes, which is a little more involved than regular textboxes.
+
+_articleTextBox_:  A function for making article text boxes, which is a little more involved than regular textboxes.
+
+_officeHoursTextBox_:  A function for making office hour text boxes, which is a little more involved than regular textboxes.
+
+_degreeTextBox_:  A function for making degree text boxes, which is a little more involved than regular textboxes.
+
+_dropDown_:  A function for making generic drop down lists.
+
+_textInputField_:  Generically creates a text input.
+
+= MainPage =
+
+*Methods:*
+
+_get_:  Sets up the main page.
+
+_post_:  Takes care of the submissions.  This method also contains many calls to ValidateFaculty, which tests the validity of the data.
