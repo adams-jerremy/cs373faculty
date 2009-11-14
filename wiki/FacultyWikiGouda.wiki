@@ -147,6 +147,9 @@
                                        <coauthor_lastname>Huang</coauthor_lastname> 
                                </coauthor>
                        </coauthors> 
+                       <publisher>
+                       Springer
+                       </publisher>
                </book>
                <book> 
                        <book_name>The Austin Protocol Compiler, Advances in Information Security Series</book_name> 
@@ -156,11 +159,17 @@
                                        <coauthor_lastname>McGuire</coauthor_lastname> 
                                </coauthor>
                        </coauthors> 
+                       <publisher>
+                       Springer
+                       </publisher>
                </book>
                <book> 
                        <book_name>Elements of Network Protocol Design</book_name> 
                        <coauthors>
-                       </coauthors> 
+                       </coauthors>
+                       <publisher>
+                       Wiley-Interscience
+                       </publisher> 
                </book>
        </books> 
 
