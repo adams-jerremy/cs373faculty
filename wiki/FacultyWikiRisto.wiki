@@ -156,7 +156,10 @@
                                        <coauthor_firstname>Joseph</coauthor_firstname> 
                                        <coauthor_lastname>Sirosh</coauthor_lastname> 
                                </coauthor>
-                       </coauthors> 
+                       </coauthors>
+                       <publisher>
+                       Springer
+                       </publisher>
                </book>
 	       <book> 
                        <book_name>Lateral Interactions in the Cortex: Structure and Function</book_name> 
@@ -169,7 +172,9 @@
                                        <coauthor_firstname>Joseph</coauthor_firstname> 
                                        <coauthor_lastname>Sirosh</coauthor_lastname> 
                                </coauthor>
-                       </coauthors> 
+                       </coauthors>
+                       <publisher>
+                       </publisher>
                </book>
        </books> 
 
