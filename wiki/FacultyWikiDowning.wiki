@@ -113,6 +113,8 @@
                        <book_name>Data Sharing in Scientific Simulations</book_name>
                        <coauthors>
                        </coauthors>
+                       <publisher>
+                       </publisher>
                </book>
        </books>
 
