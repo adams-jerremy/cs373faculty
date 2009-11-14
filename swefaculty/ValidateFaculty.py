@@ -21,6 +21,7 @@ def book(bs,b):
 This function validates conferences.
 """
 def conference(confs,name,location,title,date):
+    if name == "" or location == "" or title == "" or date == "": return False;
     for conf in confs:
         if conf.name == name and conf.title == title and conf.location == location and conf.date == date : return False;
     return yearLimit>int(date)>1900
@@ -28,6 +29,7 @@ def conference(confs,name,location,title,date):
 This function validates articles.
 """
 def article(articles,title,journal,date):
+    if title == "" or journal == "" or date == "": return False;
     for article in articles:
         if article.title == title and article.journal == journal and article.date == date: return False;
     return yearLimit>int(date)>1900
@@ -71,7 +73,7 @@ def phone_number (phone) :
 This function validates names.
 """
 def name(name):
-    return name=='valid'
+    return re.search('^[\w\. ]+$',name) is not None
 """
 This function validates emails.
 """
@@ -81,7 +83,7 @@ def email(email):
 This function validates websites.
 """
 def website(website):
-    return re.search('^(https?)://(\w+\.)+(com|net|org|gov|edu|mil|biz|info|mobi|name|aero|jobs|museum|[a-zA-Z][a-zA-Z])$',website) is not None
+    return re.search('^(https?)://(\w+\.)+(com|net|org|gov|edu|mil|biz|info|mobi|name|aero|jobs|museum|[a-zA-Z][a-zA-Z])([\w\.]+/?)*$',website) is not None
 """
 This function validates offices.
 """
@@ -95,20 +97,8 @@ def office(building, location):
             or (building == 'ENS' and -1<int(floor)<8 )
         
 def main():
-    print phone_number("1214541439x0")
-    print office("TAY","4.11")
-    print office("TAY","4.")
-    print office("TAY",".11")
+    print name("jerremy adams")
     
-    print "(",
-    for i in xrange(0,24):
-        print '"',
-        print i,
-        print ':00",',
-        print '"',
-        print i,
-        print ':30",',
-    print ")"
     
 if __name__ == "__main__":
     main()
