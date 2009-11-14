@@ -79,7 +79,7 @@ def export(f) :
         for ca in coauthors :   # ca is each tuple of the coauthor's first and last names
             c += "<coauthor><coauthor_firstname>" + ca[0] + "</coauthor_firstname><coauthor_lastname>" + ca[1]\
             + "</coauthor_lastname></coauthor>"
-        xml += "<book><book_name>" + b[0] + "</book_name><coauthors>" + c + "</coauthors></book>"
+        xml += "<book><book_name>" + b[0] + "</book_name><coauthors>" + c + "</coauthors><publisher>" + b[2] + "</publisher></book>" 
         
     xml += "</books></faculty_member>"
     
