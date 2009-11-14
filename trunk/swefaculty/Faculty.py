@@ -218,9 +218,12 @@ Genericly create a textinput
 def textInputField(id,value=''):
     return '<input type="text" name="'+id+'" value = "' +value+ '" />'
 
-"""
-Handler for faculty page
-"""
+'''
+handler for faculty page
+'''
+
+id = ""
+facs = {}
 
 class MainPage (webapp.RequestHandler) :
     id = ""
@@ -230,12 +233,16 @@ class MainPage (webapp.RequestHandler) :
     Takes care of main page
     """
     def get (self) :
+        global id
+        global facs
         self.response.out.write('<form action="/faculty" method="post">')
-        if MainPage.facs.has_key(MainPage.id):
-            MainPage.type = "submit"
+        if id != '':
+        #if MainPage.facs.has_key(MainPage.id):
+            #MainPage.type = "submit"
+            self.type = "submit"
             self.response.out.write('ID:')
-            self.response.out.write(MainPage.id);
-            fac = MainPage.facs[MainPage.id]
+            self.response.out.write(id);
+            fac = facs[id]
             self.response.out.write('<br />Faculty Name<br />')
             self.response.out.write(textInputField('name',fac.name))
             self.response.out.write('<br/>Faculty Office Building<br/>')
@@ -287,12 +294,12 @@ class MainPage (webapp.RequestHandler) :
             self.response.out.write(textBox(fac.awards))
             self.response.out.write(dropDown('award',options['awards'],False))
             self.response.out.write('<br/>')
+            self.response.out.write('<br />Logout after submit:<input type="checkbox" name="logout"/><br />')
         else:
-            MainPage.type = "Login"
+            self.type = "Login"
             self.response.out.write('ID:')
             self.response.out.write(textInputField('FacID'))
         self.response.out.write('<input type="submit" value="Submit" /> </form><br />')
-        self.response.out.write('<form action="/" method="get"><input type="submit" value="Logout!"></form>')
         
         
         
@@ -300,12 +307,14 @@ class MainPage (webapp.RequestHandler) :
     takes care of submissions
     """
     def post (self) :
-        if MainPage.type == "Login":
-            MainPage.id = cgi.escape(self.request.get('FacID'))
-            if not MainPage.facs.has_key(MainPage.id):
-                MainPage.facs[MainPage.id] = Faculty()
+        global id
+        global facs
+        if self.type == "Login" or id == "":
+            id = cgi.escape(self.request.get('FacID'))
+            if not facs.has_key(id):
+                facs[id] = Faculty()
         else :
-            fac = MainPage.facs[MainPage.id]
+            fac = facs[id]
             name = cgi.escape(self.request.get('name'))
             building = cgi.escape(self.request.get('building'))
             room = cgi.escape(self.request.get('room'))
@@ -331,6 +340,7 @@ class MainPage (webapp.RequestHandler) :
             confDate = cgi.escape(self.request.get('conferenceDate'))
             book = cgi.escape(self.request.get('book'))
             award = cgi.escape(self.request.get('award'))
+            logout = cgi.escape(self.request.get('logout')) == 'on'
             
             if ValidateFaculty.name(name):
                 fac.name = name
@@ -402,6 +412,8 @@ class MainPage (webapp.RequestHandler) :
                     fac.awards.append(award)
                 else:
                     self.response.out.write('Invalid Award.<br />')
+            if logout :
+                id = ""
         self.get()
 
 
