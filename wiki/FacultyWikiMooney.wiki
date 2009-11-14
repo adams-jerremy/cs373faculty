@@ -134,12 +134,17 @@
                <book> 
                        <book_name>A General Explanation-Based Learning Mechanism and its Application to Narrative Understanding</book_name> 
                        <coauthors> 
-                       </coauthors> 
+                       </coauthors>
+                       <publisher>
+                       Morgan Kaufmann
+                       </publisher> 
                </book> 
                <book> 
                        <book_name>Proceedings of the Seventh International Conference on Machine Learning Porter, B.W.</book_name> 
                        <coauthors> 
                        </coauthors> 
+                       <publisher>
+                       </publisher>
                </book>
        </books>
 
