@@ -92,6 +92,9 @@
                        <book_name>Automata, Computability and Complexity: Theory and Applications</book_name>
                        <coauthors>
                        </coauthors>
+                       <publisher>
+                       Prentice Hall
+                       </publisher>
                </book>
        </books>
 
