@@ -1,3 +1,7 @@
+                                                                     
+                                                                     
+                                                                     
+                                             
 # ----------------
 # ValidateAdmin.py
 # ----------------
@@ -17,8 +21,9 @@ semester - Spring, Summer, or Fall, followed by space, followed by a year.
 
 import re
 
-def faculty_eid (s) :
-    return eid(s)
+
+def faculty_email (s) :
+    return True
 
 def student_eid (s) :
     return eid (s)
@@ -34,9 +39,6 @@ def research_area (s) :
 
 def building (s) :
     return not re.search('^[A-Z][A-Z]([A-Z])?([A-Z,1-8])$', s) is None
-
-def day (s) :
-    return True
 
 def start_time (s) :
     return my_time(s)
@@ -59,7 +61,13 @@ def institution (s) :
 def conference_name (s) :
     return True
 
+def location (s) :
+    return True
+
 def journal_name (s) :
+    return True
+
+def publisher (s) :
     return True
 
 def student_type (s) :

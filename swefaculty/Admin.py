@@ -1,40 +1,68 @@
+                                                                     
+                                                                     
+                                                                     
+                                             
 # --------
 # Admin.py
 # --------
 
 import cgi
 
+from google.appengine.ext import db 
 from google.appengine.ext import webapp
 
 import ValidateAdmin
 
 '''
-The Admin dictionary is a temporary store for the "database" information
-read in by the Admin page.  When the database is running with the web
-interface this data will be stored in the real database.
+These classes create the database model.  For now, the class
+name must match the column name in the database because the
+functions below which access the information in queries, 
+create new rows, etc all depend on this.
 '''
 
-Admin = {}
-Admin["faculty_eid"] = set()
-Admin["student_eid"] = set()
-Admin["faculty_type"] = set()
-Admin["research_area"] = set()
-Admin["building"] = set()
-Admin["day"] = set()
-Admin["start_time"] = set()
-Admin["end_time"] = set()
-Admin["degree_type"] = set()
-Admin["degree_name"] = set()
-Admin["institution"] = set()
-Admin["conference_name"] = set()
-Admin["journal_name"] = set()
-Admin["student_type"] = set()
-Admin["course_number"] = set()
-Admin["course_name"] = set()
-Admin["class_type"] = set()
-Admin["semester"] = set()
-Admin["award_name"] = set()
-Admin["award_type"] = set()
+class faculty_email(db.Model) :
+    faculty_email = db.StringProperty(required=True)
+class student_eid(db.Model) :
+    student_eid = db.StringProperty(required=True)
+class faculty_type(db.Model) :
+    faculty_type = db.StringProperty(required=True)
+class research_area(db.Model) :
+    research_area = db.StringProperty(required=True)
+class building(db.Model) :
+    building = db.StringProperty(required=True)
+class start_time(db.Model) :
+    start_time = db.StringProperty(required=True)
+class end_time(db.Model) :
+    end_time = db.StringProperty(required=True)
+class degree_type(db.Model) :
+    degree_type = db.StringProperty(required=True)
+class degree_name(db.Model) :
+    degree_name = db.StringProperty(required=True)
+class institution(db.Model) :
+    institution = db.StringProperty(required=True)
+class conference_name(db.Model) :
+    conference_name = db.StringProperty(required=True)
+class location(db.Model) :
+    location = db.StringProperty(required=True)
+class journal_name(db.Model) :
+    journal_name = db.StringProperty(required=True)
+class publisher(db.Model) :
+    publisher = db.StringProperty(required=True)
+class student_type(db.Model) :
+    student_type = db.StringProperty(required=True)
+class course_number(db.Model) :
+    course_number = db.StringProperty(required=True)
+class course_name(db.Model) :
+    course_name = db.StringProperty(required=True)
+class class_type(db.Model) :
+    class_type = db.StringProperty(required=True)
+class semester(db.Model) :
+    semester = db.StringProperty(required=True)
+class award_name(db.Model) :
+    award_name = db.StringProperty(required=True)
+class award_type(db.Model) :
+    award_type = db.StringProperty(required=True)
+
 
 '''
 textstore is a global variable for passing messages between get and post.
@@ -63,15 +91,19 @@ class MainPage (webapp.RequestHandler) :
     drop down box for each input field on the admin page.  The function takes
     in the field_title displayed next to the input field, used for display
     purposes only, and the field_name, which is important because it must
-    match the field_name in the javascript, the post function, and every
-    where else.
+    match the field_name in the javascript, the post function, the name
+    of the database class we get with the query, and the name of the
+    column in the database class.
     '''
 
     def printfield (self, field_title, field_name) :
         self.response.out.write(field_title)
         self.response.out.write('<input type="text" name="' + field_name + '" id="' + field_name + '" style="position: absolute; left: 150px" />')
         self.response.out.write('<select id="' + field_name + '_sel" style="position: absolute; left: 315px" onchange="changeField(' + "'" + field_name + "'" + ')">')
-        i = list(Admin[field_name])
+        q = db.GqlQuery("SELECT * FROM " + field_name)
+        i = list()
+        for v in q :
+            i.append(v.__dict__["_" + field_name])
         i.sort()
         for v in i :
             self.response.out.write("<option>" + v + "</option>")
@@ -88,19 +120,20 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write(javascript)
         self.response.out.write('<font size="6">Admin Database Management</font>')
         self.response.out.write('<form action="/admin" method="post">')
-        self.printfield('Faculty EID', 'faculty_eid')
+        self.printfield('Faculty email', 'faculty_email')
         self.printfield('Student EID', 'student_eid')
         self.printfield('Faculty Type', 'faculty_type')
         self.printfield('Research Area', 'research_area')
         self.printfield('Building Abbreviation', 'building')
-        self.printfield('Day', 'day')
         self.printfield('Start Time', 'start_time')
         self.printfield('End Time', 'end_time')
         self.printfield('Degree Type', 'degree_type')
         self.printfield('Degree Name', 'degree_name')
         self.printfield('Institution', 'institution')
         self.printfield('Conference Name', 'conference_name')
+        self.printfield('Conference Location', 'location')
         self.printfield('Journal Name', 'journal_name')
+        self.printfield('Publisher', 'publisher')
         self.printfield('Student Type', 'student_type')
         self.printfield('Course Number', 'course_number')
         self.printfield('Course Name', 'course_name')
@@ -124,22 +157,36 @@ class MainPage (webapp.RequestHandler) :
     by the second input to "go", validator, which is a function).  The
     input field is either added to the database or an error message is 
     put into textstore.
+    To add a new field to the database we create a new object and use 
+    put().  The constructor is passed into "go" as constr, it is 
+    different for each field and is just to the database class.
     '''
 
-    def go (self, field, validator) :
+    def go (self, field, validator, constr) :
         global textstore
         s = cgi.escape(self.request.get(field))
         if (s != "") :
             if (cgi.escape(self.request.get("Remove")) == "on") :
-                if (s in Admin[field]) :
-                    Admin[field].remove(s)
+                i = db.GqlQuery("SELECT * FROM " + field)
+                found = ""
+                for v in i :
+                    if (v.__dict__["_" + field] == s) :
+                        found = v
+                if (found != "") :
+                    found.delete()
                     textstore = textstore + 'Removed ' + field + ' ' + s + '.<br />'
                 else :
                     textstore = textstore + '<font color="color:red">' + field + ' ' + s + ' not in database.</font><br />'
             else :
                 if validator(s) :
-                    if (s not in Admin[field]) :
-                        Admin[field].add(s)
+                    i = db.GqlQuery("SELECT * FROM " + field)
+                    found = False
+                    for v in i :
+                        if (v.__dict__["_" + field] == s) :
+                            found = True
+                    if (not found) :
+                        f = constr(**{field : s})
+                        f.put()
                         textstore = textstore + 'Added new ' + field + ' ' + s + '.<br />'
                     else :
                         textstore = textstore + '<font color="color:red">' + field + ' ' + s + ' already in database.</font><br />'
@@ -151,33 +198,36 @@ class MainPage (webapp.RequestHandler) :
     Function "post" checks each input field and then runs "get".
     Each field is checked with the "go" function, which takes in the
     name of the input field to be checked (must match "field_name" for
-    the fields that are set up in the "get" function) and the 
-    Validator function to be used to check the input.
+    the fields that are set up in the "get" function), the 
+    Validator function to be used to check the input, and the constructor
+    class for the database which will be used to create a new entry
+    in the database if all the tests pass.
     '''
 
     def post (self) :
         global textstore
         textstore = ""
-        self.go('faculty_eid', ValidateAdmin.faculty_eid)
-        self.go('student_eid', ValidateAdmin.student_eid)
-        self.go('faculty_type', ValidateAdmin.faculty_type)
-        self.go('research_area', ValidateAdmin.research_area)
-        self.go('building', ValidateAdmin.building)
-        self.go('day', ValidateAdmin.day)
-        self.go('start_time', ValidateAdmin.start_time)
-        self.go('end_time', ValidateAdmin.end_time)
-        self.go('degree_type', ValidateAdmin.degree_type)
-        self.go('degree_name', ValidateAdmin.degree_name)
-        self.go('institution', ValidateAdmin.institution)
-        self.go('conference_name', ValidateAdmin.conference_name)
-        self.go('journal_name', ValidateAdmin.journal_name)
-        self.go('student_type', ValidateAdmin.student_type)
-        self.go('course_number', ValidateAdmin.course_number)
-        self.go('course_name', ValidateAdmin.course_name)
-        self.go('class_type', ValidateAdmin.class_type)
-        self.go('semester', ValidateAdmin.semester)
-        self.go('award_name', ValidateAdmin.award_name)
-        self.go('award_type', ValidateAdmin.award_type)
+        self.go('faculty_email', ValidateAdmin.faculty_email, faculty_email)
+        self.go('student_eid', ValidateAdmin.student_eid, student_eid)
+        self.go('faculty_type', ValidateAdmin.faculty_type, faculty_type)
+        self.go('research_area', ValidateAdmin.research_area, research_area)
+        self.go('building', ValidateAdmin.building, building)
+        self.go('start_time', ValidateAdmin.start_time, start_time)
+        self.go('end_time', ValidateAdmin.end_time, end_time)
+        self.go('degree_type', ValidateAdmin.degree_type, degree_type)
+        self.go('degree_name', ValidateAdmin.degree_name, degree_name)
+        self.go('institution', ValidateAdmin.institution, institution)
+        self.go('conference_name', ValidateAdmin.conference_name, conference_name)
+        self.go('location', ValidateAdmin.location, location)
+        self.go('journal_name', ValidateAdmin.journal_name, journal_name)
+        self.go('publisher', ValidateAdmin.publisher, publisher)
+        self.go('student_type', ValidateAdmin.student_type, student_type)
+        self.go('course_number', ValidateAdmin.course_number, course_number)
+        self.go('course_name', ValidateAdmin.course_name, course_name)
+        self.go('class_type', ValidateAdmin.class_type, class_type)
+        self.go('semester', ValidateAdmin.semester, semester)
+        self.go('award_name', ValidateAdmin.award_name, award_name)
+        self.go('award_type', ValidateAdmin.award_type, award_type)
         self.get()
 
 if __name__ == "__main__":
