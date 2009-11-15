@@ -42,7 +42,7 @@ class Faculty(db.Model):
     room = db.StringProperty(validator=ValidateFaculty.room)
     email = db.EmailProperty(required=True)
     website = db.LinkProperty()
-    type = db.StringProperty(validator=ValidateFaculty.type)
+    type = db.ReferenceProperty(reference_class=FacultyType)
     
     
 class OfficeHour(db.Model):

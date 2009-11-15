@@ -84,6 +84,9 @@ This function validates websites.
 """
 def website(website):
     return re.search('^(https?)://(\w+\.)+(com|net|org|gov|edu|mil|biz|info|mobi|name|aero|jobs|museum|[a-zA-Z][a-zA-Z])([\w\.]+/?)*$',website) is not None
+
+def year(year):
+    return re.search('^/d/d/d/d$',year) is not None
 """
 This function validates offices.
 """
