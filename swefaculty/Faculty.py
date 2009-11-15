@@ -5,6 +5,7 @@
 
 
 import cgi
+import types
 
 from google.appengine.ext        import db
 from google.appengine.ext        import webapp
@@ -13,23 +14,27 @@ from google.appengine.ext.db     import djangoforms
 
 import ValidateFaculty
 
-options = {"facTypes":("","Professor","Lecturer","Researcher"),
-           "buildings":("","TAY","PAI","ACES","ENS"),
-           "researchAreas":("","AI","Compilers","OS","Robotics","Algorithms"),
-           "gradStudents":("","Student1(st0001)","Student2(st0002)"),
-           "courses":("","55555","55556"),
-           "books":("","AwesomeBook","Anotherbook","LessAwesomeBook"),
-           "awards":("","Awards","SuperAwesomeAward")
-   }
+#options = {"facTypes":("","Professor","Lecturer","Researcher"),
+#           "buildings":("","TAY","PAI","ACES","ENS"),
+#           "researchAreas":("","AI","Compilers","OS","Robotics","Algorithms"),
+#           "gradStudents":("","Student1(st0001)","Student2(st0002)"),
+#           "courses":("","55555","55556"),
+#           "books":("","AwesomeBook","Anotherbook","LessAwesomeBook"),
+#           "awards":("","Awards","SuperAwesomeAward")
+#   }
 
 class student_eid(db.Model) :
     student_eid = db.StringProperty(required=True)
 class faculty_type(db.Model) :
     faculty_type = db.StringProperty(required=True)
+    def __str__(self):
+        return self._faculty_type
 class research_area(db.Model) :
     research_area = db.StringProperty(required=True)
 class building(db.Model) :
     building = db.StringProperty(required=True)
+    def __str__(self):
+        return self._building
 class start_time(db.Model) :
     start_time = db.StringProperty(required=True)
 class end_time(db.Model) :
@@ -68,7 +73,7 @@ Database Faculty Model
 
 class Faculty(db.Model):
     name = db.StringProperty()
-    phone = db.PhoneNumberProperty()
+    phone = db.StringProperty(validator=ValidateFaculty.phone_number)
     building = db.ReferenceProperty(reference_class=building)
     room = db.StringProperty(validator=ValidateFaculty.room)
     email = db.EmailProperty(required=True)
@@ -78,6 +83,8 @@ class Faculty(db.Model):
 """
 Faculty Form
 """
+
+
 
 class FacultyForm (djangoforms.ModelForm) :
     class Meta :
@@ -313,19 +320,19 @@ class AwardJoin(db.Model):
 #"""
 #Function for making generic drop down lists
 #"""
-#def dropDown(name,options,preselect,selected=""):
-#    s = '<select name="'
-#    s+=name
-#    s+='">'
-#    for o in options:
-#        s+='<option value="'
-#        s+=o
-#        s+=('" selected>' if preselect and o==selected else '">')
-#        s+=o
-#        s+='</option>'
-#    s+='</select>' 
-#    return s
-#
+def dropDown(name,options,preselect,selected=""):
+    s = '<select name="'
+    s+=name
+    s+='">'
+    for o in options:
+        s+='<option value="'
+        s+=o
+        s+=('" selected>' if preselect and o==selected else '">')
+        s+=o
+        s+='</option>'
+    s+='</select>' 
+    return s
+
 #"""
 #Generically create a textinput
 #"""
@@ -340,71 +347,48 @@ class AwardJoin(db.Model):
 #id = ""
 #facs = {}
 
+def researchAreaDropDown():
+    ras = research_area.all()
+    s = '<select name="'
+    s+="researchArea"
+    s+='"><option value = ""></option>'
+    for ra in ras:
+        s+='<option value="'
+        s+=str(ra.key())
+        s+='">'
+        s+=ra.research_area
+        s+='</option>'
+    s+='</select>' 
+    return s
+
+def researchAreaList(facKey):
+    ras = AreaJoin.gql("WHERE faculty = :1",facKey)
+    s = ""
+    for ra in ras:
+        s+= db.get(ra.area.key()).research_area
+        s+='\n<br>'
+    return s
+
 class MainPage (webapp.RequestHandler) :
     """
     Takes care of main page
     """
     def get (self) :
-        fac = Faculty.gql("WHERE email = :1",id)
-        data = {}
+        f = Faculty(email = "abc")
+        f.put()
+        fac = Faculty.gql("WHERE email = :1","abc")[0]
+        key = fac.key()
+        data = {"website":fac.website,"type":""if fac.type is None else fac.type.key(),"email":fac.email,"name":fac.name,"phone":fac.phone,"building":""if fac.building is None else fac.building.key(),"room":fac.room}
         form = FacultyForm(data = data)
-        
         self.response.out.write('<form action="/faculty" method="post">')
-        self.response.out.write(FacultyForm())
-        """
-        self.response.out.write('<br />Faculty Name<br />')
-        self.response.out.write(textInputField('name',fac.name))
-        self.response.out.write('<br/>Faculty Office Building<br/>')
-        self.response.out.write(dropDown('building',options["buildings"],True,fac.building))
-        self.response.out.write('<br/>Faculty Room Number<br/>')
-        self.response.out.write(textInputField('room',fac.room))
-        self.response.out.write('<br/>Faculty Phone<br/>')
-        self.response.out.write(textInputField('phone',fac.phone))
-        self.response.out.write('<br/>Faculty email<br/>')
-        self.response.out.write(textInputField('email',fac.email))
-        self.response.out.write('<br/>Faculty website<br/>')
-        self.response.out.write(textInputField('website',fac.website))
-        self.response.out.write('<br/>Faculty Office Hours<br/>')
-        self.response.out.write(officeHoursTextBox(fac))
-        self.response.out.write(dropDown('officeHourDay',OfficeHour.days,False))
-        self.response.out.write(dropDown('beginTime',OfficeHour.times,False))
-        self.response.out.write(dropDown('endTime',OfficeHour.times,False))
-        self.response.out.write('<br/>Faculty Type<br/>')
-        self.response.out.write(dropDown('facType',options["facTypes"],True,fac.type))
-        self.response.out.write('<br/>Degrees<br/>')
-        self.response.out.write(degreesTextBox(fac))
-        self.response.out.write(dropDown('degreeType',Degree.types,False))
-        self.response.out.write(dropDown('degreeInst',Degree.institutions,False))
-        self.response.out.write(textInputField('degreeYear'))
-        self.response.out.write('<br/>Research Areas<br/>')
-        self.response.out.write(textBox(fac.researchAreas))
-        self.response.out.write(dropDown('researchArea',options['researchAreas'],False))
-        self.response.out.write('<br/>Graduate Students<br/>')
-        self.response.out.write(textBox(fac.gradStudents))
-        self.response.out.write(dropDown('gradStudent',options['gradStudents'],False))
-        self.response.out.write('<br/>Courses<br/>')
-        self.response.out.write(textBox(fac.courses))
-        self.response.out.write(dropDown('course',options['courses'],False))
-        self.response.out.write('<br/>Articles<br/>')
-        self.response.out.write(articleTextBox(fac))
-        self.response.out.write(dropDown('journal',Article.journals,False))
-        self.response.out.write(textInputField('articleTitle'))
-        self.response.out.write(textInputField('articleYear'))
-        self.response.out.write('<br/>Conferences<br/>')
-        self.response.out.write(conferenceTextBox(fac))
-        self.response.out.write(dropDown('conference',Conference.conferences,False))
-        self.response.out.write(dropDown('conferenceLocation',Conference.locations,False))
-        self.response.out.write(textInputField('conferenceTitle'))
-        self.response.out.write(textInputField('conferenceDate'))
-        self.response.out.write('<br/>Books<br/>')
-        self.response.out.write(textBox(fac.books))
-        self.response.out.write(dropDown('book',options['books'],False))
-        self.response.out.write('<br/>Awards<br/>')
-        self.response.out.write(textBox(fac.awards))
-        self.response.out.write(dropDown('award',options['awards'],False))
-        self.response.out.write('<br/>')
-        """
-        self.response.out.write('<input type="submit" value="Submit" /> </form><br />')
+        self.response.out.write(form)
+        self.response.out.write('<br><br>Research Areas<br>')
+        self.response.out.write(researchAreaList(key))
+        self.response.out.write(researchAreaDropDown())
+        self.response.out.write('<br><br>Courses<br>')
+        self.response.out.write(courseList(key))
+        
+        self.response.out.write('<br><input type="submit" value="Submit" /> </form><br />')
         
         
         
@@ -413,6 +397,26 @@ class MainPage (webapp.RequestHandler) :
     """
     def post (self) :
         form = FacultyForm(data=self.request.POST)
+        if form.is_valid():
+            fac = Faculty.gql("WHERE email = :1","abc")[0]
+            facKey = fac.key()
+            fac.name = self.request.POST["name"]
+            fac.phone = self.request.POST["phone"]
+            s = self.request.POST["type"]
+            if s != "": fac.type = db.Key(encoded=s);
+            s = self.request.POST["building"]
+            if s != "": fac.building = db.Key(encoded=s);
+            fac.room = self.request.POST["room"]
+            fac.email = self.request.POST["email"]
+            fac.website = self.request.POST["website"]
+            fac.put()
+        else:
+            self.response.out.write("Bad Data")
+            
+        ra = cgi.escape(self.request.get('researchArea'))
+        if ra != "":
+            AreaJoin(faculty = facKey,area = db.Key(ra)).put()
+        
 #        name = cgi.escape(self.request.get('name'))
 #        building = cgi.escape(self.request.get('building'))
 #        room = cgi.escape(self.request.get('room'))

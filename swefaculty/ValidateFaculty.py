@@ -68,7 +68,7 @@ def officeHour(day,begin,end):
 This function validates phone numbers.
 """
 def phone_number (phone) :
-    return not re.search('^(1|1\s*-)?\s*((\(\d\d\d\))|(\d\d\d))\s*-?\s*\d\d\d\s*-?\s*\d\d\d\d\s*((ext|x|ext.)\s*\d+)?$', phone) is None
+    return phone is not None and not re.search('^(1|1\s*-)?\s*((\(\d\d\d\))|(\d\d\d))\s*-?\s*\d\d\d\s*-?\s*\d\d\d\d\s*((ext|x|ext.)\s*\d+)?$', phone) is None
 """
 This function validates names.
 """
@@ -91,7 +91,7 @@ def year(year):
 This function validates offices.
 """
 def room(room):
-    return re.search('^\d+\.\d+$',room) is not None
+    return room is not None and re.search('^\d+\.\d+$',room) is not None 
     
 def unique(unique):
     return re.search('^\d\d\d\d\d$',room) is not None
