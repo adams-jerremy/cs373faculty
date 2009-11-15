@@ -90,6 +90,12 @@ def year(year):
 """
 This function validates offices.
 """
+def room(room):
+    return re.search('^\d+\.\d+$',room) is not None
+    
+def unique(unique):
+    return re.search('^\d\d\d\d\d$',room) is not None
+
 def office(building, location):
     if location == ""  or building == "": return building == location;
     if re.search('\d+\.\d+',location) is None: return False;

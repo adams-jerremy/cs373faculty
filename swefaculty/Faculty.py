@@ -8,9 +8,8 @@ import cgi
 
 from google.appengine.ext        import db
 from google.appengine.ext        import webapp
+from google.appengine.ext.webapp import template 
 from google.appengine.ext.db     import djangoforms
-from google.appengine.ext.webapp import template
-
 
 import ValidateFaculty
 
@@ -23,13 +22,45 @@ options = {"facTypes":("","Professor","Lecturer","Researcher"),
            "awards":("","Awards","SuperAwesomeAward")
    }
 
-"""
-Faculty Form
-"""
-
-class FacultyForm (djangoforms.ModelForm) :
-    class Meta :
-        model = Faculty
+class student_eid(db.Model) :
+    student_eid = db.StringProperty(required=True)
+class faculty_type(db.Model) :
+    faculty_type = db.StringProperty(required=True)
+class research_area(db.Model) :
+    research_area = db.StringProperty(required=True)
+class building(db.Model) :
+    building = db.StringProperty(required=True)
+class start_time(db.Model) :
+    start_time = db.StringProperty(required=True)
+class end_time(db.Model) :
+    end_time = db.StringProperty(required=True)
+class degree_type(db.Model) :
+    degree_type = db.StringProperty(required=True)
+class degree_name(db.Model) :
+    degree_name = db.StringProperty(required=True)
+class institution(db.Model) :
+    institution = db.StringProperty(required=True)
+class conference_name(db.Model) :
+    conference_name = db.StringProperty(required=True)
+class location(db.Model) :
+    location = db.StringProperty(required=True)
+class journal_name(db.Model) :
+    journal_name = db.StringProperty(required=True)
+class publisher(db.Model) :
+    publisher = db.StringProperty(required=True)
+class student_type(db.Model) :
+    student_type = db.StringProperty(required=True)
+class course(db.Model):
+    course_number = db.StringProperty(required=True)
+    course_name = db.StringProperty(required=True)
+    course_type = db.StringProperty(required=True)
+    
+class semester(db.Model) :
+    semester = db.StringProperty(required=True)
+class award_name(db.Model) :
+    award_name = db.StringProperty(required=True)
+class award_type(db.Model) :
+    award_type = db.StringProperty(required=True)
 
 """
 Database Faculty Model
@@ -38,11 +69,19 @@ Database Faculty Model
 class Faculty(db.Model):
     name = db.StringProperty()
     phone = db.PhoneNumberProperty()
-    building = db.ReferenceProperty(reference_class=Building)#TODO: Class Name?
+    building = db.ReferenceProperty(reference_class=building)
     room = db.StringProperty(validator=ValidateFaculty.room)
     email = db.EmailProperty(required=True)
     website = db.LinkProperty()
-    type = db.ReferenceProperty(reference_class=FacultyType)
+    type = db.ReferenceProperty(reference_class=faculty_type)
+
+"""
+Faculty Form
+"""
+
+class FacultyForm (djangoforms.ModelForm) :
+    class Meta :
+        model = Faculty
     
     
 class OfficeHour(db.Model):
@@ -53,253 +92,253 @@ class OfficeHour(db.Model):
 
 class DegreeJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
-    type = db.ReferenceProperty(reference_class=DegreeType)#TODO: Class Name?
-    major = db.ReferenceProperty(reference_class=Major)#TODO: Class Name?
-    institute = db.ReferenceProperty(reference_class=Institute)#TODO: Class Name?
+    type = db.ReferenceProperty(reference_class=degree_type)
+    major = db.ReferenceProperty(reference_class=degree_name)
+    institute = db.ReferenceProperty(reference_class=institution)
     year = db.IntegerProperty(validator=ValidateFaculty.year)
     
-class AreaJoin(db.model):
+class AreaJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
-    area = db.ReferenceProperty(reference_class=ResearchArea)#TODO: Class Name?
+    area = db.ReferenceProperty(reference_class=research_area)
     
-class StudentJoin(db.model):
+class StudentJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
-    student = db.ReferenceProperty(reference_class=GradStudent)#TODO: Class Name?
+    student = db.ReferenceProperty(reference_class=student_eid)
 
-class CourseJoin(db.model):
+class CourseJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
-    unique = db.ReferenceProperty(reference_class=Unique)#TODO: Class Name?
-    course = db.ReferenceProperty(reference_class=Course)#TODO: Class Name?
+    unique = db.IntegerProperty(validator=ValidateFaculty.unique)
+    course = db.ReferenceProperty(reference_class=course)
     semester = db.StringProperty(choices=["Fall","Summer","Spring"])
     year = db.IntegerProperty(validator=ValidateFaculty.year)
 
-class ArticleJoin(db.model):
+class ArticleJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
-    journal = db.ReferenceProperty(reference_class=Journal)#TODO: Class Name?
+    journal = db.ReferenceProperty(reference_class=journal_name)
     title = db.TextProperty()
     date = db.DateProperty()
 
-class ConferenceJoin(db.model):
+class ConferenceJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
-    conference = db.ReferenceProperty(reference_class=Conference)#TODO: Class Name?
+    conference = db.ReferenceProperty(reference_class=conference_name)
     title = db.TextProperty()
-    location =db.ReferenceProperty(reference_class=Location)#TODO: Class Name?
+    location =db.ReferenceProperty(reference_class=location)
     year = db.IntegerProperty(validator=ValidateFaculty.year)
     
-class BookJoin(db.model):
+class BookJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
     title = db.TextProperty()
-    publisher = db.ReferenceProperty(reference_class=Publisher)
+    publisher = db.ReferenceProperty(reference_class=publisher)
 
-class AwardJoin(db.model):
+class AwardJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
     title = db.TextProperty()
-    type = db.ReferenceProperty(reference_class=Award)
+    type = db.ReferenceProperty(reference_class=award_type)
     year = db.IntegerProperty(validator=ValidateFaculty.year)
 
-class Faculty:
-
-    def __init__(self):
-        self.phone = ""
-        self.name = ""
-        self.building = ""
-        self.room = ""
-        self.email = ""
-        self.website = "http://"
-        self.officeHours = []
-        self.type = ""
-        self.degrees = []
-        self.researchAreas = []
-        self.gradStudents = []
-        self.courses = []
-        self.articles = []
-        self.conferences = []
-        self.books= []
-        self.awards = []
-"""
-Simple class for holding onto conference data
-"""        
-class Conference:
-    conferences = ("","Conference","AnotherConference","aThird")
-    locations = ("","Location","Burbank","Singapore","Fiji","Stalingrad")
-    def __init__(self,name,location,title,date):
-        self.name = name
-        self.location = location
-        self.title = title
-        self.date = date
-    def __len__(self):
-        return len(self.title)+len(self.name)+len(self.date)+len(self.location)+len("at  in , ")
-    
-"""
-Simple class for holding onto article data
-"""        
-class Article:
-    journals = ("","Scientific American","Applied Computing", "Robotic Murder Monthly")
-    def __init__(self,t,j,d):
-        self.title = t
-        self.journal = j
-        self.date = d
-    def __len__(self):
-        return len(self.title)+len(self.journal)+len(self.date)+len(" in , ")
-    
-"""
-Simple class for holding onto degree data
-"""        
-class Degree:
-    types = ("","B.S.","B.A.","M.S.","M.A.","Ph.D.")
-    institutions = ("","UT","Less Important")
-    def __init__(self,t,i,d):
-        self.type = t
-        self.institution = i
-        self.date = d
-    def __len__(self):
-        return len(self.type)+len(self.institution)+len(self.date)+len(" from in ")    
-
-"""
-Simple class for holding onto officeHour data
-"""        
-class OfficeHour:
-    days = ("","M","T","W","R","F")
-    times = ("","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30")
-    def __init__(self,day,b,e):
-        self.day = day
-        self.beginTime = b
-        self.endTime = e
-    def __len__(self):
-        return len(self.day)+len(self.beginTime)+len(self.endTime)+len(" from in ")
-"""
-function to check if any of the values passed in are filled
-"""
-def anyFilled(*t):
-    for e in t:
-        if e!="": return True;
-        
-"""
-Function for making 'generic' text boxes
-"""
-
-def textBox(t):
-    s = '<textarea rows ="'
-    s+= str(len(t)+1)
-    s+= '" cols="'
-    s+= str(max(map(len,t)) if len(t)>0 else 25)
-    s+='" readonly="readonly">'
-    for o in t:
-        s+=o
-        s+='\n'
-    s+='</textarea>'
-    return s
-
-"""
-function for making conference text boxes- a little more involved than regular textboxes
-"""
-
-def conferenceTextBox(f):
-    s = '<textarea rows ="'
-    s+= str(len(f.conferences)+1)
-    s+= '" cols="'
-    s+= str(max(map(len,f.conferences)) if len(f.conferences)>0 else 25)
-    s+='" readonly="readonly">'
-    for conf in f.conferences: #name location title date
-        s+=conf.title
-        s+= ' at '
-        s+=conf.name
-        s+= ' in '
-        s+=conf.location
-        s+=', '
-        s+=conf.date
-        s+='\n'
-    s+='</textarea>'
-    return s    
-
-"""
-function for making article text boxes- a little more involved than regular textboxes
-"""
-def articleTextBox(f):
-    s = '<textarea rows ="'
-    s+= str(len(f.articles)+1)
-    s+= '" cols="'
-    s+= str(max(map(len,f.articles)) if len(f.articles)>0 else 25)
-    s+='" readonly="readonly">'
-    for article in f.articles:
-        s+=article.title
-        s+= ' in '
-        s+=article.journal
-        s+= ', '
-        s+=article.date
-        s+='\n'
-    s+='</textarea>'
-    return s
-    
-"""
-function for making office hour text boxes- a little more involved than regular textboxes
-"""
-def officeHoursTextBox(f):
-    s = '<textarea rows ="'
-    s+= str(len(f.articles)+1)
-    s+= '" cols="'
-    s+= str(max(map(len,f.officeHours)) if len(f.officeHours)>0 else 25)
-    s+='" readonly="readonly">'
-    for officeHour in f.officeHours:
-        s+=officeHour.day
-        s+= ' from '
-        s+=officeHour.beginTime
-        s+= ' to '
-        s+=officeHour.endTime
-        s+='\n'
-    s+='</textarea>'
-    return s
-
-"""
-function for making degree text boxes- a little more involved than regular textboxes
-"""
-def degreesTextBox(f):
-    s = '<textarea rows ="'
-    s+= str(len(f.degrees)+1)
-    s+= '" cols="'
-    s+= str(max(map(len,f.degrees)) if len(f.degrees)>0 else 25)
-    s+='" readonly="readonly">'
-    for degree in f.degrees:
-        s+=degree.type
-        s+= ' degree from '
-        s+=degree.institution
-        s+= ' in '
-        s+=degree.date
-        s+='\n'
-    s+='</textarea>'
-    return s
-
-    
-
-"""
-Function for making generic drop down lists
-"""
-def dropDown(name,options,preselect,selected=""):
-    s = '<select name="'
-    s+=name
-    s+='">'
-    for o in options:
-        s+='<option value="'
-        s+=o
-        s+=('" selected>' if preselect and o==selected else '">')
-        s+=o
-        s+='</option>'
-    s+='</select>' 
-    return s
-
-"""
-Generically create a textinput
-"""
-
-def textInputField(id,value=''):
-    return '<input type="text" name="'+id+'" value = "' +value+ '" />'
-
-'''
-handler for faculty page
-'''
-
-id = ""
-facs = {}
+#class Faculty:
+#
+#    def __init__(self):
+#        self.phone = ""
+#        self.name = ""
+#        self.building = ""
+#        self.room = ""
+#        self.email = ""
+#        self.website = "http://"
+#        self.officeHours = []
+#        self.type = ""
+#        self.degrees = []
+#        self.researchAreas = []
+#        self.gradStudents = []
+#        self.courses = []
+#        self.articles = []
+#        self.conferences = []
+#        self.books= []
+#        self.awards = []
+#"""
+#Simple class for holding onto conference data
+#"""        
+#class Conference:
+#    conferences = ("","Conference","AnotherConference","aThird")
+#    locations = ("","Location","Burbank","Singapore","Fiji","Stalingrad")
+#    def __init__(self,name,location,title,date):
+#        self.name = name
+#        self.location = location
+#        self.title = title
+#        self.date = date
+#    def __len__(self):
+#        return len(self.title)+len(self.name)+len(self.date)+len(self.location)+len("at  in , ")
+#    
+#"""
+#Simple class for holding onto article data
+#"""        
+#class Article:
+#    journals = ("","Scientific American","Applied Computing", "Robotic Murder Monthly")
+#    def __init__(self,t,j,d):
+#        self.title = t
+#        self.journal = j
+#        self.date = d
+#    def __len__(self):
+#        return len(self.title)+len(self.journal)+len(self.date)+len(" in , ")
+#    
+#"""
+#Simple class for holding onto degree data
+#"""        
+#class Degree:
+#    types = ("","B.S.","B.A.","M.S.","M.A.","Ph.D.")
+#    institutions = ("","UT","Less Important")
+#    def __init__(self,t,i,d):
+#        self.type = t
+#        self.institution = i
+#        self.date = d
+#    def __len__(self):
+#        return len(self.type)+len(self.institution)+len(self.date)+len(" from in ")    
+#
+#"""
+#Simple class for holding onto officeHour data
+#"""        
+#class OfficeHour:
+#    days = ("","M","T","W","R","F")
+#    times = ("","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30")
+#    def __init__(self,day,b,e):
+#        self.day = day
+#        self.beginTime = b
+#        self.endTime = e
+#    def __len__(self):
+#        return len(self.day)+len(self.beginTime)+len(self.endTime)+len(" from in ")
+#"""
+#function to check if any of the values passed in are filled
+#"""
+#def anyFilled(*t):
+#    for e in t:
+#        if e!="": return True;
+#        
+#"""
+#Function for making 'generic' text boxes
+#"""
+#
+#def textBox(t):
+#    s = '<textarea rows ="'
+#    s+= str(len(t)+1)
+#    s+= '" cols="'
+#    s+= str(max(map(len,t)) if len(t)>0 else 25)
+#    s+='" readonly="readonly">'
+#    for o in t:
+#        s+=o
+#        s+='\n'
+#    s+='</textarea>'
+#    return s
+#
+#"""
+#function for making conference text boxes- a little more involved than regular textboxes
+#"""
+#
+#def conferenceTextBox(f):
+#    s = '<textarea rows ="'
+#    s+= str(len(f.conferences)+1)
+#    s+= '" cols="'
+#    s+= str(max(map(len,f.conferences)) if len(f.conferences)>0 else 25)
+#    s+='" readonly="readonly">'
+#    for conf in f.conferences: #name location title date
+#        s+=conf.title
+#        s+= ' at '
+#        s+=conf.name
+#        s+= ' in '
+#        s+=conf.location
+#        s+=', '
+#        s+=conf.date
+#        s+='\n'
+#    s+='</textarea>'
+#    return s    
+#
+#"""
+#function for making article text boxes- a little more involved than regular textboxes
+#"""
+#def articleTextBox(f):
+#    s = '<textarea rows ="'
+#    s+= str(len(f.articles)+1)
+#    s+= '" cols="'
+#    s+= str(max(map(len,f.articles)) if len(f.articles)>0 else 25)
+#    s+='" readonly="readonly">'
+#    for article in f.articles:
+#        s+=article.title
+#        s+= ' in '
+#        s+=article.journal
+#        s+= ', '
+#        s+=article.date
+#        s+='\n'
+#    s+='</textarea>'
+#    return s
+#    
+#"""
+#function for making office hour text boxes- a little more involved than regular textboxes
+#"""
+#def officeHoursTextBox(f):
+#    s = '<textarea rows ="'
+#    s+= str(len(f.articles)+1)
+#    s+= '" cols="'
+#    s+= str(max(map(len,f.officeHours)) if len(f.officeHours)>0 else 25)
+#    s+='" readonly="readonly">'
+#    for officeHour in f.officeHours:
+#        s+=officeHour.day
+#        s+= ' from '
+#        s+=officeHour.beginTime
+#        s+= ' to '
+#        s+=officeHour.endTime
+#        s+='\n'
+#    s+='</textarea>'
+#    return s
+#
+#"""
+#function for making degree text boxes- a little more involved than regular textboxes
+#"""
+#def degreesTextBox(f):
+#    s = '<textarea rows ="'
+#    s+= str(len(f.degrees)+1)
+#    s+= '" cols="'
+#    s+= str(max(map(len,f.degrees)) if len(f.degrees)>0 else 25)
+#    s+='" readonly="readonly">'
+#    for degree in f.degrees:
+#        s+=degree.type
+#        s+= ' degree from '
+#        s+=degree.institution
+#        s+= ' in '
+#        s+=degree.date
+#        s+='\n'
+#    s+='</textarea>'
+#    return s
+#
+#    
+#
+#"""
+#Function for making generic drop down lists
+#"""
+#def dropDown(name,options,preselect,selected=""):
+#    s = '<select name="'
+#    s+=name
+#    s+='">'
+#    for o in options:
+#        s+='<option value="'
+#        s+=o
+#        s+=('" selected>' if preselect and o==selected else '">')
+#        s+=o
+#        s+='</option>'
+#    s+='</select>' 
+#    return s
+#
+#"""
+#Generically create a textinput
+#"""
+#
+#def textInputField(id,value=''):
+#    return '<input type="text" name="'+id+'" value = "' +value+ '" />'
+#
+#'''
+#handler for faculty page
+#'''
+#
+#id = ""
+#facs = {}
 
 class MainPage (webapp.RequestHandler) :
     """
@@ -311,6 +350,7 @@ class MainPage (webapp.RequestHandler) :
         form = FacultyForm(data = data)
         
         self.response.out.write('<form action="/faculty" method="post">')
+        self.response.out.write(FacultyForm())
         """
         self.response.out.write('<br />Faculty Name<br />')
         self.response.out.write(textInputField('name',fac.name))
@@ -373,103 +413,103 @@ class MainPage (webapp.RequestHandler) :
     """
     def post (self) :
         form = FacultyForm(data=self.request.POST)
-        name = cgi.escape(self.request.get('name'))
-        building = cgi.escape(self.request.get('building'))
-        room = cgi.escape(self.request.get('room'))
-        phone = cgi.escape(self.request.get('phone'))
-        email = cgi.escape(self.request.get('email'))
-        website = cgi.escape(self.request.get('website'))
-        officeHourDay = cgi.escape(self.request.get('officeHourDay'))
-        officeHourBegin = cgi.escape(self.request.get('beginTime'))
-        officeHourEnd = cgi.escape(self.request.get('endTime'))
-        facType = cgi.escape(self.request.get('facType'))
-        degreeType = cgi.escape(self.request.get('degreeType'))
-        degreeInst = cgi.escape(self.request.get('degreeInst'))
-        degreeYear = cgi.escape(self.request.get('degreeYear'))
-        researchArea = cgi.escape(self.request.get('researchArea'))
-        gradStudent = cgi.escape(self.request.get('gradStudent'))
-        course = cgi.escape(self.request.get('course'))
-        articleTitle = cgi.escape(self.request.get('articleTitle'))
-        journal = cgi.escape(self.request.get('journal'))
-        articleYear = cgi.escape(self.request.get('articleYear'))
-        confName = cgi.escape(self.request.get('conference'))
-        confLoc = cgi.escape(self.request.get('conferenceLocation'))
-        confTitle = cgi.escape(self.request.get('conferenceTitle'))
-        confDate = cgi.escape(self.request.get('conferenceDate'))
-        book = cgi.escape(self.request.get('book'))
-        award = cgi.escape(self.request.get('award'))
-        logout = cgi.escape(self.request.get('logout')) == 'on'
-        
-        if ValidateFaculty.name(name):
-            fac.name = name
-        else:
-            self.response.out.write('Invalid name<br />')
-        
-        if ValidateFaculty.office(building, room) :
-            fac.building = building
-            fac.room = room
-        else :
-            self.response.out.write('Invalid Office.<br />')
-            
-        if ValidateFaculty.phone_number(phone) :
-            fac.phone = phone
-        else :
-            self.response.out.write('Invalid number.<br />')
-        if ValidateFaculty.email(email) :
-            fac.email = email
-        else :
-            self.response.out.write('Invalid email.<br />')
-        if ValidateFaculty.website(website) :
-            fac.website = website
-        else :
-            self.response.out.write('Invalid Website.<br />')
-        if officeHourDay!="" or officeHourBegin!="" or officeHourEnd !="":
-            if ValidateFaculty.officeHour(officeHourDay,officeHourBegin,officeHourEnd) :
-                fac.officeHours.append(OfficeHour(officeHourDay,officeHourBegin,officeHourEnd))
-            else:
-                self.response.out.write('Invalid Office Hour.<br />')
-        fac.type = facType
-        if degreeType!="" or degreeInst!="" or degreeYear !="":
-            if ValidateFaculty.degree(fac.degrees,degreeType,degreeInst,degreeYear) :
-                fac.degrees.append(Degree(degreeType,degreeInst,degreeYear))
-            else:
-                self.response.out.write('Invalid Degree.<br />')
-        if researchArea!="":
-            if ValidateFaculty.researchArea(fac.researchAreas,researchArea) :
-                fac.researchAreas.append(researchArea)
-            else:
-                self.response.out.write('Invalid Research Area.<br />')
-        if gradStudent != "":
-            if ValidateFaculty.graduateStudent(fac.gradStudents,gradStudent) :
-                fac.gradStudents.append(gradStudent)
-            else:
-                self.response.out.write('Invalid Grad Student.<br />')
-        if course != "":
-            if ValidateFaculty.course(fac.courses,course) :
-                fac.courses.append(course)
-            else:
-                self.response.out.write('Invalid Course.<br />')
-
-        if articleTitle!="" or articleYear!="" or journal !="":
-            if ValidateFaculty.article(fac.articles,articleTitle,journal,articleYear) :
-                fac.articles.append(Article(articleTitle,journal,articleYear))
-            else:
-                self.response.out.write('Invalid Article.<br />') 
-        if anyFilled(confName,confLoc,confTitle,confDate):
-            if ValidateFaculty.conference(fac.conferences,confName,confLoc,confTitle,confDate) :
-                fac.conferences.append(Conference(confName,confLoc,confTitle,confDate))
-            else:
-                self.response.out.write('Invalid Conference.<br />')        
-        if book != "":
-            if ValidateFaculty.book(fac.books,book) :
-                fac.books.append(book)
-            else:
-                self.response.out.write('Invalid book.<br />')
-        if award != "":
-            if ValidateFaculty.award(fac.awards,award) :
-                fac.awards.append(award)
-            else:
-                self.response.out.write('Invalid Award.<br />')
+#        name = cgi.escape(self.request.get('name'))
+#        building = cgi.escape(self.request.get('building'))
+#        room = cgi.escape(self.request.get('room'))
+#        phone = cgi.escape(self.request.get('phone'))
+#        email = cgi.escape(self.request.get('email'))
+#        website = cgi.escape(self.request.get('website'))
+#        officeHourDay = cgi.escape(self.request.get('officeHourDay'))
+#        officeHourBegin = cgi.escape(self.request.get('beginTime'))
+#        officeHourEnd = cgi.escape(self.request.get('endTime'))
+#        facType = cgi.escape(self.request.get('facType'))
+#        degreeType = cgi.escape(self.request.get('degreeType'))
+#        degreeInst = cgi.escape(self.request.get('degreeInst'))
+#        degreeYear = cgi.escape(self.request.get('degreeYear'))
+#        researchArea = cgi.escape(self.request.get('researchArea'))
+#        gradStudent = cgi.escape(self.request.get('gradStudent'))
+#        course = cgi.escape(self.request.get('course'))
+#        articleTitle = cgi.escape(self.request.get('articleTitle'))
+#        journal = cgi.escape(self.request.get('journal'))
+#        articleYear = cgi.escape(self.request.get('articleYear'))
+#        confName = cgi.escape(self.request.get('conference'))
+#        confLoc = cgi.escape(self.request.get('conferenceLocation'))
+#        confTitle = cgi.escape(self.request.get('conferenceTitle'))
+#        confDate = cgi.escape(self.request.get('conferenceDate'))
+#        book = cgi.escape(self.request.get('book'))
+#        award = cgi.escape(self.request.get('award'))
+#        logout = cgi.escape(self.request.get('logout')) == 'on'
+#        
+#        if ValidateFaculty.name(name):
+#            fac.name = name
+#        else:
+#            self.response.out.write('Invalid name<br />')
+#        
+#        if ValidateFaculty.office(building, room) :
+#            fac.building = building
+#            fac.room = room
+#        else :
+#            self.response.out.write('Invalid Office.<br />')
+#            
+#        if ValidateFaculty.phone_number(phone) :
+#            fac.phone = phone
+#        else :
+#            self.response.out.write('Invalid number.<br />')
+#        if ValidateFaculty.email(email) :
+#            fac.email = email
+#        else :
+#            self.response.out.write('Invalid email.<br />')
+#        if ValidateFaculty.website(website) :
+#            fac.website = website
+#        else :
+#            self.response.out.write('Invalid Website.<br />')
+#        if officeHourDay!="" or officeHourBegin!="" or officeHourEnd !="":
+#            if ValidateFaculty.officeHour(officeHourDay,officeHourBegin,officeHourEnd) :
+#                fac.officeHours.append(OfficeHour(officeHourDay,officeHourBegin,officeHourEnd))
+#            else:
+#                self.response.out.write('Invalid Office Hour.<br />')
+#        fac.type = facType
+#        if degreeType!="" or degreeInst!="" or degreeYear !="":
+#            if ValidateFaculty.degree(fac.degrees,degreeType,degreeInst,degreeYear) :
+#                fac.degrees.append(Degree(degreeType,degreeInst,degreeYear))
+#            else:
+#                self.response.out.write('Invalid Degree.<br />')
+#        if researchArea!="":
+#            if ValidateFaculty.researchArea(fac.researchAreas,researchArea) :
+#                fac.researchAreas.append(researchArea)
+#            else:
+#                self.response.out.write('Invalid Research Area.<br />')
+#        if gradStudent != "":
+#            if ValidateFaculty.graduateStudent(fac.gradStudents,gradStudent) :
+#                fac.gradStudents.append(gradStudent)
+#            else:
+#                self.response.out.write('Invalid Grad Student.<br />')
+#        if course != "":
+#            if ValidateFaculty.course(fac.courses,course) :
+#                fac.courses.append(course)
+#            else:
+#                self.response.out.write('Invalid Course.<br />')
+#
+#        if articleTitle!="" or articleYear!="" or journal !="":
+#            if ValidateFaculty.article(fac.articles,articleTitle,journal,articleYear) :
+#                fac.articles.append(Article(articleTitle,journal,articleYear))
+#            else:
+#                self.response.out.write('Invalid Article.<br />') 
+#        if anyFilled(confName,confLoc,confTitle,confDate):
+#            if ValidateFaculty.conference(fac.conferences,confName,confLoc,confTitle,confDate) :
+#                fac.conferences.append(Conference(confName,confLoc,confTitle,confDate))
+#            else:
+#                self.response.out.write('Invalid Conference.<br />')        
+#        if book != "":
+#            if ValidateFaculty.book(fac.books,book) :
+#                fac.books.append(book)
+#            else:
+#                self.response.out.write('Invalid book.<br />')
+#        if award != "":
+#            if ValidateFaculty.award(fac.awards,award) :
+#                fac.awards.append(award)
+#            else:
+#                self.response.out.write('Invalid Award.<br />')
         self.get()
 
 
