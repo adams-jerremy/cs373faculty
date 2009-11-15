@@ -6,7 +6,11 @@
 
 import cgi
 
-from google.appengine.ext import webapp
+from google.appengine.ext        import db
+from google.appengine.ext        import webapp
+from google.appengine.ext.db     import djangoforms
+from google.appengine.ext.webapp import template
+
 
 import ValidateFaculty
 
@@ -17,10 +21,82 @@ options = {"facTypes":("","Professor","Lecturer","Researcher"),
            "courses":("","55555","55556"),
            "books":("","AwesomeBook","Anotherbook","LessAwesomeBook"),
            "awards":("","Awards","SuperAwesomeAward")
-           }
+   }
+
 """
-Simple class for holding onto faculty data
+Faculty Form
 """
+
+class FacultyForm (djangoforms.ModelForm) :
+    class Meta :
+        model = Faculty
+
+"""
+Database Faculty Model
+"""
+
+class Faculty(db.Model):
+    name = db.StringProperty()
+    phone = db.PhoneNumberProperty()
+    building = db.ReferenceProperty(reference_class=Building)#TODO: Class Name?
+    room = db.StringProperty(validator=ValidateFaculty.room)
+    email = db.EmailProperty(required=True)
+    website = db.LinkProperty()
+    type = db.StringProperty(validator=ValidateFaculty.type)
+    
+    
+class OfficeHour(db.Model):
+    faculty = db.ReferenceProperty(reference_class=Faculty)
+    day = db.StringProperty(choices = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"])
+    start = db.TimeProperty()
+    end = db.TimeProperty()
+
+class DegreeJoin(db.Model):
+    faculty = db.ReferenceProperty(reference_class=Faculty)
+    type = db.ReferenceProperty(reference_class=DegreeType)#TODO: Class Name?
+    major = db.ReferenceProperty(reference_class=Major)#TODO: Class Name?
+    institute = db.ReferenceProperty(reference_class=Institute)#TODO: Class Name?
+    year = db.IntegerProperty(validator=ValidateFaculty.year)
+    
+class AreaJoin(db.model):
+    faculty = db.ReferenceProperty(reference_class=Faculty)
+    area = db.ReferenceProperty(reference_class=ResearchArea)#TODO: Class Name?
+    
+class StudentJoin(db.model):
+    faculty = db.ReferenceProperty(reference_class=Faculty)
+    student = db.ReferenceProperty(reference_class=GradStudent)#TODO: Class Name?
+
+class CourseJoin(db.model):
+    faculty = db.ReferenceProperty(reference_class=Faculty)
+    unique = db.ReferenceProperty(reference_class=Unique)#TODO: Class Name?
+    course = db.ReferenceProperty(reference_class=Course)#TODO: Class Name?
+    semester = db.StringProperty(choices=["Fall","Summer","Spring"])
+    year = db.IntegerProperty(validator=ValidateFaculty.year)
+
+class ArticleJoin(db.model):
+    faculty = db.ReferenceProperty(reference_class=Faculty)
+    journal = db.ReferenceProperty(reference_class=Journal)#TODO: Class Name?
+    title = db.TextProperty()
+    date = db.DateProperty()
+
+class ConferenceJoin(db.model):
+    faculty = db.ReferenceProperty(reference_class=Faculty)
+    conference = db.ReferenceProperty(reference_class=Conference)#TODO: Class Name?
+    title = db.TextProperty()
+    location =db.ReferenceProperty(reference_class=Location)#TODO: Class Name?
+    year = db.IntegerProperty(validator=ValidateFaculty.year)
+    
+class BookJoin(db.model):
+    faculty = db.ReferenceProperty(reference_class=Faculty)
+    title = db.TextProperty()
+    publisher = db.ReferenceProperty(reference_class=Publisher)
+
+class AwardJoin(db.model):
+    faculty = db.ReferenceProperty(reference_class=Faculty)
+    title = db.TextProperty()
+    type = db.ReferenceProperty(reference_class=Award)
+    year = db.IntegerProperty(validator=ValidateFaculty.year)
+
 class Faculty:
 
     def __init__(self):
