@@ -386,7 +386,7 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write(researchAreaList(key))
         self.response.out.write(researchAreaDropDown())
         self.response.out.write('<br><br>Courses<br>')
-        self.response.out.write(courseList(key))
+        #self.response.out.write(courseList(key))
         
         self.response.out.write('<br><input type="submit" value="Submit" /> </form><br />')
         
