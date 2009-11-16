@@ -13,6 +13,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.db     import djangoforms
 
 import ValidateFaculty
+import main
 
 #options = {"facTypes":("","Professor","Lecturer","Researcher"),
 #           "buildings":("","TAY","PAI","ACES","ENS"),
@@ -55,10 +56,16 @@ class publisher(db.Model) :
     publisher = db.StringProperty(required=True)
 class student_type(db.Model) :
     student_type = db.StringProperty(required=True)
-class course(db.Model):
+class course_number(db.Model) :
     course_number = db.StringProperty(required=True)
+class course_name(db.Model) :
     course_name = db.StringProperty(required=True)
+class course_type(db.Model) :
     course_type = db.StringProperty(required=True)
+class course(db.Model):
+    course_number = db.ReferenceProperty(reference_class=course_number)
+    course_name = db.ReferenceProperty(reference_class=course_name)
+    course_type = db.ReferenceProperty(reference_class=course_type)
     
 class semester(db.Model) :
     semester = db.StringProperty(required=True)
@@ -91,7 +98,7 @@ class FacultyForm (djangoforms.ModelForm) :
         model = Faculty
     
     
-class OfficeHour(db.Model):
+class OfficeHourJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
     day = db.StringProperty(choices = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"])
     start = db.TimeProperty()
@@ -116,8 +123,7 @@ class CourseJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
     unique = db.IntegerProperty(validator=ValidateFaculty.unique)
     course = db.ReferenceProperty(reference_class=course)
-    semester = db.StringProperty(choices=["Fall","Summer","Spring"])
-    year = db.IntegerProperty(validator=ValidateFaculty.year)
+    semester = db.ReferenceProperty(reference_class=semester)
 
 class ArticleJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
@@ -320,14 +326,14 @@ class AwardJoin(db.Model):
 #"""
 #Function for making generic drop down lists
 #"""
-def dropDown(name,options,preselect,selected=""):
+def dropDownList(name,options):
     s = '<select name="'
     s+=name
     s+='">'
     for o in options:
         s+='<option value="'
         s+=o
-        s+=('" selected>' if preselect and o==selected else '">')
+        s+='">'
         s+=o
         s+='</option>'
     s+='</select>' 
@@ -337,36 +343,70 @@ def dropDown(name,options,preselect,selected=""):
 #Generically create a textinput
 #"""
 #
-#def textInputField(id,value=''):
-#    return '<input type="text" name="'+id+'" value = "' +value+ '" />'
+def textInputField(id,value=''):
+    return '<input type="text" name="'+id+'" value = "' +value+ '" />'
 #
 #'''
 #handler for faculty page
 #'''
-#
-#id = ""
-#facs = {}
 
-def researchAreaDropDown():
-    ras = research_area.all()
-    s = '<select name="'
-    s+="researchArea"
-    s+='"><option value = ""></option>'
+def removeCheckBox(entry):
+    return ' Remove:<input type="checkbox" name="R'+str(entry.key())+'"/>\n<br>'
+
+def getOnFac(table,facKey):
+    return table.gql("WHERE faculty=:1",facKey)
+
+def tab(i):
+    return '&nbsp;'*i
+
+def courseList(facKey):
+    cs = getOnFac(CourseJoin,facKey)
+    s = ""
+    for c in cs:
+        s+=tab(4)+str(c.unique)+": "+db.get(c.course.key()).course_number.course_number+", "+db.get(c.course.key()).course_name.course_name
+        s+=removeCheckBox(c)
+    return s
+def researchAreaList(facKey):
+    ras = getOnFac(AreaJoin,facKey)
+    s = ""
     for ra in ras:
+        s+= tab(4)+ db.get(ra.area.key()).research_area
+        s+=removeCheckBox(ra)
+    return s
+def bookList(facKey):
+    bs = getOnFac(BookJoin,facKey)
+    s = ""
+    for b in bs:
+        s+= tab(4)+b.title+" from "+  db.get(b.publisher.key()).publisher
+        s+=removeCheckBox(b)
+    return s
+
+def dropDown(table,name,column):
+    entries = table.all()
+    s = '<select name="'
+    s+= name
+    s+='"><option value = ""></option>'
+    for e in entries:
         s+='<option value="'
-        s+=str(ra.key())
+        s+=str(e.key())
         s+='">'
-        s+=ra.research_area
+        s+=e.__dict__["_"+column]
         s+='</option>'
     s+='</select>' 
     return s
 
-def researchAreaList(facKey):
-    ras = AreaJoin.gql("WHERE faculty = :1",facKey)
-    s = ""
-    for ra in ras:
-        s+= db.get(ra.area.key()).research_area
-        s+='\n<br>'
+def courseDropDown():
+    entries = course.all()
+    s = '<select name="'
+    s+= "course"
+    s+='"><option value = ""></option>'
+    for e in entries:
+        s+='<option value="'
+        s+=str(e.key())
+        s+='">'
+        s+=e.course_number.course_number + ", " + e.course_name.course_name + ", " + e.course_type.course_type
+        s+='</option>'
+    s+='</select>' 
     return s
 
 class MainPage (webapp.RequestHandler) :
@@ -374,9 +414,7 @@ class MainPage (webapp.RequestHandler) :
     Takes care of main page
     """
     def get (self) :
-        f = Faculty(email = "abc")
-        f.put()
-        fac = Faculty.gql("WHERE email = :1","abc")[0]
+        fac = Faculty.gql("WHERE email = :1","blah@blah.com")[0]
         key = fac.key()
         data = {"website":fac.website,"type":""if fac.type is None else fac.type.key(),"email":fac.email,"name":fac.name,"phone":fac.phone,"building":""if fac.building is None else fac.building.key(),"room":fac.room}
         form = FacultyForm(data = data)
@@ -384,22 +422,35 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write(form)
         self.response.out.write('<br><br>Research Areas<br>')
         self.response.out.write(researchAreaList(key))
-        self.response.out.write(researchAreaDropDown())
+        #self.response.out.write(researchAreaDropDown())
+        self.response.out.write(dropDown(research_area,"researchArea","research_area"))
+        self.response.out.write('<br><br>Books<br>')
+        self.response.out.write(bookList(key))
+        self.response.out.write(textInputField("bookTitle"))
+        self.response.out.write(dropDown(publisher,"publisher","publisher"))
         self.response.out.write('<br><br>Courses<br>')
-        #self.response.out.write(courseList(key))
+        self.response.out.write(courseList(key))
+        self.response.out.write(textInputField("unique"))
+        self.response.out.write(courseDropDown())
+        self.response.out.write(dropDown(semester,"semester","semester"))
+        self.response.out.write(str(getOnFac(CourseJoin,key)))
+        self.response.out.write(CourseJoin.gql("WHERE faculty=:1",key))
+        self.response.out.write(CourseJoin.all())
         
         self.response.out.write('<br><input type="submit" value="Submit" /> </form><br />')
         
         
-        
+    def doDeletes(self, table, facKey):
+        map(lambda x: x.delete(),filter(lambda x:cgi.escape(self.request.get('R'+str(x.key()))) == 'on', table.gql("WHERE faculty=:1",facKey)))
+            
     """
     takes care of submissions
     """
     def post (self) :
+        fac = Faculty.gql("WHERE email = :1","blah@blah.com")[0]
+        facKey = fac.key()
         form = FacultyForm(data=self.request.POST)
-        if form.is_valid():
-            fac = Faculty.gql("WHERE email = :1","abc")[0]
-            facKey = fac.key()
+        if form.is_valid():    
             fac.name = self.request.POST["name"]
             fac.phone = self.request.POST["phone"]
             s = self.request.POST["type"]
@@ -416,7 +467,25 @@ class MainPage (webapp.RequestHandler) :
         ra = cgi.escape(self.request.get('researchArea'))
         if ra != "":
             AreaJoin(faculty = facKey,area = db.Key(ra)).put()
+        self.doDeletes(AreaJoin,facKey)
         
+        bookTitle = cgi.escape(self.request.get('bookTitle'))
+        publisher = cgi.escape(self.request.get('publisher'))
+        if bookTitle!="" and publisher != "":
+            BookJoin(faculty=facKey,title=bookTitle,publisher=db.Key(publisher)).put()
+        self.doDeletes(BookJoin,facKey)
+            
+        course = cgi.escape(self.request.get('course'))
+        unique = cgi.escape(self.request.get('unique'))
+        semester = cgi.escape(self.request.get('semester'))
+        if course!="" and unique != "" and semester != "":
+            CourseJoin(faculty=facKey,unique=int(unique),course=db.Key(course),semester=db.Key(semester)).put()
+        self.doDeletes(CourseJoin,facKey)    
+        
+        
+        
+
+        #map(lambda x: x.delete(),filter(lambda x:cgi.escape(self.request.get('R'+str(x.area.key()))) == 'on', ras))
 #        name = cgi.escape(self.request.get('name'))
 #        building = cgi.escape(self.request.get('building'))
 #        room = cgi.escape(self.request.get('room'))

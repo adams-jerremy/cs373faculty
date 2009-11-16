@@ -73,14 +73,15 @@ def publisher (s) :
 def student_type (s) :
     return True
 
+def course_type(s):
+    return True
+
 def course_number (s) :
     return not re.search('^CS\d\d\d([A-Z])?$', s) is None
 
 def course_name (s) :
     return True
 
-def class_type (s) :
-    return True
 
 def semester (s) :
     return not re.search('^((Spring)|(Summer)|(Fall)) \d\d\d\d$', s) is None

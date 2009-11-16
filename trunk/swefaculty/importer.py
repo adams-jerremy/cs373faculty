@@ -43,13 +43,286 @@ class Faculty() :
     This method parses the given xml file and stores the data into the appropriate containers.
     """
     def process (self, filename) :
-        f = open(filename)
-        xml = ""
-        while True :
-            s = f.readline()
-            if len(s) == 0 :
-                break
-            xml += s
+#        f = open(filename)
+#        xml = ""
+#        while True :
+#            s = f.readline()
+#            if len(s) == 0 :
+#                break
+#            xml += s
+        xml = """
+        <faculty_member>
+
+    <faculty_firstname>
+
+    Shyamal
+
+    </faculty_firstname>
+
+    <faculty_lastname>
+
+    Mitra
+
+    </faculty_lastname>
+
+    <office>
+
+        <building>
+
+        PAI
+
+        </building>
+
+        <room>
+
+        5.52
+
+        </room>
+
+    </office>
+
+    <phone_number>
+
+    5124719708
+
+    </phone_number>
+
+    <email>
+
+    mitra@cs.utexas.edu
+
+    </email>
+
+    <website>
+
+    http://www.cs.utexas.edu/~mitra
+
+    </website>
+
+    <faculty_type>
+
+    Lecturer
+
+    </faculty_type>
+
+    <research_areas>
+
+        <research_area>
+
+        Grid Computing
+
+        </research_area>
+
+        <research_area>
+
+        Numerical Computation
+
+        </research_area>
+
+        <research_area>
+
+        Computer Science Education
+
+        </research_area>
+
+    </research_areas>
+
+    <office_hours>
+
+        <office_hour>
+
+            <day>
+
+            Monday
+
+            </day>
+
+            <start>
+
+            10:00 AM
+
+            </start>
+
+            <end>
+
+            11:00 AM
+
+            </end>
+
+        </office_hour>
+
+        <office_hour>
+
+            <day>
+
+            Wednesday
+
+            </day>
+
+            <start>
+
+            10:00 AM
+
+            </start>
+
+            <end>
+
+            11:00 AM
+
+            </end>
+
+        </office_hour>
+
+        <office_hour>
+
+            <day>
+
+            Friday
+
+            </day>
+
+            <start>
+
+            10:00 AM
+
+            </start>
+
+            <end>
+
+            11:00 AM
+
+            </end>
+
+        </office_hour>
+
+    </office_hours>
+
+    <degrees>
+
+        <degree>
+
+            <degree_type>
+
+            PHD
+
+            </degree_type>
+
+            <degree_name>
+
+            Computer Science
+
+            </degree_name>
+
+            <institution>
+
+            University of Texas at Austin
+
+            </institution>
+
+            <degree_date>
+
+            1988
+
+            </degree_date>
+
+        </degree>
+
+    </degrees>
+
+    <conferences>
+
+    </conferences>
+
+    <journals>
+
+    </journals>
+
+    <graduate_students>
+
+    </graduate_students>
+
+    <classes>
+
+        <class>
+
+            <class_name>
+
+            Elements of Computers and Programming
+
+            </class_name>
+
+            <course_number>
+
+            CS303E
+
+            </course_number>
+
+            <class_type>
+
+            Undergraduate
+
+            </class_type>
+
+            <semester>
+
+            Fall 2009
+
+            </semester>
+
+            <unique>
+
+            54510
+
+            </unique>
+
+        </class>
+
+        <class>
+
+            <class_name>
+
+            Elements of Web Programming
+
+            </class_name>
+
+            <course_number>
+
+            CS329E
+
+            </course_number>
+
+            <class_type>
+
+            Undergraduate
+
+            </class_type>
+
+            <semester>
+
+            Fall 2009
+
+            </semester>
+
+            <unique>
+
+            54745
+
+            </unique>
+
+        </class>
+
+    </classes>
+
+    <awards>
+
+    </awards>
+
+    <books>
+
+    </books>
+
+</faculty_member>
+"""
 
         facxml = BeautifulStoneSoup(xml)
         self.faculty_firstname = facxml.faculty_firstname.string
@@ -92,7 +365,7 @@ class Faculty() :
         
 if __name__ == "__main__" : 
     f = Faculty()
-    f.input()
+    f.process("")
     exporter.export(f)
     
     
