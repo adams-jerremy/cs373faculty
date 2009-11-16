@@ -101,8 +101,8 @@ class FacultyForm (djangoforms.ModelForm) :
 class OfficeHourJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
     day = db.StringProperty(choices = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"])
-    start = db.TimeProperty()
-    end = db.TimeProperty()
+    start = db.StringProperty()
+    end = db.StringProperty()
 
 class DegreeJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
@@ -129,7 +129,7 @@ class ArticleJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
     journal = db.ReferenceProperty(reference_class=journal_name)
     title = db.TextProperty()
-    date = db.DateProperty()
+    date = db.StringProperty()#db.DateProperty()
 
 class ConferenceJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
@@ -359,6 +359,47 @@ def getOnFac(table,facKey):
 def tab(i):
     return '&nbsp;'*i
 
+def awardList(facKey):
+    aws = getOnFac(AwardJoin,facKey)
+    s = ""
+    for a in aws:
+        s+=tab(4)+a.title+", "+db.get(a.type.key()).award_type+", "+str(a.year)
+        s+=removeCheckBox(a)
+    return s
+
+def conferenceList(facKey):
+    cs = getOnFac(ConferenceJoin,facKey)
+    s = ""
+    for c in cs:
+        s+=tab(4)+c.title+" for "+db.get(c.conference.key()).conference_name+" in "+db.get(c.conference.key()).conference_name+", "+str(c.year)
+        s+=removeCheckBox(c)
+    return s
+
+def articleList(facKey):
+    arts = getOnFac(ArticleJoin,facKey)
+    s = ""
+    for a in arts:
+        s+=tab(4)+a.title+" in "+db.get(a.journal.key()).journal_name+", "+a.date
+        s+=removeCheckBox(a)
+    return s 
+
+def officeHourList(facKey):
+    os = getOnFac(OfficeHourJoin,facKey)
+    s =""
+    for o in os:
+        s+=tab(4)+o.day+" from "+o.start+" to "+o.end
+        s+=removeCheckBox(o)
+    return s
+
+def studentList(facKey):
+    sts = getOnFac(StudentJoin,facKey)
+    s = ""
+    for st in sts:
+        s+=tab(4)+db.get(st.student.key()).student_eid
+        s+=removeCheckBox(st)
+    return s
+    
+
 def courseList(facKey):
     cs = getOnFac(CourseJoin,facKey)
     s = ""
@@ -433,9 +474,31 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write(textInputField("unique"))
         self.response.out.write(courseDropDown())
         self.response.out.write(dropDown(semester,"semester","semester"))
-        self.response.out.write(str(getOnFac(CourseJoin,key)))
-        self.response.out.write(CourseJoin.gql("WHERE faculty=:1",key))
-        self.response.out.write(CourseJoin.all())
+        self.response.out.write('<br><br>Graduate Students<br>')
+        self.response.out.write(studentList(key))
+        self.response.out.write(dropDown(student_eid,"student_eid","student_eid"))
+        self.response.out.write('<br><br>Office Hours<br>')
+        self.response.out.write(officeHourList(key))
+        self.response.out.write(dropDownList("Day",["","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]))
+        self.response.out.write(dropDownList("StartTime",["","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"]))
+        self.response.out.write(dropDownList("EndTime",["","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"]))
+        self.response.out.write('<br><br>Articles<br>')
+        self.response.out.write(articleList(key))
+        self.response.out.write(textInputField("articleTitle"))
+        self.response.out.write(textInputField("articleDate"))
+        self.response.out.write(dropDown(journal_name,"journal_name","journal_name"))
+        self.response.out.write('<br><br>Conferences<br>')
+        self.response.out.write(conferenceList(key))
+        self.response.out.write(textInputField("confTitle"))
+        self.response.out.write(textInputField("confYear"))
+        self.response.out.write(dropDown(conference_name,"conference_name","conference_name"))
+        self.response.out.write(dropDown(location,"location","location"))
+        self.response.out.write('<br><br>Award<br>')
+        self.response.out.write(awardList(key))
+        self.response.out.write(textInputField("awardTitle"))
+        self.response.out.write(dropDown(award_type,"award_type","award_type"))
+        self.response.out.write(textInputField("awardYear"))
+        
         
         self.response.out.write('<br><input type="submit" value="Submit" /> </form><br />')
         
@@ -482,7 +545,40 @@ class MainPage (webapp.RequestHandler) :
             CourseJoin(faculty=facKey,unique=int(unique),course=db.Key(course),semester=db.Key(semester)).put()
         self.doDeletes(CourseJoin,facKey)    
         
+        student = cgi.escape(self.request.get('student_eid'))
+        if student!="":
+            StudentJoin(faculty=facKey,student=db.Key(student)).put()
+        self.doDeletes(StudentJoin,facKey)    
         
+        day = cgi.escape(self.request.get('Day'))
+        start = cgi.escape(self.request.get('StartTime'))
+        end = cgi.escape(self.request.get('EndTime'))
+        if day != "" and start != "" and end != "":
+            OfficeHourJoin(faculty=facKey,day=day,start=start,end=end).put()
+        self.doDeletes(OfficeHourJoin,facKey)    
+            
+        articleTitle = cgi.escape(self.request.get('articleTitle'))
+        journalName = cgi.escape(self.request.get('journal_name'))
+        articleDate =cgi.escape(self.request.get('articleDate'))
+        if articleTitle != "" and journalName != "" and articleDate != "":
+            ArticleJoin(faculty=facKey, title=articleTitle,journal=db.Key(journalName),date=articleDate).put()
+        self.doDeletes(ArticleJoin,facKey)
+        
+        confTitle = cgi.escape(self.request.get('confTitle'))
+        conf = cgi.escape(self.request.get('conference_name'))
+        confYear = cgi.escape(self.request.get('confYear'))
+        confLoc = cgi.escape(self.request.get('location'))
+        if conf != "" and confTitle != "" and confYear != "" and confLoc != "":
+            ConferenceJoin(faculty=facKey,title=confTitle,year=int(confYear),conference=db.Key(conf),location=db.Key(confLoc)).put()
+        self.doDeletes(ConferenceJoin,facKey)
+        
+        awardTitle = cgi.escape(self.request.get('awardTitle'))
+        awardYear = cgi.escape(self.request.get('awardYear'))
+        awardType = cgi.escape(self.request.get('award_type'))
+        
+        if awardTitle!=None and awardYear!=None and awardType != None:
+            AwardJoin(faculty=facKey,title=awardTitle,type=db.Key(awardType),year=int(awardYear)).put()
+        self.doDeletes(AwardJoin,facKey)
         
 
         #map(lambda x: x.delete(),filter(lambda x:cgi.escape(self.request.get('R'+str(x.area.key()))) == 'on', ras))
