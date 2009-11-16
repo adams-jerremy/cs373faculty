@@ -94,7 +94,7 @@ def room(room):
     return room is not None and re.search('^\d+\.\d+$',room) is not None 
     
 def unique(unique):
-    return re.search('^\d\d\d\d\d$',room) is not None
+    return unique is not None and  0<unique<10000 is not None
 
 def office(building, location):
     if location == ""  or building == "": return building == location;

@@ -12,6 +12,7 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 
 import ValidateAdmin
+import ValidateFaculty
 
 '''
 These classes create the database model.  For now, the class
@@ -54,14 +55,29 @@ class course_number(db.Model) :
     course_number = db.StringProperty(required=True)
 class course_name(db.Model) :
     course_name = db.StringProperty(required=True)
-class class_type(db.Model) :
-    class_type = db.StringProperty(required=True)
+class course_type(db.Model) :
+    course_type = db.StringProperty(required=True)
 class semester(db.Model) :
     semester = db.StringProperty(required=True)
 class award_name(db.Model) :
     award_name = db.StringProperty(required=True)
 class award_type(db.Model) :
     award_type = db.StringProperty(required=True)
+
+class course(db.Model) :
+    course_number = db.ReferenceProperty(reference_class=course_number)
+    course_name = db.ReferenceProperty(reference_class=course_name)
+    course_type = db.ReferenceProperty(reference_class=course_type)
+
+class Faculty(db.Model):
+    name = db.StringProperty()
+    phone = db.PhoneNumberProperty()
+    building = db.ReferenceProperty(building)
+    room = db.StringProperty(validator=ValidateFaculty.room)
+    email = db.EmailProperty(required=True)
+    website = db.LinkProperty()
+    type = db.ReferenceProperty(reference_class=faculty_type)
+
 
 
 '''
@@ -116,6 +132,43 @@ class MainPage (webapp.RequestHandler) :
     it was stored in textstore.
     '''
 
+    def course(self) :
+        self.response.out.write("<br />Build Course: <select name='course_course_number'>")
+        q = db.GqlQuery("SELECT * FROM course_number")
+        i = list()
+        for v in q :
+            i.append(v.course_number)
+        i.sort()
+        for v in i :
+            self.response.out.write("<option>" + v + "</option>")
+        self.response.out.write("</select><select name='course_course_name'>")
+        q = db.GqlQuery("SELECT * FROM course_name")
+        i = list()
+        for v in q :
+            i.append(v.course_name)
+        i.sort()
+        for v in i :
+            self.response.out.write("<option>" + v + "</option>")
+        self.response.out.write("</select><select name='course_course_type'>")
+        q = db.GqlQuery("SELECT * FROM course_type")
+        i = list()
+        for v in q :
+            i.append(v.course_type)
+        i.sort()
+        for v in i :
+            self.response.out.write("<option>" + v + "</option>")
+        self.response.out.write("</select>")
+        self.response.out.write("  Courses: <select name='course'>")
+        q = db.GqlQuery("SELECT * FROM course")
+        i = list()
+        for v in q :
+            blah = v.course_number.course_number + ", " + v.course_name.course_name + ", " + v.course_type.course_type
+            i.append(blah)
+        i.sort()
+        for v in i :
+            self.response.out.write("<option>" + v + "</option>")
+        self.response.out.write("</select><br />")
+
     def get (self) :
         self.response.out.write(javascript)
         self.response.out.write('<font size="6">Admin Database Management</font>')
@@ -137,14 +190,22 @@ class MainPage (webapp.RequestHandler) :
         self.printfield('Student Type', 'student_type')
         self.printfield('Course Number', 'course_number')
         self.printfield('Course Name', 'course_name')
-        self.printfield('Class Type', 'class_type')
+        self.printfield('Course Type', 'course_type')
         self.printfield('Semester', 'semester')
         self.printfield('Award Name', 'award_name')
         self.printfield('Award Type', 'award_type')
         self.response.out.write("""
             <br />Remove item:<input type="checkbox" name="Remove"/><br />
+            """)
+        self.course()
+        self.response.out.write("""
+            Add Course<input type="checkbox" name="AddCourse"/>
+            Remove Course<input type="checkbox" name="RemoveCourse"/><br /><br />
             <input type="submit" value="Submit"/>
             </form>""")
+        self.response.out.write("<a href=''>Login Page</a><br />")
+        self.response.out.write("<a href='importer'>Import Faculty Data</a><br />")
+        self.response.out.write("<a href='exporter'>Export Faculty Data</a><br />")
         self.response.out.write(textstore)
 
     '''
@@ -188,10 +249,51 @@ class MainPage (webapp.RequestHandler) :
                         f = constr(**{field : s})
                         f.put()
                         textstore = textstore + 'Added new ' + field + ' ' + s + '.<br />'
+                        if (field == "faculty_email") :
+                            textstore = textstore + 'Created new faculty member account: ' + s + '<br />'
+                            f2 = Faculty(email = s)
+                            f2.put()
                     else :
                         textstore = textstore + '<font color="color:red">' + field + ' ' + s + ' already in database.</font><br />'
                 else :
                     textstore = textstore + '<font color="color:red">Invalid new ' + field + ' ' + s + '.</font><br />'
+
+    def addcourse(self) :
+        global textstore
+        if (cgi.escape(self.request.get("AddCourse")) == "on") :
+            ccno = cgi.escape(self.request.get("course_course_number"))
+            ccnm = cgi.escape(self.request.get("course_course_name"))
+            ccty = cgi.escape(self.request.get("course_course_type"))
+            if ((ccno == "") or (ccnm == "") or (ccty == "")) :
+                textstore = textstore + '<font color="color:red">Error adding course:  All fields must be filled in.'
+            else :
+                q = db.GqlQuery("SELECT * FROM course_number WHERE course_number = :1", ccno)
+                ccnoobj = q.get()
+                q = db.GqlQuery("SELECT * FROM course_name WHERE course_name = :1", ccnm)
+                ccnmobj = q.get()
+                q = db.GqlQuery("SELECT * FROM course_type WHERE course_type = :1", ccty)
+                cctyobj = q.get()
+                q = db.GqlQuery("SELECT * FROM course")
+                found = False
+                for v in q :
+                    if ((v.course_number.key() == ccnoobj.key()) and (v.course_name.key() == ccnmobj.key()) and (v.course_type.key() == cctyobj.key())) :
+                        found = True
+                if (found) :
+                    textstore = textstore + '<font color="color:red">Cannot add course, already in database'
+                else :
+                    textstore = textstore + 'Added new course: ' + ccnoobj.course_number + ", " + ccnmobj.course_name + ", " + cctyobj.course_type + "<br />"
+                    c = course(course_number=ccnoobj.key(), course_name=ccnmobj.key(), course_type=cctyobj.key())
+                    c.put()
+
+
+    def removecourse(self) :
+        global textstore
+        if (cgi.escape(self.request.get("RemoveCourse")) == "on") :
+            crs = cgi.escape(self.request.get("course"))
+            if (crs == "") :
+                textstore = textstore + '<font color="color:red">Error removing course:  None selected.'
+            else:
+                textstore = textstore + '<font color="color:red">Sorry, course removal not implemented yet.'
 
 
     '''
@@ -207,7 +309,7 @@ class MainPage (webapp.RequestHandler) :
     def post (self) :
         global textstore
         textstore = ""
-        self.go('faculty_email', ValidateAdmin.faculty_email, faculty_email)
+        self.go('faculty_email', ValidateFaculty.email, faculty_email)
         self.go('student_eid', ValidateAdmin.student_eid, student_eid)
         self.go('faculty_type', ValidateAdmin.faculty_type, faculty_type)
         self.go('research_area', ValidateAdmin.research_area, research_area)
@@ -224,10 +326,12 @@ class MainPage (webapp.RequestHandler) :
         self.go('student_type', ValidateAdmin.student_type, student_type)
         self.go('course_number', ValidateAdmin.course_number, course_number)
         self.go('course_name', ValidateAdmin.course_name, course_name)
-        self.go('class_type', ValidateAdmin.class_type, class_type)
+        self.go('course_type', ValidateAdmin.course_type, course_type)
         self.go('semester', ValidateAdmin.semester, semester)
         self.go('award_name', ValidateAdmin.award_name, award_name)
         self.go('award_type', ValidateAdmin.award_type, award_type)
+        self.addcourse()
+        self.removecourse()
         self.get()
 
 if __name__ == "__main__":
