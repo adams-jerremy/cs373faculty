@@ -24,9 +24,42 @@ class MainPage (webapp.RequestHandler) :
     def get (self) :
         self.response.out.write('Login')
         self.response.out.write("""
+            <head>
+            <title> FacBook </title>
+            <style type="text/css">
+            .olink:link {color: #F07000; }
+            h1{
+            font-family:"Georgia", sans serif;
+            font-size:50px;
+            margin: 4px 0px;
+            color: #2C7EC9;
+            margin-top:180px;
+            }
+            h2{
+            font-family:"Georgia", sans serif;
+            text-align:right;
+            font-size:15px;
+            color: #F0AE35;
+            }
+            p1{
+            font-size:5px;
+            }
+            body
+            {
+            text-align:center;
+            }
+
+            </style>
+            </head>
+            <h2> <a href="admin" class="olink">Admin Login</a>  </h2>
+            <h1> FacBook </h1>
+            <p1> &#169 David Martin </p1>
+            <br>
+            <br>
             <form action="/" method="post">
             <input type="text" name="id" />
-            <input type="submit" />
+            <input type="submit" value ="Login" />
+            </body>
             </form>""")
 
     def post (self) :
