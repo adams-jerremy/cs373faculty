@@ -455,7 +455,7 @@ class MainPage (webapp.RequestHandler) :
     Takes care of main page
     """
     def get (self) :
-        fac = Faculty.gql("WHERE email = :1","blah@blah.com")[0]
+        fac = Faculty.gql("WHERE email = :1",main.get_current_user())[0]
         key = fac.key()
         data = {"website":fac.website,"type":""if fac.type is None else fac.type.key(),"email":fac.email,"name":fac.name,"phone":fac.phone,"building":""if fac.building is None else fac.building.key(),"room":fac.room}
         form = FacultyForm(data = data)
@@ -510,7 +510,7 @@ class MainPage (webapp.RequestHandler) :
     takes care of submissions
     """
     def post (self) :
-        fac = Faculty.gql("WHERE email = :1","blah@blah.com")[0]
+        fac = Faculty.gql("WHERE email = :1",main.get_current_user())[0]
         facKey = fac.key()
         form = FacultyForm(data=self.request.POST)
         if form.is_valid():    
