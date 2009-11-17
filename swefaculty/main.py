@@ -22,7 +22,6 @@ class current_user(db.Model) :
 
 class MainPage (webapp.RequestHandler) :
     def get (self) :
-        self.response.out.write('Login')
         self.response.out.write("""
             <head>
             <title> FacBook </title>
