@@ -7,7 +7,7 @@
 #
 
 from BeautifulSoup import BeautifulStoneSoup
-from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup, BeautifulSOAP
 import sys
 import exporter
 
@@ -325,6 +325,8 @@ class Faculty() :
 """
 
         facxml = BeautifulStoneSoup(xml)
+        print facxml.__dict__
+        print facxml
         self.faculty_firstname = facxml.faculty_firstname.string
         self.faculty_lastname = facxml.faculty_lastname.string
         self.office = (facxml.office.building.string, facxml.office.room.string)
