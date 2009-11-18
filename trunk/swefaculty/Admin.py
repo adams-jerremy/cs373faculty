@@ -21,8 +21,6 @@ functions below which access the information in queries,
 create new rows, etc all depend on this.
 '''
 
-class faculty_email(db.Model) :
-    faculty_email = db.StringProperty(required=True)
 class student_eid(db.Model) :
     student_eid = db.StringProperty(required=True)
 class faculty_type(db.Model) :
@@ -31,10 +29,6 @@ class research_area(db.Model) :
     research_area = db.StringProperty(required=True)
 class building(db.Model) :
     building = db.StringProperty(required=True)
-class start_time(db.Model) :
-    start_time = db.StringProperty(required=True)
-class end_time(db.Model) :
-    end_time = db.StringProperty(required=True)
 class degree_type(db.Model) :
     degree_type = db.StringProperty(required=True)
 class degree_name(db.Model) :
@@ -59,8 +53,6 @@ class course_type(db.Model) :
     course_type = db.StringProperty(required=True)
 class semester(db.Model) :
     semester = db.StringProperty(required=True)
-class award_name(db.Model) :
-    award_name = db.StringProperty(required=True)
 class award_type(db.Model) :
     award_type = db.StringProperty(required=True)
 
@@ -83,7 +75,7 @@ class Faculty(db.Model):
 '''
 textstore is a global variable for passing messages between get and post.
 '''
-textstore = ""
+textstore = {}
 
 '''
 We have a little javascript to take drop down lists in the Admin page
@@ -100,6 +92,38 @@ function changeField(a) {
 </script>
 """
 
+
+def validate (field, validator, constr, s) :
+    global textstore
+    if validator(s) :
+        if (field == "faculty_email") :
+            i = db.GqlQuery("SELECT * FROM Faculty")
+            found = False
+            for v in i :
+                if (v.email == s) :
+                    found = True
+            if (not found) :
+                textstore[field] = 'Created new faculty member account: ' + s + '<br />'
+                f2 = Faculty(email = s)
+                f2.put()
+            else :
+                textstore[field] = '<font color="color:red">' + field + ' ' + s + ' already in database.</font><br />'
+        else :
+            i = db.GqlQuery("SELECT * FROM " + field)
+            found = False
+            for v in i :
+                if (v.__dict__["_" + field] == s) :
+                    found = True
+            if (not found) :
+                f = constr(**{field : s})
+                f.put()
+                textstore[field] = 'Added new ' + field + ' ' + s + '.<br />'
+            else :
+                textstore[field] = '<font color="color:red">' + field + ' ' + s + ' already in database.</font><br />'
+    else :
+        textstore[field] = '<font color="color:red">Invalid new ' + field + ' ' + s + '.</font><br />'
+
+
 class MainPage (webapp.RequestHandler) :
 
     '''
@@ -115,15 +139,24 @@ class MainPage (webapp.RequestHandler) :
     def printfield (self, field_title, field_name) :
         self.response.out.write(field_title)
         self.response.out.write('<input type="text" name="' + field_name + '" id="' + field_name + '" style="position: absolute; left: 150px" />')
-        self.response.out.write('<select id="' + field_name + '_sel" style="position: absolute; left: 315px" onchange="changeField(' + "'" + field_name + "'" + ')">')
-        q = db.GqlQuery("SELECT * FROM " + field_name)
+        self.response.out.write('<select id="' + field_name + '_sel" style="position: absolute; left: 315px; width:300px;" onchange="changeField(' + "'" + field_name + "'" + ')">')
+        if (field_name == "faculty_email") :
+            q = db.GqlQuery("SELECT * FROM Faculty")
+        else :
+            q = db.GqlQuery("SELECT * FROM " + field_name)
         i = list()
         for v in q :
-            i.append(v.__dict__["_" + field_name])
+            if (field_name == "faculty_email") :
+                i.append(v.email)
+            else :
+                i.append(v.__dict__["_" + field_name])
         i.sort()
         for v in i :
             self.response.out.write("<option>" + v + "</option>")
-        self.response.out.write("</select><br />")
+        self.response.out.write("</select><div class='textstore' style='position:absolute; left: 630px; background-color:white; z=index:10;'>")
+        if (field_name in textstore) :
+            self.response.out.write(textstore[field_name])
+        self.response.out.write("</div><br />")
 
     '''
     Fuction get prints out the web page.  First the javascript, then
@@ -167,7 +200,10 @@ class MainPage (webapp.RequestHandler) :
         i.sort()
         for v in i :
             self.response.out.write("<option>" + v + "</option>")
-        self.response.out.write("</select><br />")
+        self.response.out.write("</select><br /><div class='textstore' style='position:absolute; left: 20px'>")
+        if (course in textstore) :
+            self.response.out.write(textstore[course])
+        self.response.out.write("</div><br />")
 
     def get (self) :
         self.response.out.write(javascript)
@@ -178,8 +214,6 @@ class MainPage (webapp.RequestHandler) :
         self.printfield('Faculty Type', 'faculty_type')
         self.printfield('Research Area', 'research_area')
         self.printfield('Building Abbreviation', 'building')
-        self.printfield('Start Time', 'start_time')
-        self.printfield('End Time', 'end_time')
         self.printfield('Degree Type', 'degree_type')
         self.printfield('Degree Name', 'degree_name')
         self.printfield('Institution', 'institution')
@@ -192,7 +226,6 @@ class MainPage (webapp.RequestHandler) :
         self.printfield('Course Name', 'course_name')
         self.printfield('Course Type', 'course_type')
         self.printfield('Semester', 'semester')
-        self.printfield('Award Name', 'award_name')
         self.printfield('Award Type', 'award_type')
         self.response.out.write("""
             <br />Remove item:<input type="checkbox" name="Remove"/><br />
@@ -206,7 +239,6 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write("<a href=''>Login Page</a><br />")
         self.response.out.write("<a href='importer'>Import Faculty Data</a><br />")
         self.response.out.write("<a href='exporter'>Export Faculty Data</a><br />")
-        self.response.out.write(textstore)
 
     '''
     Fuction "go" processes each field on the Admin page.
@@ -228,35 +260,26 @@ class MainPage (webapp.RequestHandler) :
         s = cgi.escape(self.request.get(field))
         if (s != "") :
             if (cgi.escape(self.request.get("Remove")) == "on") :
-                i = db.GqlQuery("SELECT * FROM " + field)
-                found = ""
-                for v in i :
-                    if (v.__dict__["_" + field] == s) :
-                        found = v
-                if (found != "") :
-                    found.delete()
-                    textstore = textstore + 'Removed ' + field + ' ' + s + '.<br />'
+                if (field == "faculty_email") :
+                    i = db.GqlQuery("SELECT * FROM Faculty")
+                    found = ""
+                    for v in i :
+                        if (v.email == s) :
+                            found = v
                 else :
-                    textstore = textstore + '<font color="color:red">' + field + ' ' + s + ' not in database.</font><br />'
-            else :
-                if validator(s) :
                     i = db.GqlQuery("SELECT * FROM " + field)
-                    found = False
+                    found = ""
                     for v in i :
                         if (v.__dict__["_" + field] == s) :
-                            found = True
-                    if (not found) :
-                        f = constr(**{field : s})
-                        f.put()
-                        textstore = textstore + 'Added new ' + field + ' ' + s + '.<br />'
-                        if (field == "faculty_email") :
-                            textstore = textstore + 'Created new faculty member account: ' + s + '<br />'
-                            f2 = Faculty(email = s)
-                            f2.put()
-                    else :
-                        textstore = textstore + '<font color="color:red">' + field + ' ' + s + ' already in database.</font><br />'
+                            found = v
+                if (found != "") :
+                    found.delete()
+                    textstore[field] = 'Removed ' + field + ' ' + s + '.<br />'
                 else :
-                    textstore = textstore + '<font color="color:red">Invalid new ' + field + ' ' + s + '.</font><br />'
+                    textstore[field] = '<font color="color:red">' + field + ' ' + s + ' not in database.</font><br />'
+            else :
+                validate (field, validator, constr, s)
+
 
     def addcourse(self) :
         global textstore
@@ -265,7 +288,7 @@ class MainPage (webapp.RequestHandler) :
             ccnm = cgi.escape(self.request.get("course_course_name"))
             ccty = cgi.escape(self.request.get("course_course_type"))
             if ((ccno == "") or (ccnm == "") or (ccty == "")) :
-                textstore = textstore + '<font color="color:red">Error adding course:  All fields must be filled in.'
+                textstore[course] = '<font color="color:red">Error adding course:  All fields must be filled in.</font>'
             else :
                 q = db.GqlQuery("SELECT * FROM course_number WHERE course_number = :1", ccno)
                 ccnoobj = q.get()
@@ -279,9 +302,9 @@ class MainPage (webapp.RequestHandler) :
                     if ((v.course_number.key() == ccnoobj.key()) and (v.course_name.key() == ccnmobj.key()) and (v.course_type.key() == cctyobj.key())) :
                         found = True
                 if (found) :
-                    textstore = textstore + '<font color="color:red">Cannot add course, already in database'
+                    textstore[course] = '<font color="color:red">Cannot add course, already in database</font>'
                 else :
-                    textstore = textstore + 'Added new course: ' + ccnoobj.course_number + ", " + ccnmobj.course_name + ", " + cctyobj.course_type + "<br />"
+                    textstore[course] = 'Added new course: ' + ccnoobj.course_number + ", " + ccnmobj.course_name + ", " + cctyobj.course_type + "<br />"
                     c = course(course_number=ccnoobj.key(), course_name=ccnmobj.key(), course_type=cctyobj.key())
                     c.put()
 
@@ -291,9 +314,9 @@ class MainPage (webapp.RequestHandler) :
         if (cgi.escape(self.request.get("RemoveCourse")) == "on") :
             crs = cgi.escape(self.request.get("course"))
             if (crs == "") :
-                textstore = textstore + '<font color="color:red">Error removing course:  None selected.'
+                textstore[course] = '<font color="color:red">Error removing course:  None selected.</font>'
             else:
-                textstore = textstore + '<font color="color:red">Sorry, course removal not implemented yet.'
+                textstore[course] = '<font color="color:red">Sorry, course removal not implemented yet.</font>'
 
 
     '''
@@ -308,14 +331,12 @@ class MainPage (webapp.RequestHandler) :
 
     def post (self) :
         global textstore
-        textstore = ""
-        self.go('faculty_email', ValidateFaculty.email, faculty_email)
+        textstore = {}
+        self.go('faculty_email', ValidateFaculty.email, Faculty)
         self.go('student_eid', ValidateAdmin.student_eid, student_eid)
         self.go('faculty_type', ValidateAdmin.faculty_type, faculty_type)
         self.go('research_area', ValidateAdmin.research_area, research_area)
         self.go('building', ValidateAdmin.building, building)
-        self.go('start_time', ValidateAdmin.start_time, start_time)
-        self.go('end_time', ValidateAdmin.end_time, end_time)
         self.go('degree_type', ValidateAdmin.degree_type, degree_type)
         self.go('degree_name', ValidateAdmin.degree_name, degree_name)
         self.go('institution', ValidateAdmin.institution, institution)
@@ -328,7 +349,6 @@ class MainPage (webapp.RequestHandler) :
         self.go('course_name', ValidateAdmin.course_name, course_name)
         self.go('course_type', ValidateAdmin.course_type, course_type)
         self.go('semester', ValidateAdmin.semester, semester)
-        self.go('award_name', ValidateAdmin.award_name, award_name)
         self.go('award_type', ValidateAdmin.award_type, award_type)
         self.addcourse()
         self.removecourse()
