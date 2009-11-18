@@ -12,13 +12,15 @@
 # To document the tests
 #     pydoc -w TestFaculty
 
+
 import ValidateFaculty
 import unittest
 
 # ----------
 # TestAdmin
 # ----------
-
+def allFilled(*t):
+    return "" not in t
 class Degree (object) :
     def __init__ (self, a, b, c) :
         self.type = a
@@ -26,7 +28,9 @@ class Degree (object) :
         self.date = c
 
 class TestFaculty (unittest.TestCase) :
-
+    def test_allFilled(self):
+        self.assert_(allFilled(".","a"," ","b","c"))
+        self.assert_(not allFilled(".","","b","c"))
     # --------
     #  course
     # --------
@@ -112,13 +116,13 @@ class TestFaculty (unittest.TestCase) :
     # -------------
 
     def test_phone_number1 (self) :
-        self.assert_(ValidateFaculty.phone_number("5125551234") == True)
+        self.assert_(ValidateFaculty.phone("5125551234") == True)
 
     def test_phone_number2 (self) :
-        self.assert_(ValidateFaculty.phone_number("51255512345") == False)
+        self.assert_(ValidateFaculty.phone("51255512345") == False)
 
     def test_phone_number3 (self) :
-        self.assert_(ValidateFaculty.phone_number("512555123") == False)
+        self.assert_(ValidateFaculty.phone("512555123") == False)
 
     # -------------
     #  email

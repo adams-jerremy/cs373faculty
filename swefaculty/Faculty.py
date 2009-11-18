@@ -6,6 +6,7 @@
 
 import cgi
 import types
+import re
 
 from google.appengine.ext        import db
 from google.appengine.ext        import webapp
@@ -94,11 +95,11 @@ Database Faculty Model
 
 class Faculty(db.Model):
     name = db.StringProperty()
-    phone = db.StringProperty(validator=ValidateFaculty.phone_number)
+    phone = db.StringProperty(validator=ValidateFaculty.phone)
     building = db.ReferenceProperty(reference_class=building)
     room = db.StringProperty(validator=ValidateFaculty.room)
     email = db.EmailProperty(required=True)
-    website = db.LinkProperty()
+    website = db.StringProperty()
     type = db.ReferenceProperty(reference_class=faculty_type)
 
 """
@@ -448,13 +449,15 @@ def bookList(facKey):
         s+=removeCheckBox(b)
     return s
 
-def dropDown(table,name,column,title=''):
+def dropDown(table,name,column,title='',selected=None):
     entries = table.all()
     s = '<select title="'+title+'" name="'
     s+= name
     s+='"><option value = ""></option>'
     for e in entries:
-        s+='<option value="'
+        s+='<option '
+        s+='selected="selected"' if selected == e.key() else ''
+        s+='value="'
         s+=str(e.key())
         s+='">'
         s+=e.__dict__["_"+column]
@@ -503,12 +506,12 @@ class MainPage (webapp.RequestHandler) :
             """)
             
         self.response.out.write('<form action="/faculty" method="post">')
-        self.response.out.write("Name: "+textInputField("name"))
-        self.response.out.write("<br>Type: "+dropDown(faculty_type,"faculty_type","faculty_type"))
-        self.response.out.write("<br>Phone: "+textInputField("phone"))
-        self.response.out.write("<br>Office: "+dropDown(building,"building","building",title=tooltip["build"])+textInputField("room",title=tooltip["room"]))
-        self.response.out.write("<br>Email: "+textInputField("email"))
-        self.response.out.write("<br>Website: "+textInputField("website"))
+        self.response.out.write("Name: "+textInputField("name",fac.name))
+        self.response.out.write("<br>Type: "+dropDown(faculty_type,"faculty_type","faculty_type",selected=fac.type))
+        self.response.out.write("<br>Phone: "+textInputField("phone",fac.phone))
+        self.response.out.write("<br>Office: "+dropDown(building,"building","building",title=tooltip["build"],selected=fac.building)+textInputField("room",fac.room,title=tooltip["room"]))
+        self.response.out.write("<br>Email: "+textInputField("email",fac.email))
+        self.response.out.write("<br>Website: "+textInputField("website",fac.website))
         self.response.out.write('<br><br>Degrees</p1><br>')
         self.response.out.write(degreeList(key))
         self.response.out.write(dropDown(degree_type,"degree_type","degree_type",title=tooltip["dType"]))
@@ -565,61 +568,48 @@ class MainPage (webapp.RequestHandler) :
     def post (self) :
         fac = Faculty.gql("WHERE email = :1",main.get_current_user())[0]
         facKey = fac.key()
+        facAttrs = ("name","phone","room","email","website")
+        def validate(s):
+            a = cgi.escape(self.request.get(s))
+            if(a=="" or ValidateFaculty.__dict__[s](a)): fac.__dict__['_'+s] = a;
+        map(validate,facAttrs)
         
-        fac.name = self.request.get("name")
-        fac.phone = self.request.get("phone")
         s = self.request.get("faculty_type")
         if s != "": fac.type = db.Key(encoded=s);
         s = self.request.get("building")
         if s != "": fac.building = db.Key(encoded=s);
-        fac.room = self.request.get("room")
-        fac.email = self.request.get("email")
-        fac.website = self.request.get("website")
         fac.put()
         
-        dType = cgi.escape(self.request.get('degree_type'))
-        dName = cgi.escape(self.request.get('degree_name'))
-        dInst = cgi.escape(self.request.get('institution'))
-        dYear = cgi.escape(self.request.get('degreeYear'))
-        if filled(dType,dName,dInst,dYear):
-            DegreeJoin(faculty = facKey, type = db.Key(dType),major = db.Key(dName),institute=db.Key(dInst),year=int(dYear)).put()
+        def fun(table,dict,keyDict):
+            if filled(*dict.values()) and filled(*keyDict.values()) :
+                for k in keyDict:
+                   keyDict[k] = db.Key(keyDict[k])
+                dict.update(keyDict)
+                table(faculty = facKey,**dict).put()
+        get = lambda x:cgi.escape(self.request.get(x))
+        yearToInt = lambda x: -1 if re.search('^\d+$',x) is None else int(x)
+        uniqueToInt = lambda x: -1 if re.search('^\d+$',x) is None else int(x)
         
-        ra = cgi.escape(self.request.get('researchArea'))
-        if filled(ra):
-            AreaJoin(faculty = facKey,area = db.Key(ra)).put()
-#        self.doDeletes(AreaJoin,facKey)
-        
-        bookTitle = cgi.escape(self.request.get('bookTitle'))
-        publisher = cgi.escape(self.request.get('publisher'))
-        if filled(bookTitle,publisher):
-            BookJoin(faculty=facKey,title=bookTitle,publisher=db.Key(publisher)).put()
-#        self.doDeletes(BookJoin,facKey)
-            
-        course = cgi.escape(self.request.get('course'))
-        unique = cgi.escape(self.request.get('unique'))
-        semester = cgi.escape(self.request.get('semester'))
-        if filled(course,unique,semester):
-            CourseJoin(faculty=facKey,unique=int(unique),course=db.Key(course),semester=db.Key(semester)).put()
-#        self.doDeletes(CourseJoin,facKey)    
-        
+        fun(DegreeJoin,{"year":yearToInt(get('degreeYear'))},{"type":get('degree_type'),"major":get('degree_name'),"institute":get('institution')})
+        fun(AreaJoin,{},{"area":get('researchArea')})
+        fun(BookJoin,{"title":get('bookTitle')},{"publisher":get("publisher")})
+        fun(CourseJoin,{"unique":uniqueToInt(get('unique'))},{"course":get('course'),"semester":get('semester')})
+
         student = cgi.escape(self.request.get('student_eid'))
         if filled(student):
-            StudentJoin(faculty=facKey,student=db.Key(student)).put()
-#        self.doDeletes(StudentJoin,facKey)    
+            StudentJoin(faculty=facKey,student=db.Key(student)).put()    
         
         day = cgi.escape(self.request.get('Day'))
         start = cgi.escape(self.request.get('StartTime'))
         end = cgi.escape(self.request.get('EndTime'))
         if filled(day,start,end):
-            OfficeHourJoin(faculty=facKey,day=day,start=start,end=end).put()
-#        self.doDeletes(OfficeHourJoin,facKey)    
+            OfficeHourJoin(faculty=facKey,day=day,start=start,end=end).put()    
             
         articleTitle = cgi.escape(self.request.get('articleTitle'))
         journalName = cgi.escape(self.request.get('journal_name'))
         articleDate =cgi.escape(self.request.get('articleDate'))
         if filled(articleTitle, journalName, articleDate):
             ArticleJoin(faculty=facKey, title=articleTitle,journal=db.Key(journalName),date=articleDate).put()
-#        self.doDeletes(ArticleJoin,facKey)
         
         confTitle = cgi.escape(self.request.get('confTitle'))
         conf = cgi.escape(self.request.get('conference_name'))
@@ -627,7 +617,6 @@ class MainPage (webapp.RequestHandler) :
         confLoc = cgi.escape(self.request.get('location'))
         if filled(conf, confTitle, confYear, confLoc):
             ConferenceJoin(faculty=facKey,title=confTitle,year=int(confYear),conference=db.Key(conf),location=db.Key(confLoc)).put()
-#        self.doDeletes(ConferenceJoin,facKey)
         
         awardTitle = cgi.escape(self.request.get('awardTitle'))
         awardYear = cgi.escape(self.request.get('awardYear'))
@@ -635,7 +624,6 @@ class MainPage (webapp.RequestHandler) :
         
         if filled(awardTitle, awardYear, awardType):
             AwardJoin(faculty=facKey,title=awardTitle,type=db.Key(awardType),year=int(awardYear)).put()
-#        self.doDeletes(AwardJoin,facKey)
         
         joins = (AreaJoin,BookJoin,CourseJoin,StudentJoin,OfficeHourJoin,ArticleJoin,ConferenceJoin,AwardJoin,DegreeJoin)
         map(lambda x:self.doDeletes(x,facKey),joins)

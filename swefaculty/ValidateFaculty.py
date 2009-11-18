@@ -67,7 +67,7 @@ def officeHour(day,begin,end):
 """
 This function validates phone numbers.
 """
-def phone_number (phone) :
+def phone (phone) :
     return phone is not None and not re.search('^(1|1\s*-)?\s*((\(\d\d\d\))|(\d\d\d))\s*-?\s*\d\d\d\s*-?\s*\d\d\d\d\s*((ext|x|ext.)\s*\d+)?$', phone) is None
 """
 This function validates names.
@@ -83,7 +83,7 @@ def email(email):
 This function validates websites.
 """
 def website(website):
-    return re.search('^(https?)://(\w+\.)+(com|net|org|gov|edu|mil|biz|info|mobi|name|aero|jobs|museum|[a-zA-Z][a-zA-Z])([\w\.]+/?)*$',website) is not None
+    return re.search('^(https?)://(\w+\.)+(com|net|org|gov|edu|mil|biz|info|mobi|name|aero|jobs|museum|[a-zA-Z][a-zA-Z])(/[\w\.]+/?)*$',website) is not None
 
 def year(year):
     return year is not None and 0<year<10000
