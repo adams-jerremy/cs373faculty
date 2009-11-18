@@ -104,12 +104,14 @@ class OfficeHourJoin(db.Model):
     start = db.StringProperty()
     end = db.StringProperty()
 
+    
 class DegreeJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
     type = db.ReferenceProperty(reference_class=degree_type)
     major = db.ReferenceProperty(reference_class=degree_name)
     institute = db.ReferenceProperty(reference_class=institution)
     year = db.IntegerProperty(validator=ValidateFaculty.year)
+    print
     
 class AreaJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
@@ -459,9 +461,26 @@ class MainPage (webapp.RequestHandler) :
         key = fac.key()
         data = {"website":fac.website,"type":""if fac.type is None else fac.type.key(),"email":fac.email,"name":fac.name,"phone":fac.phone,"building":""if fac.building is None else fac.building.key(),"room":fac.room}
         form = FacultyForm(data = data)
+        self.response.out.write("""
+            <head>
+            <title>"""+(fac.name if fac.name is not None else fac.email)+""" </title>
+             <style type="text/css">
+            h1{
+            font-family:"Georgia", sans serif;
+            font-size:50px;
+            margin: 4px 0px;
+            color: #2C7EC9;
+            margin-top:15px
+            }
+            </style>
+            </head>
+            <h1> FacBook </h1>
+            <br>
+            """)
+            
         self.response.out.write('<form action="/faculty" method="post">')
         self.response.out.write(form)
-        self.response.out.write('<br><br>Research Areas<br>')
+        self.response.out.write('<br><br>Research Areas</p1><br>')
         self.response.out.write(researchAreaList(key))
         #self.response.out.write(researchAreaDropDown())
         self.response.out.write(dropDown(research_area,"researchArea","research_area"))
@@ -576,7 +595,7 @@ class MainPage (webapp.RequestHandler) :
         awardYear = cgi.escape(self.request.get('awardYear'))
         awardType = cgi.escape(self.request.get('award_type'))
         
-        if awardTitle!=None and awardYear!=None and awardType != None:
+        if awardTitle!="" and awardYear!="" and awardType != "":
             AwardJoin(faculty=facKey,title=awardTitle,type=db.Key(awardType),year=int(awardYear)).put()
         self.doDeletes(AwardJoin,facKey)
         

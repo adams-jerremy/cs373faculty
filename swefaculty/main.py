@@ -29,7 +29,7 @@ class MainPage (webapp.RequestHandler) :
             .olink:link {color: #F07000; }
             h1{
             font-family:"Georgia", sans serif;
-            font-size:50px;
+            font-size:60px;
             margin: 4px 0px;
             color: #2C7EC9;
             margin-top:180px;
