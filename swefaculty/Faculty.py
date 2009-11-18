@@ -30,7 +30,12 @@ tooltip = { "":"",
            "loc":"Location",
            "conf":"Conference",
            "ra":"Research Area",
-           "student":"Graduate Student"
+           "student":"Graduate Student",
+           "inst":"Institution",
+           "dName":"Degree Name",
+           "dType":"Degree Type",
+           "room":"Office Number",
+           "build":"Office Building"
            }
 
 class student_eid(db.Model) :
@@ -334,6 +339,10 @@ class AwardJoin(db.Model):
 #
 #    
 #
+
+def filled(*t):
+    return "" not in t
+
 #"""
 #Function for making generic drop down lists
 #"""
@@ -409,7 +418,13 @@ def studentList(facKey):
         s+=tab(4)+db.get(st.student.key()).student_eid
         s+=removeCheckBox(st)
     return s
-    
+def degreeList(facKey):
+    ds = getOnFac(DegreeJoin,facKey)
+    s = ""
+    for d in ds:
+        s+=tab(4)+db.get(d.type.key()).degree_type+" in "+db.get(d.major.key()).degree_name+" from "+db.get(d.institute.key()).institution
+        s+=removeCheckBox(d)
+    return s    
 
 def courseList(facKey):
     cs = getOnFac(CourseJoin,facKey)
@@ -488,10 +503,20 @@ class MainPage (webapp.RequestHandler) :
             """)
             
         self.response.out.write('<form action="/faculty" method="post">')
-        self.response.out.write(form)
+        self.response.out.write("Name: "+textInputField("name"))
+        self.response.out.write("<br>Type: "+dropDown(faculty_type,"faculty_type","faculty_type"))
+        self.response.out.write("<br>Phone: "+textInputField("phone"))
+        self.response.out.write("<br>Office: "+dropDown(building,"building","building",title=tooltip["build"])+textInputField("room",title=tooltip["room"]))
+        self.response.out.write("<br>Email: "+textInputField("email"))
+        self.response.out.write("<br>Website: "+textInputField("website"))
+        self.response.out.write('<br><br>Degrees</p1><br>')
+        self.response.out.write(degreeList(key))
+        self.response.out.write(dropDown(degree_type,"degree_type","degree_type",title=tooltip["dType"]))
+        self.response.out.write(dropDown(degree_name,"degree_name","degree_name",title=tooltip["dName"]))
+        self.response.out.write(dropDown(institution,"institution","institution",title=tooltip["inst"]))
+        self.response.out.write(textInputField("degreeYear",title=tooltip["year"]))
         self.response.out.write('<br><br>Research Areas</p1><br>')
         self.response.out.write(researchAreaList(key))
-        #self.response.out.write(researchAreaDropDown())
         self.response.out.write(dropDown(research_area,"researchArea","research_area",title=tooltip["ra"]))
         self.response.out.write('<br><br>Books<br>')
         self.response.out.write(bookList(key))
@@ -540,173 +565,80 @@ class MainPage (webapp.RequestHandler) :
     def post (self) :
         fac = Faculty.gql("WHERE email = :1",main.get_current_user())[0]
         facKey = fac.key()
-        form = FacultyForm(data=self.request.POST)
-        if form.is_valid():    
-            fac.name = self.request.POST["name"]
-            fac.phone = self.request.POST["phone"]
-            s = self.request.POST["type"]
-            if s != "": fac.type = db.Key(encoded=s);
-            s = self.request.POST["building"]
-            if s != "": fac.building = db.Key(encoded=s);
-            fac.room = self.request.POST["room"]
-            fac.email = self.request.POST["email"]
-            fac.website = self.request.POST["website"]
-            fac.put()
-        else:
-            self.response.out.write("Bad Data")
-            
+        
+        fac.name = self.request.get("name")
+        fac.phone = self.request.get("phone")
+        s = self.request.get("faculty_type")
+        if s != "": fac.type = db.Key(encoded=s);
+        s = self.request.get("building")
+        if s != "": fac.building = db.Key(encoded=s);
+        fac.room = self.request.get("room")
+        fac.email = self.request.get("email")
+        fac.website = self.request.get("website")
+        fac.put()
+        
+        dType = cgi.escape(self.request.get('degree_type'))
+        dName = cgi.escape(self.request.get('degree_name'))
+        dInst = cgi.escape(self.request.get('institution'))
+        dYear = cgi.escape(self.request.get('degreeYear'))
+        if filled(dType,dName,dInst,dYear):
+            DegreeJoin(faculty = facKey, type = db.Key(dType),major = db.Key(dName),institute=db.Key(dInst),year=int(dYear)).put()
+        
         ra = cgi.escape(self.request.get('researchArea'))
-        if ra != "":
+        if filled(ra):
             AreaJoin(faculty = facKey,area = db.Key(ra)).put()
-        self.doDeletes(AreaJoin,facKey)
+#        self.doDeletes(AreaJoin,facKey)
         
         bookTitle = cgi.escape(self.request.get('bookTitle'))
         publisher = cgi.escape(self.request.get('publisher'))
-        if bookTitle!="" and publisher != "":
+        if filled(bookTitle,publisher):
             BookJoin(faculty=facKey,title=bookTitle,publisher=db.Key(publisher)).put()
-        self.doDeletes(BookJoin,facKey)
+#        self.doDeletes(BookJoin,facKey)
             
         course = cgi.escape(self.request.get('course'))
         unique = cgi.escape(self.request.get('unique'))
         semester = cgi.escape(self.request.get('semester'))
-        if course!="" and unique != "" and semester != "":
+        if filled(course,unique,semester):
             CourseJoin(faculty=facKey,unique=int(unique),course=db.Key(course),semester=db.Key(semester)).put()
-        self.doDeletes(CourseJoin,facKey)    
+#        self.doDeletes(CourseJoin,facKey)    
         
         student = cgi.escape(self.request.get('student_eid'))
-        if student!="":
+        if filled(student):
             StudentJoin(faculty=facKey,student=db.Key(student)).put()
-        self.doDeletes(StudentJoin,facKey)    
+#        self.doDeletes(StudentJoin,facKey)    
         
         day = cgi.escape(self.request.get('Day'))
         start = cgi.escape(self.request.get('StartTime'))
         end = cgi.escape(self.request.get('EndTime'))
-        if day != "" and start != "" and end != "":
+        if filled(day,start,end):
             OfficeHourJoin(faculty=facKey,day=day,start=start,end=end).put()
-        self.doDeletes(OfficeHourJoin,facKey)    
+#        self.doDeletes(OfficeHourJoin,facKey)    
             
         articleTitle = cgi.escape(self.request.get('articleTitle'))
         journalName = cgi.escape(self.request.get('journal_name'))
         articleDate =cgi.escape(self.request.get('articleDate'))
-        if articleTitle != "" and journalName != "" and articleDate != "":
+        if filled(articleTitle, journalName, articleDate):
             ArticleJoin(faculty=facKey, title=articleTitle,journal=db.Key(journalName),date=articleDate).put()
-        self.doDeletes(ArticleJoin,facKey)
+#        self.doDeletes(ArticleJoin,facKey)
         
         confTitle = cgi.escape(self.request.get('confTitle'))
         conf = cgi.escape(self.request.get('conference_name'))
         confYear = cgi.escape(self.request.get('confYear'))
         confLoc = cgi.escape(self.request.get('location'))
-        if conf != "" and confTitle != "" and confYear != "" and confLoc != "":
+        if filled(conf, confTitle, confYear, confLoc):
             ConferenceJoin(faculty=facKey,title=confTitle,year=int(confYear),conference=db.Key(conf),location=db.Key(confLoc)).put()
-        self.doDeletes(ConferenceJoin,facKey)
+#        self.doDeletes(ConferenceJoin,facKey)
         
         awardTitle = cgi.escape(self.request.get('awardTitle'))
         awardYear = cgi.escape(self.request.get('awardYear'))
         awardType = cgi.escape(self.request.get('award_type'))
         
-        if awardTitle!="" and awardYear!="" and awardType != "":
+        if filled(awardTitle, awardYear, awardType):
             AwardJoin(faculty=facKey,title=awardTitle,type=db.Key(awardType),year=int(awardYear)).put()
-        self.doDeletes(AwardJoin,facKey)
+#        self.doDeletes(AwardJoin,facKey)
         
-
-        #map(lambda x: x.delete(),filter(lambda x:cgi.escape(self.request.get('R'+str(x.area.key()))) == 'on', ras))
-#        name = cgi.escape(self.request.get('name'))
-#        building = cgi.escape(self.request.get('building'))
-#        room = cgi.escape(self.request.get('room'))
-#        phone = cgi.escape(self.request.get('phone'))
-#        email = cgi.escape(self.request.get('email'))
-#        website = cgi.escape(self.request.get('website'))
-#        officeHourDay = cgi.escape(self.request.get('officeHourDay'))
-#        officeHourBegin = cgi.escape(self.request.get('beginTime'))
-#        officeHourEnd = cgi.escape(self.request.get('endTime'))
-#        facType = cgi.escape(self.request.get('facType'))
-#        degreeType = cgi.escape(self.request.get('degreeType'))
-#        degreeInst = cgi.escape(self.request.get('degreeInst'))
-#        degreeYear = cgi.escape(self.request.get('degreeYear'))
-#        researchArea = cgi.escape(self.request.get('researchArea'))
-#        gradStudent = cgi.escape(self.request.get('gradStudent'))
-#        course = cgi.escape(self.request.get('course'))
-#        articleTitle = cgi.escape(self.request.get('articleTitle'))
-#        journal = cgi.escape(self.request.get('journal'))
-#        articleYear = cgi.escape(self.request.get('articleYear'))
-#        confName = cgi.escape(self.request.get('conference'))
-#        confLoc = cgi.escape(self.request.get('conferenceLocation'))
-#        confTitle = cgi.escape(self.request.get('conferenceTitle'))
-#        confDate = cgi.escape(self.request.get('conferenceDate'))
-#        book = cgi.escape(self.request.get('book'))
-#        award = cgi.escape(self.request.get('award'))
-#        logout = cgi.escape(self.request.get('logout')) == 'on'
-#        
-#        if ValidateFaculty.name(name):
-#            fac.name = name
-#        else:
-#            self.response.out.write('Invalid name<br />')
-#        
-#        if ValidateFaculty.office(building, room) :
-#            fac.building = building
-#            fac.room = room
-#        else :
-#            self.response.out.write('Invalid Office.<br />')
-#            
-#        if ValidateFaculty.phone_number(phone) :
-#            fac.phone = phone
-#        else :
-#            self.response.out.write('Invalid number.<br />')
-#        if ValidateFaculty.email(email) :
-#            fac.email = email
-#        else :
-#            self.response.out.write('Invalid email.<br />')
-#        if ValidateFaculty.website(website) :
-#            fac.website = website
-#        else :
-#            self.response.out.write('Invalid Website.<br />')
-#        if officeHourDay!="" or officeHourBegin!="" or officeHourEnd !="":
-#            if ValidateFaculty.officeHour(officeHourDay,officeHourBegin,officeHourEnd) :
-#                fac.officeHours.append(OfficeHour(officeHourDay,officeHourBegin,officeHourEnd))
-#            else:
-#                self.response.out.write('Invalid Office Hour.<br />')
-#        fac.type = facType
-#        if degreeType!="" or degreeInst!="" or degreeYear !="":
-#            if ValidateFaculty.degree(fac.degrees,degreeType,degreeInst,degreeYear) :
-#                fac.degrees.append(Degree(degreeType,degreeInst,degreeYear))
-#            else:
-#                self.response.out.write('Invalid Degree.<br />')
-#        if researchArea!="":
-#            if ValidateFaculty.researchArea(fac.researchAreas,researchArea) :
-#                fac.researchAreas.append(researchArea)
-#            else:
-#                self.response.out.write('Invalid Research Area.<br />')
-#        if gradStudent != "":
-#            if ValidateFaculty.graduateStudent(fac.gradStudents,gradStudent) :
-#                fac.gradStudents.append(gradStudent)
-#            else:
-#                self.response.out.write('Invalid Grad Student.<br />')
-#        if course != "":
-#            if ValidateFaculty.course(fac.courses,course) :
-#                fac.courses.append(course)
-#            else:
-#                self.response.out.write('Invalid Course.<br />')
-#
-#        if articleTitle!="" or articleYear!="" or journal !="":
-#            if ValidateFaculty.article(fac.articles,articleTitle,journal,articleYear) :
-#                fac.articles.append(Article(articleTitle,journal,articleYear))
-#            else:
-#                self.response.out.write('Invalid Article.<br />') 
-#        if anyFilled(confName,confLoc,confTitle,confDate):
-#            if ValidateFaculty.conference(fac.conferences,confName,confLoc,confTitle,confDate) :
-#                fac.conferences.append(Conference(confName,confLoc,confTitle,confDate))
-#            else:
-#                self.response.out.write('Invalid Conference.<br />')        
-#        if book != "":
-#            if ValidateFaculty.book(fac.books,book) :
-#                fac.books.append(book)
-#            else:
-#                self.response.out.write('Invalid book.<br />')
-#        if award != "":
-#            if ValidateFaculty.award(fac.awards,award) :
-#                fac.awards.append(award)
-#            else:
-#                self.response.out.write('Invalid Award.<br />')
+        joins = (AreaJoin,BookJoin,CourseJoin,StudentJoin,OfficeHourJoin,ArticleJoin,ConferenceJoin,AwardJoin,DegreeJoin)
+        map(lambda x:self.doDeletes(x,facKey),joins)
         self.get()
 
 
