@@ -474,7 +474,7 @@ class MainPage (webapp.RequestHandler) :
             }
             </style>
             </head>
-            <h1> FacBook </h1>
+            <h1> Faculty Database </h1>
             <br>
             """)
             

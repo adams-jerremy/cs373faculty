@@ -24,14 +24,14 @@ class MainPage (webapp.RequestHandler) :
     def get (self) :
         self.response.out.write("""
             <head>
-            <title> FacBook </title>
+            <title> University of Texas Austin Faculty Database </title>
             <style type="text/css">
             .olink:link {color: #F07000; }
             h1{
             font-family:"Georgia", sans serif;
             font-size:60px;
             margin: 4px 0px;
-            color: #2C7EC9;
+            color: #ADADAD;
             margin-top:180px;
             }
             h2{
@@ -43,20 +43,19 @@ class MainPage (webapp.RequestHandler) :
             p1{
             font-size:5px;
             }
-            body
-            {
+            body{
             text-align:center;
+            background-color: #000052
             }
+            input.blue {background-color: #9999FF; font-size: 15px;}
 
             </style>
             </head>
-            <h2> <a href="admin" class="olink">Admin Login</a>  </h2>
-            <h1> FacBook </h1>
-            <p1> &#169 David Martin </p1>
+            <h1> Faculty Database </h1>
             <br>
             <br>
             <form action="/" method="post">
-            <input type="text" name="id" />
+            <input type="text" class="blue" name="id" />
             <input type="submit" value ="Login" />
             </body>
             </form>""")
