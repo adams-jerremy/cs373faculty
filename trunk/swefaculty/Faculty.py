@@ -15,14 +15,23 @@ from google.appengine.ext.db     import djangoforms
 import ValidateFaculty
 import main
 
-#options = {"facTypes":("","Professor","Lecturer","Researcher"),
-#           "buildings":("","TAY","PAI","ACES","ENS"),
-#           "researchAreas":("","AI","Compilers","OS","Robotics","Algorithms"),
-#           "gradStudents":("","Student1(st0001)","Student2(st0002)"),
-#           "courses":("","55555","55556"),
-#           "books":("","AwesomeBook","Anotherbook","LessAwesomeBook"),
-#           "awards":("","Awards","SuperAwesomeAward")
-#   }
+tooltip = { "":"",
+           "remove":"Select To Remove Entry",
+           "title":"Title",
+           "publisher":"Publisher",
+           "unique":"Course Unique",
+           "semester":"Semester",
+           "day":"day",
+           "start":"Start Time",
+           "end":"End Time",
+           "journal":"Journal",
+           "year":"Year",
+           "type":"Type",
+           "loc":"Location",
+           "conf":"Conference",
+           "ra":"Research Area",
+           "student":"Graduate Student"
+           }
 
 class student_eid(db.Model) :
     student_eid = db.StringProperty(required=True)
@@ -328,8 +337,8 @@ class AwardJoin(db.Model):
 #"""
 #Function for making generic drop down lists
 #"""
-def dropDownList(name,options):
-    s = '<select name="'
+def dropDownList(name,options,title=''):
+    s = '<select title="'+title+'" name="'
     s+=name
     s+='">'
     for o in options:
@@ -345,15 +354,15 @@ def dropDownList(name,options):
 #Generically create a textinput
 #"""
 #
-def textInputField(id,value=''):
-    return '<input type="text" name="'+id+'" value = "' +value+ '" />'
+def textInputField(id,value='',title=''):
+    return '<input type="text" title="'+title+'" name="'+id+'" value = "' +value+ '" />'
 #
 #'''
 #handler for faculty page
 #'''
 
 def removeCheckBox(entry):
-    return ' Remove:<input type="checkbox" name="R'+str(entry.key())+'"/>\n<br>'
+    return ' Remove:<input type="checkbox" title="'+tooltip["remove"]+'" name="R'+str(entry.key())+'"/>\n<br>'
 
 def getOnFac(table,facKey):
     return table.gql("WHERE faculty=:1",facKey)
@@ -424,9 +433,9 @@ def bookList(facKey):
         s+=removeCheckBox(b)
     return s
 
-def dropDown(table,name,column):
+def dropDown(table,name,column,title=''):
     entries = table.all()
-    s = '<select name="'
+    s = '<select title="'+title+'" name="'
     s+= name
     s+='"><option value = ""></option>'
     for e in entries:
@@ -483,40 +492,40 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write('<br><br>Research Areas</p1><br>')
         self.response.out.write(researchAreaList(key))
         #self.response.out.write(researchAreaDropDown())
-        self.response.out.write(dropDown(research_area,"researchArea","research_area"))
+        self.response.out.write(dropDown(research_area,"researchArea","research_area",title=tooltip["ra"]))
         self.response.out.write('<br><br>Books<br>')
         self.response.out.write(bookList(key))
-        self.response.out.write(textInputField("bookTitle"))
-        self.response.out.write(dropDown(publisher,"publisher","publisher"))
+        self.response.out.write(textInputField("bookTitle",title=tooltip["title"]))
+        self.response.out.write(dropDown(publisher,"publisher","publisher",title = tooltip["publisher"]))
         self.response.out.write('<br><br>Courses<br>')
         self.response.out.write(courseList(key))
-        self.response.out.write(textInputField("unique"))
+        self.response.out.write(textInputField("unique",title=tooltip["unique"]))
         self.response.out.write(courseDropDown())
-        self.response.out.write(dropDown(semester,"semester","semester"))
+        self.response.out.write(dropDown(semester,"semester","semester",title=tooltip["semester"]))
         self.response.out.write('<br><br>Graduate Students<br>')
         self.response.out.write(studentList(key))
-        self.response.out.write(dropDown(student_eid,"student_eid","student_eid"))
+        self.response.out.write(dropDown(student_eid,"student_eid","student_eid",title=tooltip["student"]))
         self.response.out.write('<br><br>Office Hours<br>')
         self.response.out.write(officeHourList(key))
-        self.response.out.write(dropDownList("Day",["","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]))
-        self.response.out.write(dropDownList("StartTime",["","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"]))
-        self.response.out.write(dropDownList("EndTime",["","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"]))
+        self.response.out.write(dropDownList("Day",["","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],title=tooltip["day"]))
+        self.response.out.write(dropDownList("StartTime",["","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"],title=tooltip["start"]))
+        self.response.out.write(dropDownList("EndTime",["","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"],title=tooltip["end"]))
         self.response.out.write('<br><br>Articles<br>')
         self.response.out.write(articleList(key))
-        self.response.out.write(textInputField("articleTitle"))
-        self.response.out.write(textInputField("articleDate"))
-        self.response.out.write(dropDown(journal_name,"journal_name","journal_name"))
+        self.response.out.write(textInputField("articleTitle",title=tooltip["title"]))
+        self.response.out.write(textInputField("articleDate",title=tooltip["year"]))
+        self.response.out.write(dropDown(journal_name,"journal_name","journal_name",title=tooltip["journal"]))
         self.response.out.write('<br><br>Conferences<br>')
         self.response.out.write(conferenceList(key))
-        self.response.out.write(textInputField("confTitle"))
-        self.response.out.write(textInputField("confYear"))
-        self.response.out.write(dropDown(conference_name,"conference_name","conference_name"))
-        self.response.out.write(dropDown(location,"location","location"))
+        self.response.out.write(textInputField("confTitle",title=tooltip["title"]))
+        self.response.out.write(textInputField("confYear",title=tooltip["year"]))
+        self.response.out.write(dropDown(conference_name,"conference_name","conference_name",title=tooltip["conf"]))
+        self.response.out.write(dropDown(location,"location","location",title=tooltip["loc"]))
         self.response.out.write('<br><br>Award<br>')
         self.response.out.write(awardList(key))
-        self.response.out.write(textInputField("awardTitle"))
-        self.response.out.write(dropDown(award_type,"award_type","award_type"))
-        self.response.out.write(textInputField("awardYear"))
+        self.response.out.write(textInputField("awardTitle",title=tooltip["title"]))
+        self.response.out.write(dropDown(award_type,"award_type","award_type",title=tooltip["type"]))
+        self.response.out.write(textInputField("awardYear",title=tooltip["year"]))
         
         
         self.response.out.write('<br><input type="submit" value="Submit" /> </form><br />')
