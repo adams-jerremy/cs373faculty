@@ -47,7 +47,10 @@ class MainPage (webapp.RequestHandler) :
             text-align:center;
             background-color: #000052
             }
-            input.blue {background-color: #9999FF; font-size: 15px;}
+            input.blue {
+            background-color: #9999FF; 
+            font-size: 15px;
+            }
 
             </style>
             </head>
@@ -71,8 +74,13 @@ class MainPage (webapp.RequestHandler) :
                 if (s == v.faculty_email) :
                     current_user = s
                     self.redirect("/faculty")
-        self.response.out.write("Invalid ID.<br />")
         self.get()
+        self.response.out.write("""
+        <style type="text/css">
+        m{color: #D90000;}
+        </style type="text/css">
+        <m>Invalid ID.</m>
+        """)
 
 def get_current_user () :
     global current_user

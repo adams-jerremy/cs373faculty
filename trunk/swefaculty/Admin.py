@@ -171,7 +171,7 @@ class MainPage (webapp.RequestHandler) :
 
     def get (self) :
         self.response.out.write(javascript)
-        self.response.out.write('<font size="6">Admin Database Management</font>')
+        self.response.out.write('<font size="6" face="Georgia">Faculty Database Management</font>')
         self.response.out.write('<form action="/admin" method="post">')
         self.printfield('Faculty email', 'faculty_email')
         self.printfield('Student EID', 'student_eid')
