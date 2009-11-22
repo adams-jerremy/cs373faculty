@@ -14,6 +14,7 @@ import Faculty
 import ImporterPage
 import ExporterPage
 import Tester
+import Public
 
 current_user = ""
 
@@ -96,7 +97,8 @@ def main () :
          ("/faculty", Faculty.MainPage),
          ("/importer", ImporterPage.MainPage),
          ("/exporter", ExporterPage.MainPage),
-         ("/tester",Tester.MainPage)],
+         ("/tester",Tester.MainPage),
+         ("/public",Public.MainPage)],
         debug=True)
     run_wsgi_app(x)
 
