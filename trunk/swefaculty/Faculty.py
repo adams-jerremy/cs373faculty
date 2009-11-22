@@ -10,7 +10,9 @@ import re
 
 from google.appengine.ext        import db
 from google.appengine.ext        import webapp
-from google.appengine.ext.webapp import template 
+from google.appengine.ext.webapp import template
+from google.appengine.ext.db import djangoforms
+import os
 
 import Datastore
 import ValidateFaculty
@@ -38,122 +40,126 @@ tooltip = { "":"",
            "room":"Office Number",
            "build":"Office Building"
            }
-class student_eid(db.Model) :
-    student_eid = db.StringProperty(required=True)
-class faculty_type(db.Model) :
-    faculty_type = db.StringProperty(required=True)
-    def __str__(self):
-        return self._faculty_type
-class research_area(db.Model) :
-    research_area = db.StringProperty(required=True)
-class building(db.Model) :
-    building = db.StringProperty(required=True)
-    def __str__(self):
-        return self._building
-class start_time(db.Model) :
-    start_time = db.StringProperty(required=True)
-class end_time(db.Model) :
-    end_time = db.StringProperty(required=True)
-class degree_type(db.Model) :
-    degree_type = db.StringProperty(required=True)
-class degree_name(db.Model) :
-    degree_name = db.StringProperty(required=True)
-class institution(db.Model) :
-    institution = db.StringProperty(required=True)
-class conference_name(db.Model) :
-    conference_name = db.StringProperty(required=True)
-class location(db.Model) :
-    location = db.StringProperty(required=True)
-class journal_name(db.Model) :
-    journal_name = db.StringProperty(required=True)
-class publisher(db.Model) :
-    publisher = db.StringProperty(required=True)
-class student_type(db.Model) :
-    student_type = db.StringProperty(required=True)
-class course_number(db.Model) :
-    course_number = db.StringProperty(required=True)
-class course_name(db.Model) :
-    course_name = db.StringProperty(required=True)
-class course_type(db.Model) :
-    course_type = db.StringProperty(required=True)
-class course(db.Model):
-    course_number = db.ReferenceProperty(reference_class=course_number)
-    course_name = db.ReferenceProperty(reference_class=course_name)
-    course_type = db.ReferenceProperty(reference_class=course_type)
-    
-class semester(db.Model) :
-    semester = db.StringProperty(required=True)
-class award_name(db.Model) :
-    award_name = db.StringProperty(required=True)
-class award_type(db.Model) :
-    award_type = db.StringProperty(required=True)
+#class student_eid(db.Model) :
+#    student_eid = db.StringProperty(required=True)
+#class faculty_type(db.Model) :
+#    faculty_type = db.StringProperty(required=True)
+#    def __str__(self):
+#        return self._faculty_type
+#class research_area(db.Model) :
+#    research_area = db.StringProperty(required=True)
+#class building(db.Model) :
+#    building = db.StringProperty(required=True)
+#    def __str__(self):
+#        return self._building
+#class start_time(db.Model) :
+#    start_time = db.StringProperty(required=True)
+#class end_time(db.Model) :
+#    end_time = db.StringProperty(required=True)
+#class degree_type(db.Model) :
+#    degree_type = db.StringProperty(required=True)
+#class degree_name(db.Model) :
+#    degree_name = db.StringProperty(required=True)
+#class institution(db.Model) :
+#    institution = db.StringProperty(required=True)
+#class conference_name(db.Model) :
+#    conference_name = db.StringProperty(required=True)
+#class location(db.Model) :
+#    location = db.StringProperty(required=True)
+#class journal_name(db.Model) :
+#    journal_name = db.StringProperty(required=True)
+#class publisher(db.Model) :
+#    publisher = db.StringProperty(required=True)
+#class student_type(db.Model) :
+#    student_type = db.StringProperty(required=True)
+#class course_number(db.Model) :
+#    course_number = db.StringProperty(required=True)
+#class course_name(db.Model) :
+#    course_name = db.StringProperty(required=True)
+#class course_type(db.Model) :
+#    course_type = db.StringProperty(required=True)
+#class course(db.Model):
+#    course_number = db.ReferenceProperty(reference_class=course_number)
+#    course_name = db.ReferenceProperty(reference_class=course_name)
+#    course_type = db.ReferenceProperty(reference_class=course_type)
+#    
+#class semester(db.Model) :
+#    semester = db.StringProperty(required=True)
+#class award_name(db.Model) :
+#    award_name = db.StringProperty(required=True)
+#class award_type(db.Model) :
+#    award_type = db.StringProperty(required=True)
+#
+#"""
+#Database Faculty Model
+#"""
+#
+#class Faculty(db.Model):
+#    name = db.StringProperty()
+#    phone = db.StringProperty()
+#    building = db.ReferenceProperty(reference_class=building)
+#    room = db.StringProperty()
+#    email = db.EmailProperty(required=True)
+#    website = db.StringProperty()
+#    type = db.ReferenceProperty(reference_class=faculty_type)
 
-"""
-Database Faculty Model
-"""
-
-class Faculty(db.Model):
-    name = db.StringProperty()
-    phone = db.StringProperty()
-    building = db.ReferenceProperty(reference_class=building)
-    room = db.StringProperty()
-    email = db.EmailProperty(required=True)
-    website = db.StringProperty()
-    type = db.ReferenceProperty(reference_class=faculty_type)
-
-    
-class OfficeHourJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    day = db.StringProperty(choices = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"])
-    start = db.StringProperty()
-    end = db.StringProperty()
-
-    
-class DegreeJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    type = db.ReferenceProperty(reference_class=degree_type)
-    major = db.ReferenceProperty(reference_class=degree_name)
-    institute = db.ReferenceProperty(reference_class=institution)
-    year = db.IntegerProperty(validator=ValidateFaculty.year)
-    print
-    
-class AreaJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    area = db.ReferenceProperty(reference_class=research_area)
-    
-class StudentJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    student = db.ReferenceProperty(reference_class=student_eid)
-
-class CourseJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    unique = db.IntegerProperty(validator=ValidateFaculty.unique)
-    course = db.ReferenceProperty(reference_class=course)
-    semester = db.ReferenceProperty(reference_class=semester)
-
-class ArticleJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    journal = db.ReferenceProperty(reference_class=journal_name)
-    title = db.TextProperty()
-    date = db.StringProperty()#db.DateProperty()
-
-class ConferenceJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    conference = db.ReferenceProperty(reference_class=conference_name)
-    title = db.TextProperty()
-    location =db.ReferenceProperty(reference_class=location)
-    year = db.IntegerProperty(validator=ValidateFaculty.year)
-    
-class BookJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    title = db.TextProperty()
-    publisher = db.ReferenceProperty(reference_class=publisher)
-
-class AwardJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    title = db.TextProperty()
-    type = db.ReferenceProperty(reference_class=award_type)
-    year = db.IntegerProperty(validator=ValidateFaculty.year)
+#class FacultyForm(djangoforms.ModelForm):
+#    class Meta:
+#        model = Faculty
+#
+#    
+#class OfficeHourJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    day = db.StringProperty(choices = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"])
+#    start = db.StringProperty()
+#    end = db.StringProperty()
+#
+#    
+#class DegreeJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    type = db.ReferenceProperty(reference_class=degree_type)
+#    major = db.ReferenceProperty(reference_class=degree_name)
+#    institute = db.ReferenceProperty(reference_class=institution)
+#    year = db.IntegerProperty(validator=ValidateFaculty.year)
+#    print
+#    
+#class AreaJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    area = db.ReferenceProperty(reference_class=research_area)
+#    
+#class StudentJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    student = db.ReferenceProperty(reference_class=student_eid)
+#
+#class CourseJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    unique = db.IntegerProperty(validator=ValidateFaculty.unique)
+#    course = db.ReferenceProperty(reference_class=course)
+#    semester = db.ReferenceProperty(reference_class=semester)
+#
+#class ArticleJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    journal = db.ReferenceProperty(reference_class=journal_name)
+#    title = db.TextProperty()
+#    date = db.StringProperty()#db.DateProperty()
+#
+#class ConferenceJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    conference = db.ReferenceProperty(reference_class=conference_name)
+#    title = db.TextProperty()
+#    location =db.ReferenceProperty(reference_class=location)
+#    year = db.IntegerProperty(validator=ValidateFaculty.year)
+#    
+#class BookJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    title = db.TextProperty()
+#    publisher = db.ReferenceProperty(reference_class=publisher)
+#
+#class AwardJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    title = db.TextProperty()
+#    type = db.ReferenceProperty(reference_class=award_type)
+#    year = db.IntegerProperty(validator=ValidateFaculty.year)
 
 #class Faculty:
 #
@@ -370,7 +376,7 @@ def tab(i):
     return '&nbsp;'*i
 
 def awardList(facKey):
-    aws = getOnFac(AwardJoin,facKey)
+    aws = getOnFac(Datastore.AwardJoin,facKey)
     s = ""
     for a in aws:
         s+=tab(4)+a.title+", "+db.get(a.type.key()).award_type+", "+str(a.year)
@@ -378,7 +384,7 @@ def awardList(facKey):
     return s
 
 def conferenceList(facKey):
-    cs = getOnFac(ConferenceJoin,facKey)
+    cs = getOnFac(Datastore.ConferenceJoin,facKey)
     s = ""
     for c in cs:
         s+=tab(4)+c.title+" for "+db.get(c.conference.key()).conference_name+" in "+db.get(c.conference.key()).conference_name+", "+str(c.year)
@@ -386,7 +392,7 @@ def conferenceList(facKey):
     return s
 
 def articleList(facKey):
-    arts = getOnFac(ArticleJoin,facKey)
+    arts = getOnFac(Datastore.ArticleJoin,facKey)
     s = ""
     for a in arts:
         s+=tab(4)+a.title+" in "+db.get(a.journal.key()).journal_name+", "+a.date
@@ -394,7 +400,7 @@ def articleList(facKey):
     return s 
 
 def officeHourList(facKey):
-    os = getOnFac(OfficeHourJoin,facKey)
+    os = getOnFac(Datastore.OfficeHourJoin,facKey)
     s =""
     for o in os:
         s+=tab(4)+o.day+" from "+o.start+" to "+o.end
@@ -402,14 +408,14 @@ def officeHourList(facKey):
     return s
 
 def studentList(facKey):
-    sts = getOnFac(StudentJoin,facKey)
+    sts = getOnFac(Datastore.StudentJoin,facKey)
     s = ""
     for st in sts:
         s+=tab(4)+db.get(st.student.key()).student_eid
         s+=removeCheckBox(st)
     return s
 def degreeList(facKey):
-    ds = getOnFac(DegreeJoin,facKey)
+    ds = getOnFac(Datastore.DegreeJoin,facKey)
     s = ""
     for d in ds:
         s+=tab(4)+db.get(d.type.key()).degree_type+" in "+db.get(d.major.key()).degree_name+" from "+db.get(d.institute.key()).institution
@@ -417,21 +423,21 @@ def degreeList(facKey):
     return s    
 
 def courseList(facKey):
-    cs = getOnFac(CourseJoin,facKey)
+    cs = getOnFac(Datastore.CourseJoin,facKey)
     s = ""
     for c in cs:
         s+=tab(4)+str(c.unique)+": "+db.get(c.course.key()).course_number.course_number+", "+db.get(c.course.key()).course_name.course_name
         s+=removeCheckBox(c)
     return s
 def researchAreaList(facKey):
-    ras = getOnFac(AreaJoin,facKey)
+    ras = getOnFac(Datastore.AreaJoin,facKey)
     s = ""
     for ra in ras:
         s+= tab(4)+ db.get(ra.area.key()).research_area
         s+=removeCheckBox(ra)
     return s
 def bookList(facKey):
-    bs = getOnFac(BookJoin,facKey)
+    bs = getOnFac(Datastore.BookJoin,facKey)
     s = ""
     for b in bs:
         s+= tab(4)+b.title+" from "+  db.get(b.publisher.key()).publisher
@@ -455,7 +461,7 @@ def dropDown(table,name,column,title='',selected=None):
     return s
 
 def courseDropDown():
-    entries = course.all()
+    entries = Datastore.course.all()
     s = '<select name="'
     s+= "course"
     s+='"><option value = ""></option>'
@@ -478,9 +484,12 @@ class MainPage (webapp.RequestHandler) :
     Takes care of main page
     """
     def get (self) :
-        fac = Faculty.gql("WHERE email = :1",main.get_current_user())[0]
+        facid = self.request.get("facid")
+        facs = Datastore.Faculty.gql("WHERE email = :1",facid)
+        if facs.count() < 1 or facid is None or facid == "":
+            self.redirect("/")
+        fac = facs.get()
         key = fac.key()
-
         self.response.out.write("""
             <head>
             <title>"""+(fac.name if fac.name is not None else fac.email)+""" </title>
@@ -497,35 +506,38 @@ class MainPage (webapp.RequestHandler) :
             <h1> Faculty Database </h1>
             <br>
             """)
-            
-        self.response.out.write('<form action="/faculty" method="post">')
+#        form = FacultyForm()
+#        template_values = {'form': form}
+#        path = os.path.join(os.path.dirname(__file__), 'fac.html')
+#        self.response.out.write(template.render(path, template_values))
+        self.response.out.write('<form action="/faculty?facid='+facid+'" method="post">')
         self.response.out.write("Name: "+textInputField("name",fac.name))
-        self.response.out.write("<br>Type: "+dropDown(faculty_type,"faculty_type","faculty_type",selected=fac.type))
+        self.response.out.write("<br>Type: "+dropDown(Datastore.faculty_type,"faculty_type","faculty_type",selected=fac.type))
         self.response.out.write("<br>Phone: "+textInputField("phone",fac.phone))
-        self.response.out.write("<br>Office: "+dropDown(building,"building","building",title=tooltip["build"],selected=fac.building)+textInputField("room",fac.room,title=tooltip["room"]))
+        self.response.out.write("<br>Office: "+dropDown(Datastore.building,"building","building",title=tooltip["build"],selected=fac.building)+textInputField("room",fac.room,title=tooltip["room"]))
         self.response.out.write("<br>Email: "+textInputField("email",fac.email))
         self.response.out.write("<br>Website: "+textInputField("website",fac.website))
         self.response.out.write('<br><br>Degrees</p1><br>')
         self.response.out.write(degreeList(key))
-        self.response.out.write(dropDown(degree_type,"degree_type","degree_type",title=tooltip["dType"]))
-        self.response.out.write(dropDown(degree_name,"degree_name","degree_name",title=tooltip["dName"]))
-        self.response.out.write(dropDown(institution,"institution","institution",title=tooltip["inst"]))
+        self.response.out.write(dropDown(Datastore.degree_type,"degree_type","degree_type",title=tooltip["dType"]))
+        self.response.out.write(dropDown(Datastore.degree_name,"degree_name","degree_name",title=tooltip["dName"]))
+        self.response.out.write(dropDown(Datastore.institution,"institution","institution",title=tooltip["inst"]))
         self.response.out.write(textInputField("degreeYear",title=tooltip["year"]))
         self.response.out.write('<br><br>Research Areas</p1><br>')
         self.response.out.write(researchAreaList(key))
-        self.response.out.write(dropDown(research_area,"researchArea","research_area",title=tooltip["ra"]))
+        self.response.out.write(dropDown(Datastore.research_area,"researchArea","research_area",title=tooltip["ra"]))
         self.response.out.write('<br><br>Books<br>')
         self.response.out.write(bookList(key))
         self.response.out.write(textInputField("bookTitle",title=tooltip["title"]))
-        self.response.out.write(dropDown(publisher,"publisher","publisher",title = tooltip["publisher"]))
+        self.response.out.write(dropDown(Datastore.publisher,"publisher","publisher",title = tooltip["publisher"]))
         self.response.out.write('<br><br>Courses<br>')
         self.response.out.write(courseList(key))
         self.response.out.write(textInputField("unique",title=tooltip["unique"]))
         self.response.out.write(courseDropDown())
-        self.response.out.write(dropDown(semester,"semester","semester",title=tooltip["semester"]))
+        self.response.out.write(dropDown(Datastore.semester,"semester","semester",title=tooltip["semester"]))
         self.response.out.write('<br><br>Graduate Students<br>')
         self.response.out.write(studentList(key))
-        self.response.out.write(dropDown(student_eid,"student_eid","student_eid",title=tooltip["student"]))
+        self.response.out.write(dropDown(Datastore.student_eid,"student_eid","student_eid",title=tooltip["student"]))
         self.response.out.write('<br><br>Office Hours<br>')
         self.response.out.write(officeHourList(key))
         self.response.out.write(dropDownList("Day",["","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],title=tooltip["day"]))
@@ -535,17 +547,17 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write(articleList(key))
         self.response.out.write(textInputField("articleTitle",title=tooltip["title"]))
         self.response.out.write(textInputField("articleDate",title=tooltip["year"]))
-        self.response.out.write(dropDown(journal_name,"journal_name","journal_name",title=tooltip["journal"]))
+        self.response.out.write(dropDown(Datastore.journal_name,"journal_name","journal_name",title=tooltip["journal"]))
         self.response.out.write('<br><br>Conferences<br>')
         self.response.out.write(conferenceList(key))
         self.response.out.write(textInputField("confTitle",title=tooltip["title"]))
         self.response.out.write(textInputField("confYear",title=tooltip["year"]))
-        self.response.out.write(dropDown(conference_name,"conference_name","conference_name",title=tooltip["conf"]))
-        self.response.out.write(dropDown(location,"location","location",title=tooltip["loc"]))
+        self.response.out.write(dropDown(Datastore.conference_name,"conference_name","conference_name",title=tooltip["conf"]))
+        self.response.out.write(dropDown(Datastore.location,"location","location",title=tooltip["loc"]))
         self.response.out.write('<br><br>Award<br>')
         self.response.out.write(awardList(key))
         self.response.out.write(textInputField("awardTitle",title=tooltip["title"]))
-        self.response.out.write(dropDown(award_type,"award_type","award_type",title=tooltip["type"]))
+        self.response.out.write(dropDown(Datastore.award_type,"award_type","award_type",title=tooltip["type"]))
         self.response.out.write(textInputField("awardYear",title=tooltip["year"]))
         
         
@@ -559,7 +571,7 @@ class MainPage (webapp.RequestHandler) :
     takes care of submissions
     """
     def post (self) :
-        fac = Faculty.gql("WHERE email = :1",main.get_current_user())[0]
+        fac = Datastore.Faculty.gql("WHERE email = :1",self.request.get("facid"))[0]
         facKey = fac.key()
         facAttrs = ("name","phone","room","email","website")
         def validate(s):
@@ -583,17 +595,17 @@ class MainPage (webapp.RequestHandler) :
         yearToInt = lambda x: -1 if re.search('^\d+$',x) is None else int(x)
         uniqueToInt = lambda x: -1 if re.search('^\d+$',x) is None else int(x)
         
-        fun(DegreeJoin,{"year":yearToInt(get('degreeYear'))},{"type":get('degree_type'),"major":get('degree_name'),"institute":get('institution')})
-        fun(AreaJoin,{},{"area":get('researchArea')})
-        fun(BookJoin,{"title":get('bookTitle')},{"publisher":get("publisher")})
-        fun(CourseJoin,{"unique":uniqueToInt(get('unique'))},{"course":get('course'),"semester":get('semester')})
-        fun(StudentJoin,{},{"student":get('student_eid')})
-        fun(OfficeHourJoin,{"day":get('Day'),"start":get('StartTime'),"end":get('EndTime')},{})
-        fun(ArticleJoin,{"title":get('articleTitle'),"date":get('articleDate')},{'journal':get('journal_name')})
-        fun(ConferenceJoin,{"title":get('confTitle'),"year":yearToInt(get('confYear'))},{"conference":get("conference_name"),"location":get("location")})
-        fun(AwardJoin,{"title":get('awardTitle'),"year":yearToInt(get('awardYear'))},{"type":get('award_type')})
+        fun(Datastore.DegreeJoin,{"year":yearToInt(get('degreeYear'))},{"type":get('degree_type'),"major":get('degree_name'),"institute":get('institution')})
+        fun(Datastore.AreaJoin,{},{"area":get('researchArea')})
+        fun(Datastore.BookJoin,{"title":get('bookTitle')},{"publisher":get("publisher")})
+        fun(Datastore.CourseJoin,{"unique":uniqueToInt(get('unique'))},{"course":get('course'),"semester":get('semester')})
+        fun(Datastore.StudentJoin,{},{"student":get('student_eid')})
+        fun(Datastore.OfficeHourJoin,{"day":get('Day'),"start":get('StartTime'),"end":get('EndTime')},{})
+        fun(Datastore.ArticleJoin,{"title":get('articleTitle'),"date":get('articleDate')},{'journal':get('journal_name')})
+        fun(Datastore.ConferenceJoin,{"title":get('confTitle'),"year":yearToInt(get('confYear'))},{"conference":get("conference_name"),"location":get("location")})
+        fun(Datastore.AwardJoin,{"title":get('awardTitle'),"year":yearToInt(get('awardYear'))},{"type":get('award_type')})
         
-        joins = (AreaJoin,BookJoin,CourseJoin,StudentJoin,OfficeHourJoin,ArticleJoin,ConferenceJoin,AwardJoin,DegreeJoin)
+        joins = (Datastore.AreaJoin,Datastore.BookJoin,Datastore.CourseJoin,Datastore.StudentJoin,Datastore.OfficeHourJoin,Datastore.ArticleJoin,Datastore.ConferenceJoin,Datastore.AwardJoin,Datastore.DegreeJoin)
         map(lambda x:self.doDeletes(x,facKey),joins)
         self.get()
 
