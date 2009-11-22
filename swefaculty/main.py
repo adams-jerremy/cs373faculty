@@ -76,7 +76,7 @@ class MainPage (webapp.RequestHandler) :
             for v in q :
                 if (s == v.email) :
                     current_user = s
-                    self.redirect("/faculty")
+                    self.redirect("/faculty?facid="+s)
         self.get()
         self.response.out.write("""
         <style type="text/css">
