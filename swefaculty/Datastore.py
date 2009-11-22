@@ -1,12 +1,13 @@
-class Faculty(db.Model):
-    name = db.StringProperty()
-    phone = db.StringProperty(validator=ValidateFaculty.phone)
-    building = db.ReferenceProperty(reference_class=building)
-    room = db.StringProperty(validator=ValidateFaculty.room)
-    email = db.EmailProperty(required=True)
-    website = db.StringProperty()
-    type = db.ReferenceProperty(reference_class=faculty_type)
-	
+import cgi
+import types
+import re
+
+from google.appengine.ext        import db
+from google.appengine.ext        import webapp
+from google.appengine.ext.webapp import template 
+import ValidateFaculty
+
+
 class student_eid(db.Model) :
     student_eid = db.StringProperty(required=True)
 class faculty_type(db.Model) :
@@ -47,6 +48,14 @@ class course(db.Model) :
     course_name = db.ReferenceProperty(reference_class=course_name)
     course_type = db.ReferenceProperty(reference_class=course_type)
 
+class Faculty(db.Model):
+    name = db.StringProperty()
+    phone = db.StringProperty(validator=ValidateFaculty.phone)
+    building = db.ReferenceProperty(reference_class=building)
+    room = db.StringProperty(validator=ValidateFaculty.room)
+    email = db.EmailProperty(required=True)
+    website = db.StringProperty()
+    type = db.ReferenceProperty(reference_class=faculty_type)
     
     
 class OfficeHourJoin(db.Model):
