@@ -80,74 +80,34 @@ def getOnFac(table,facKey):
 def tab(i):
     return '&nbsp;'*i
 
-def awardList(facKey):
-    aws = getOnFac(Datastore.AwardJoin,facKey)
+def makeList(facKey, table, line,editable = True):
+    q = getOnFac(table,facKey)
     s = ""
-    for a in aws:
-        s+=tab(4)+a.title+", "+db.get(a.type.key()).award_type+", "+str(a.year)
-        s+=removeCheckBox(a)
+    for v in q:
+        s+=line(v)
+        s+= removeCheckBox(v) if editable else '<br>'
     return s
 
-def conferenceList(facKey):
-    cs = getOnFac(Datastore.ConferenceJoin,facKey)
-    s = ""
-    for c in cs:
-        s+=tab(4)+c.title+" for "+db.get(c.conference.key()).conference_name+" in "+db.get(c.conference.key()).conference_name+", "+str(c.year)
-        s+=removeCheckBox(c)
-    return s
 
-def articleList(facKey):
-    arts = getOnFac(Datastore.ArticleJoin,facKey)
-    s = ""
-    for a in arts:
-        s+=tab(4)+a.title+" in "+db.get(a.journal.key()).journal_name+", "+a.date
-        s+=removeCheckBox(a)
-    return s 
+awardLine = lambda a: tab(4)+a.title+", "+db.get(a.type.key()).award_type+", "+str(a.year)
+conferenceLine = lambda c : tab(4)+c.title+" for "+db.get(c.conference.key()).conference_name+" in "+db.get(c.conference.key()).conference_name+", "+str(c.year)
+articleLine = lambda a : tab(4)+a.title+" in "+db.get(a.journal.key()).journal_name+", "+a.date
+officeHourLine = lambda o :tab(4)+o.day+" from "+o.start+" to "+o.end
+studentLine = lambda s :tab(4)+db.get(s.student.key()).student_eid
+degreeLine = lambda d :tab(4)+db.get(d.type.key()).degree_type+" in "+db.get(d.major.key()).degree_name+" from "+db.get(d.institute.key()).institution
+courseLine = lambda c :tab(4)+str(c.unique)+": "+db.get(c.course.key()).course_number.course_number+", "+db.get(c.course.key()).course_name.course_name
+researchAreaLine = lambda ra : tab(4)+ db.get(ra.area.key()).research_area
+bookLine = lambda b :tab(4)+b.title+" from "+  db.get(b.publisher.key()).publisher
 
-def officeHourList(facKey):
-    os = getOnFac(Datastore.OfficeHourJoin,facKey)
-    s =""
-    for o in os:
-        s+=tab(4)+o.day+" from "+o.start+" to "+o.end
-        s+=removeCheckBox(o)
-    return s
-
-def studentList(facKey):
-    sts = getOnFac(Datastore.StudentJoin,facKey)
-    s = ""
-    for st in sts:
-        s+=tab(4)+db.get(st.student.key()).student_eid
-        s+=removeCheckBox(st)
-    return s
-def degreeList(facKey):
-    ds = getOnFac(Datastore.DegreeJoin,facKey)
-    s = ""
-    for d in ds:
-        s+=tab(4)+db.get(d.type.key()).degree_type+" in "+db.get(d.major.key()).degree_name+" from "+db.get(d.institute.key()).institution
-        s+=removeCheckBox(d)
-    return s    
-
-def courseList(facKey):
-    cs = getOnFac(Datastore.CourseJoin,facKey)
-    s = ""
-    for c in cs:
-        s+=tab(4)+str(c.unique)+": "+db.get(c.course.key()).course_number.course_number+", "+db.get(c.course.key()).course_name.course_name
-        s+=removeCheckBox(c)
-    return s
-def researchAreaList(facKey):
-    ras = getOnFac(Datastore.AreaJoin,facKey)
-    s = ""
-    for ra in ras:
-        s+= tab(4)+ db.get(ra.area.key()).research_area
-        s+=removeCheckBox(ra)
-    return s
-def bookList(facKey):
-    bs = getOnFac(Datastore.BookJoin,facKey)
-    s = ""
-    for b in bs:
-        s+= tab(4)+b.title+" from "+  db.get(b.publisher.key()).publisher
-        s+=removeCheckBox(b)
-    return s
+awardList = lambda f: makeList(f,Datastore.AwardJoin,awardLine)
+conferenceList = lambda f: makeList(f,Datastore.ConferenceJoin,conferenceLine)
+articleList = lambda f: makeList(f,Datastore.ArticleJoin,articleLine)
+officeHourList = lambda f: makeList(f,Datastore.OfficeHourJoin,officeHourLine)
+studentList = lambda f: makeList(f,Datastore.StudentJoin,studentLine)
+degreeList = lambda f: makeList(f,Datastore.DegreeJoin,degreeLine)
+courseList = lambda f: makeList(f,Datastore.CourseJoin,courseLine)
+researchAreaList = lambda f: makeList(f,Datastore.AreaJoin,researchAreaLine)
+bookList = lambda f: makeList(f,Datastore.BookJoin,bookLine)
 
 def dropDown(table,name,column,title='',selected=None):
     entries = table.all()
@@ -156,7 +116,7 @@ def dropDown(table,name,column,title='',selected=None):
     s+='"><option value = ""></option>'
     for e in entries:
         s+='<option '
-        s+='selected="selected"' if selected == e else ''
+        s+='selected="selected"' if selected == e.key() else ''
         s+='value="'
         s+=str(e.key())
         s+='">'
@@ -190,10 +150,9 @@ class MainPage (webapp.RequestHandler) :
     """
     def get (self) :
         facid = self.request.get("facid")
-        facs = Datastore.Faculty.gql("WHERE email = :1",facid)
-        if facs.count() < 1 or facid is None or facid == "":
-            self.redirect("/")
-        fac = facs.get()
+        fac = Datastore.Faculty.gql("WHERE email = :1",facid).get()
+        if fac is None: self.redirect("/"); return;
+        
         key = fac.key()
         self.response.out.write("""
             <head>
@@ -217,9 +176,9 @@ class MainPage (webapp.RequestHandler) :
 #        self.response.out.write(template.render(path, template_values))
         self.response.out.write('<form action="/faculty?facid='+facid+'" method="post">')
         self.response.out.write("Name: "+textInputField("name",fac.name))
-        self.response.out.write("<br>Type: "+dropDown(Datastore.faculty_type,"faculty_type","faculty_type",selected=fac.type))
+        self.response.out.write("<br>Type: "+dropDown(Datastore.faculty_type,"faculty_type","faculty_type",selected=None if fac.type is None else fac.type.key()))
         self.response.out.write("<br>Phone: "+textInputField("phone",fac.phone))
-        self.response.out.write("<br>Office: "+dropDown(Datastore.building,"building","building",title=tooltip["build"],selected=fac.building)+textInputField("room",fac.room,title=tooltip["room"]))
+        self.response.out.write("<br>Office: "+dropDown(Datastore.building,"building","building",title=tooltip["build"],selected=None if fac.building is None else fac.building.key())+textInputField("room",fac.room,title=tooltip["room"]))
         self.response.out.write("<br>Email: "+textInputField("email",fac.email))
         self.response.out.write("<br>Website: "+textInputField("website",fac.website))
         self.response.out.write('<br><br>Degrees</p1><br>')
@@ -230,7 +189,7 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write(textInputField("degreeYear",title=tooltip["year"]))
         self.response.out.write('<br><br>Research Areas</p1><br>')
         self.response.out.write(researchAreaList(key))
-        self.response.out.write(dropDown(Datastore.research_area,"researchArea","research_area",title=tooltip["ra"]))
+        self.response.out.write(dropDown(Datastore.research_area,"research_area","research_area",title=tooltip["ra"]))
         self.response.out.write('<br><br>Books<br>')
         self.response.out.write(bookList(key))
         self.response.out.write(textInputField("bookTitle",title=tooltip["title"]))
@@ -264,8 +223,6 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write(textInputField("awardTitle",title=tooltip["title"]))
         self.response.out.write(dropDown(Datastore.award_type,"award_type","award_type",title=tooltip["type"]))
         self.response.out.write(textInputField("awardYear",title=tooltip["year"]))
-        
-        
         self.response.out.write('<br><input type="submit" value="Submit" /> </form><br />')
         
         
@@ -290,25 +247,23 @@ class MainPage (webapp.RequestHandler) :
         if s != "": fac.building = db.Key(encoded=s);
         fac.put()
         
-        def fun(table,dict,keyDict):
-            if filled(*dict.values()) and filled(*keyDict.values()) :
-                for k in keyDict:
-                   keyDict[k] = db.Key(keyDict[k])
-                dict.update(keyDict)
+        def fun(table,dict):
+            if filled(*dict.values()) :
                 table(faculty = facKey,**dict).put()
         get = lambda x:cgi.escape(self.request.get(x))
+        getKey = lambda x:""if get(x)=="" else db.Key(get(x))
         yearToInt = lambda x: -1 if re.search('^\d+$',x) is None else int(x)
         uniqueToInt = lambda x: -1 if re.search('^\d+$',x) is None else int(x)
         
-        fun(Datastore.DegreeJoin,{"year":yearToInt(get('degreeYear'))},{"type":get('degree_type'),"major":get('degree_name'),"institute":get('institution')})
-        fun(Datastore.AreaJoin,{},{"area":get('researchArea')})
-        fun(Datastore.BookJoin,{"title":get('bookTitle')},{"publisher":get("publisher")})
-        fun(Datastore.CourseJoin,{"unique":uniqueToInt(get('unique'))},{"course":get('course'),"semester":get('semester')})
-        fun(Datastore.StudentJoin,{},{"student":get('student_eid')})
-        fun(Datastore.OfficeHourJoin,{"day":get('Day'),"start":get('StartTime'),"end":get('EndTime')},{})
-        fun(Datastore.ArticleJoin,{"title":get('articleTitle'),"date":get('articleDate')},{'journal':get('journal_name')})
-        fun(Datastore.ConferenceJoin,{"title":get('confTitle'),"year":yearToInt(get('confYear'))},{"conference":get("conference_name"),"location":get("location")})
-        fun(Datastore.AwardJoin,{"title":get('awardTitle'),"year":yearToInt(get('awardYear'))},{"type":get('award_type')})
+        fun(Datastore.DegreeJoin,{"year":yearToInt(get('degreeYear')),"type":getKey('degree_type'),"major":getKey('degree_name'),"institute":getKey('institution')})
+        fun(Datastore.AreaJoin,{"area":getKey('research_area')})
+        fun(Datastore.BookJoin,{"title":get('bookTitle'),"publisher":getKey("publisher")})
+        fun(Datastore.CourseJoin,{"unique":uniqueToInt(get('unique')),"course":getKey('course'),"semester":getKey('semester')})
+        fun(Datastore.StudentJoin,{"student":getKey('student_eid')})
+        fun(Datastore.OfficeHourJoin,{"day":get('Day'),"start":get('StartTime'),"end":get('EndTime')})
+        fun(Datastore.ArticleJoin,{"title":get('articleTitle'),"date":get('articleDate'),'journal':getKey('journal_name')})
+        fun(Datastore.ConferenceJoin,{"title":get('confTitle'),"year":yearToInt(get('confYear')),"conference":getKey("conference_name"),"location":getKey("location")})
+        fun(Datastore.AwardJoin,{"title":get('awardTitle'),"year":yearToInt(get('awardYear')),"type":getKey('award_type')})
         
         joins = (Datastore.AreaJoin,Datastore.BookJoin,Datastore.CourseJoin,Datastore.StudentJoin,Datastore.OfficeHourJoin,Datastore.ArticleJoin,Datastore.ConferenceJoin,Datastore.AwardJoin,Datastore.DegreeJoin)
         map(lambda x:self.doDeletes(x,facKey),joins)
