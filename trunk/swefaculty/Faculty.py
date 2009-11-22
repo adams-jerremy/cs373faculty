@@ -11,8 +11,8 @@ import re
 from google.appengine.ext        import db
 from google.appengine.ext        import webapp
 from google.appengine.ext.webapp import template 
-from google.appengine.ext.db     import djangoforms
 
+import Datastore
 import ValidateFaculty
 import main
 
@@ -39,132 +39,122 @@ tooltip = { "":"",
            "build":"Office Building"
            }
 
-class student_eid(db.Model) :
-    student_eid = db.StringProperty(required=True)
-class faculty_type(db.Model) :
-    faculty_type = db.StringProperty(required=True)
-    def __str__(self):
-        return self._faculty_type
-class research_area(db.Model) :
-    research_area = db.StringProperty(required=True)
-class building(db.Model) :
-    building = db.StringProperty(required=True)
-    def __str__(self):
-        return self._building
-class start_time(db.Model) :
-    start_time = db.StringProperty(required=True)
-class end_time(db.Model) :
-    end_time = db.StringProperty(required=True)
-class degree_type(db.Model) :
-    degree_type = db.StringProperty(required=True)
-class degree_name(db.Model) :
-    degree_name = db.StringProperty(required=True)
-class institution(db.Model) :
-    institution = db.StringProperty(required=True)
-class conference_name(db.Model) :
-    conference_name = db.StringProperty(required=True)
-class location(db.Model) :
-    location = db.StringProperty(required=True)
-class journal_name(db.Model) :
-    journal_name = db.StringProperty(required=True)
-class publisher(db.Model) :
-    publisher = db.StringProperty(required=True)
-class student_type(db.Model) :
-    student_type = db.StringProperty(required=True)
-class course_number(db.Model) :
-    course_number = db.StringProperty(required=True)
-class course_name(db.Model) :
-    course_name = db.StringProperty(required=True)
-class course_type(db.Model) :
-    course_type = db.StringProperty(required=True)
-class course(db.Model):
-    course_number = db.ReferenceProperty(reference_class=course_number)
-    course_name = db.ReferenceProperty(reference_class=course_name)
-    course_type = db.ReferenceProperty(reference_class=course_type)
-    
-class semester(db.Model) :
-    semester = db.StringProperty(required=True)
-class award_name(db.Model) :
-    award_name = db.StringProperty(required=True)
-class award_type(db.Model) :
-    award_type = db.StringProperty(required=True)
-
-"""
-Database Faculty Model
-"""
-
-class Faculty(db.Model):
-    name = db.StringProperty()
-    phone = db.StringProperty(validator=ValidateFaculty.phone)
-    building = db.ReferenceProperty(reference_class=building)
-    room = db.StringProperty(validator=ValidateFaculty.room)
-    email = db.EmailProperty(required=True)
-    website = db.StringProperty()
-    type = db.ReferenceProperty(reference_class=faculty_type)
-
-"""
-Faculty Form
-"""
-
-
-
-class FacultyForm (djangoforms.ModelForm) :
-    class Meta :
-        model = Faculty
-    
-    
-class OfficeHourJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    day = db.StringProperty(choices = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"])
-    start = db.StringProperty()
-    end = db.StringProperty()
-
-    
-class DegreeJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    type = db.ReferenceProperty(reference_class=degree_type)
-    major = db.ReferenceProperty(reference_class=degree_name)
-    institute = db.ReferenceProperty(reference_class=institution)
-    year = db.IntegerProperty(validator=ValidateFaculty.year)
-    print
-    
-class AreaJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    area = db.ReferenceProperty(reference_class=research_area)
-    
-class StudentJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    student = db.ReferenceProperty(reference_class=student_eid)
-
-class CourseJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    unique = db.IntegerProperty(validator=ValidateFaculty.unique)
-    course = db.ReferenceProperty(reference_class=course)
-    semester = db.ReferenceProperty(reference_class=semester)
-
-class ArticleJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    journal = db.ReferenceProperty(reference_class=journal_name)
-    title = db.TextProperty()
-    date = db.StringProperty()#db.DateProperty()
-
-class ConferenceJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    conference = db.ReferenceProperty(reference_class=conference_name)
-    title = db.TextProperty()
-    location =db.ReferenceProperty(reference_class=location)
-    year = db.IntegerProperty(validator=ValidateFaculty.year)
-    
-class BookJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    title = db.TextProperty()
-    publisher = db.ReferenceProperty(reference_class=publisher)
-
-class AwardJoin(db.Model):
-    faculty = db.ReferenceProperty(reference_class=Faculty)
-    title = db.TextProperty()
-    type = db.ReferenceProperty(reference_class=award_type)
-    year = db.IntegerProperty(validator=ValidateFaculty.year)
+#class student_eid(db.Model) :
+#    student_eid = db.StringProperty(required=True)
+#class faculty_type(db.Model) :
+#    faculty_type = db.StringProperty(required=True)
+#    def __str__(self):
+#        return self._faculty_type
+#class research_area(db.Model) :
+#    research_area = db.StringProperty(required=True)
+#class building(db.Model) :
+#    building = db.StringProperty(required=True)
+#    def __str__(self):
+#        return self._building
+#class start_time(db.Model) :
+#    start_time = db.StringProperty(required=True)
+#class end_time(db.Model) :
+#    end_time = db.StringProperty(required=True)
+#class degree_type(db.Model) :
+#    degree_type = db.StringProperty(required=True)
+#class degree_name(db.Model) :
+#    degree_name = db.StringProperty(required=True)
+#class institution(db.Model) :
+#    institution = db.StringProperty(required=True)
+#class conference_name(db.Model) :
+#    conference_name = db.StringProperty(required=True)
+#class location(db.Model) :
+#    location = db.StringProperty(required=True)
+#class journal_name(db.Model) :
+#    journal_name = db.StringProperty(required=True)
+#class publisher(db.Model) :
+#    publisher = db.StringProperty(required=True)
+#class student_type(db.Model) :
+#    student_type = db.StringProperty(required=True)
+#class course_number(db.Model) :
+#    course_number = db.StringProperty(required=True)
+#class course_name(db.Model) :
+#    course_name = db.StringProperty(required=True)
+#class course_type(db.Model) :
+#    course_type = db.StringProperty(required=True)
+#class course(db.Model):
+#    course_number = db.ReferenceProperty(reference_class=course_number)
+#    course_name = db.ReferenceProperty(reference_class=course_name)
+#    course_type = db.ReferenceProperty(reference_class=course_type)
+#    
+#class semester(db.Model) :
+#    semester = db.StringProperty(required=True)
+#class award_name(db.Model) :
+#    award_name = db.StringProperty(required=True)
+#class award_type(db.Model) :
+#    award_type = db.StringProperty(required=True)
+#
+#"""
+#Database Faculty Model
+#"""
+#
+#class Faculty(db.Model):
+#    name = db.StringProperty()
+#    phone = db.StringProperty()
+#    building = db.ReferenceProperty(reference_class=building)
+#    room = db.StringProperty()
+#    email = db.EmailProperty(required=True)
+#    website = db.StringProperty()
+#    type = db.ReferenceProperty(reference_class=faculty_type)
+#
+#    
+#class OfficeHourJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    day = db.StringProperty(choices = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"])
+#    start = db.StringProperty()
+#    end = db.StringProperty()
+#
+#    
+#class DegreeJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    type = db.ReferenceProperty(reference_class=degree_type)
+#    major = db.ReferenceProperty(reference_class=degree_name)
+#    institute = db.ReferenceProperty(reference_class=institution)
+#    year = db.IntegerProperty(validator=ValidateFaculty.year)
+#    print
+#    
+#class AreaJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    area = db.ReferenceProperty(reference_class=research_area)
+#    
+#class StudentJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    student = db.ReferenceProperty(reference_class=student_eid)
+#
+#class CourseJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    unique = db.IntegerProperty(validator=ValidateFaculty.unique)
+#    course = db.ReferenceProperty(reference_class=course)
+#    semester = db.ReferenceProperty(reference_class=semester)
+#
+#class ArticleJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    journal = db.ReferenceProperty(reference_class=journal_name)
+#    title = db.TextProperty()
+#    date = db.StringProperty()#db.DateProperty()
+#
+#class ConferenceJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    conference = db.ReferenceProperty(reference_class=conference_name)
+#    title = db.TextProperty()
+#    location =db.ReferenceProperty(reference_class=location)
+#    year = db.IntegerProperty(validator=ValidateFaculty.year)
+#    
+#class BookJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    title = db.TextProperty()
+#    publisher = db.ReferenceProperty(reference_class=publisher)
+#
+#class AwardJoin(db.Model):
+#    faculty = db.ReferenceProperty(reference_class=Faculty)
+#    title = db.TextProperty()
+#    type = db.ReferenceProperty(reference_class=award_type)
+#    year = db.IntegerProperty(validator=ValidateFaculty.year)
 
 #class Faculty:
 #
@@ -365,7 +355,7 @@ def dropDownList(name,options,title=''):
 #"""
 #
 def textInputField(id,value='',title=''):
-    return '<input type="text" title="'+title+'" name="'+id+'" value = "' +value+ '" />'
+    return '<input type="text" title="'+title+'" name="'+id+'" value = "' +(value if value is not None else '')+ '" />'
 #
 #'''
 #handler for faculty page
@@ -456,7 +446,7 @@ def dropDown(table,name,column,title='',selected=None):
     s+='"><option value = ""></option>'
     for e in entries:
         s+='<option '
-        s+='selected="selected"' if selected == e.key() else ''
+        s+='selected="selected"' if selected == e else ''
         s+='value="'
         s+=str(e.key())
         s+='">'
@@ -479,6 +469,11 @@ def courseDropDown():
     s+='</select>' 
     return s
 
+style ="""
+<style type="text/css"> m{color: #ADADAD;} 
+</style type="text/css"><m>%s: </m>
+        """
+
 class MainPage (webapp.RequestHandler) :
     """
     Takes care of main page
@@ -486,8 +481,7 @@ class MainPage (webapp.RequestHandler) :
     def get (self) :
         fac = Faculty.gql("WHERE email = :1",main.get_current_user())[0]
         key = fac.key()
-        data = {"website":fac.website,"type":""if fac.type is None else fac.type.key(),"email":fac.email,"name":fac.name,"phone":fac.phone,"building":""if fac.building is None else fac.building.key(),"room":fac.room}
-        form = FacultyForm(data = data)
+
         self.response.out.write("""
             <head>
             <title>"""+(fac.name if fac.name is not None else fac.email)+""" </title>
@@ -594,11 +588,8 @@ class MainPage (webapp.RequestHandler) :
         fun(AreaJoin,{},{"area":get('researchArea')})
         fun(BookJoin,{"title":get('bookTitle')},{"publisher":get("publisher")})
         fun(CourseJoin,{"unique":uniqueToInt(get('unique'))},{"course":get('course'),"semester":get('semester')})
+        fun(StudentJoin,{},{"student":get('student_eid')})
 
-        student = cgi.escape(self.request.get('student_eid'))
-        if filled(student):
-            StudentJoin(faculty=facKey,student=db.Key(student)).put()    
-        
         day = cgi.escape(self.request.get('Day'))
         start = cgi.escape(self.request.get('StartTime'))
         end = cgi.escape(self.request.get('EndTime'))

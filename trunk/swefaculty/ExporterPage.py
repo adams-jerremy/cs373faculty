@@ -75,13 +75,14 @@ class course(db.Model) :
 
 class Faculty(db.Model):
     name = db.StringProperty()
-    phone = db.PhoneNumberProperty()
+    phone = db.StringProperty()
     building = db.ReferenceProperty(building)
     room = db.StringProperty(validator=ValidateFaculty.room)
     email = db.EmailProperty(required=True)
-    website = db.LinkProperty()
+    website = db.StringProperty()
     type = db.ReferenceProperty(reference_class=faculty_type)
-
+class rawxml(db.Model):
+    xml = db.TextProperty()
 
 
 '''
@@ -97,11 +98,9 @@ class MainPage (webapp.RequestHandler) :
 
     def get (self) :
         self.response.out.write('<font size="6">XML Exporter</font>')
-        self.response.out.write('<form action="/importer" method="post">')
+        self.response.out.write('<form action="/exporter" method="post">')
         self.response.out.write("""
-            <textarea name="xmlinput" cols="80" rows="20">
-            </textarea>
-            <input type="submit" value="Submit"/>
+            <input type="submit" value="Get It!"/>
             </form>""")
         self.response.out.write("<a href=''>Login Page</a><br />")
         self.response.out.write("<a href='admin'>Admin Page</a><br />")
@@ -162,9 +161,11 @@ class MainPage (webapp.RequestHandler) :
 
     def post (self) :
         global textstore
+        for v in rawxml.all():
+            self.response.out.write(v.xml+'<br>')
         textstore = ""
-        s = cgi.escape(self.request.get("xmlinput"))
-        self.process(s)
+        #s = cgi.escape(self.request.get("xmlinput"))
+        #self.process(s)
         self.get()
 
 if __name__ == "__main__":
