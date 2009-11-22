@@ -63,11 +63,11 @@ class course(db.Model) :
 
 class Faculty(db.Model):
     name = db.StringProperty()
-    phone = db.PhoneNumberProperty()
+    phone = db.StringProperty()
     building = db.ReferenceProperty(building)
-    room = db.StringProperty(validator=ValidateFaculty.room)
+    room = db.StringProperty()
     email = db.EmailProperty(required=True)
-    website = db.LinkProperty()
+    website = db.StringProperty()
     type = db.ReferenceProperty(reference_class=faculty_type)
 
 

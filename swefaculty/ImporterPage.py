@@ -59,6 +59,8 @@ class semester(db.Model) :
     semester = db.StringProperty(required=True)
 class award_type(db.Model) :
     award_type = db.StringProperty(required=True)
+class rawxml(db.Model):
+    xml = db.TextProperty()
 
 class course(db.Model) :
     course_number = db.ReferenceProperty(reference_class=course_number)
@@ -67,11 +69,11 @@ class course(db.Model) :
 
 class Faculty(db.Model):
     name = db.StringProperty()
-    phone = db.PhoneNumberProperty()
+    phone = db.StringProperty()
     building = db.ReferenceProperty(building)
     room = db.StringProperty(validator=ValidateFaculty.room)
     email = db.EmailProperty(required=True)
-    website = db.LinkProperty()
+    website = db.StringProperty()
     type = db.ReferenceProperty(reference_class=faculty_type)
 
 
@@ -151,6 +153,7 @@ class MainPage (webapp.RequestHandler) :
     def process (self, xml) :
         global textstore
         facxml = BeautifulStoneSoup(str(xml))
+        rawxml(xml = facxml.prettify()).put()
 
         faculty_firstname = self.chop(str(facxml.faculty_firstname.string))
         faculty_lastname = self.chop(str(facxml.faculty_lastname.string))

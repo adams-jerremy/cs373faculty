@@ -8,6 +8,7 @@ from google.appengine.ext import db
 from google.appengine.ext             import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+
 import Admin
 import Faculty
 import ImporterPage
@@ -62,6 +63,8 @@ class MainPage (webapp.RequestHandler) :
             <input type="submit" value ="Login" />
             </body>
             </form>""")
+        
+
 
     def post (self) :
         global current_user
@@ -69,9 +72,9 @@ class MainPage (webapp.RequestHandler) :
         if s == "admin" :
             self.redirect("/admin")
         else :
-            q = db.GqlQuery("SELECT * from faculty_email")
+            q = db.GqlQuery("SELECT * from Faculty")
             for v in q :
-                if (s == v.faculty_email) :
+                if (s == v.email) :
                     current_user = s
                     self.redirect("/faculty")
         self.get()
