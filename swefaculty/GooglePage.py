@@ -72,6 +72,7 @@ searches =[("Names",Datastore.Faculty,'name'),
 class MainPage (webapp.RequestHandler) :
     def get(self) :
         self.response.out.write('<form id="SearchForm" method="post" action="/search">')
+        self.response.out.write('<a href="/search">Advanced Search</a>')
         for s in searches:
             self.response.out.write(select(*s))
         self.response.out.write('<br/><input type="radio" checked="checked" name="combinator" value="and" /> AND <br /><input type="radio" name="combinator" value="or" /> OR')

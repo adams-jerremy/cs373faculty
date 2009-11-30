@@ -17,6 +17,7 @@ import Tester
 import SearchPage
 import Public
 import SearchPage
+import GooglePage
 current_user = ""
 keywords = ""
 
@@ -97,15 +98,19 @@ class MainPage (webapp.RequestHandler) :
 
     def post (self) :
         global current_user
-        s = cgi.escape(self.request.get("id"))
-        if s == "admin" :
-            self.redirect("/admin")
-        else :
-            q = db.GqlQuery("SELECT * from Faculty")
-            for v in q :
-                if (s == v.email) :
-                    current_user = s
-                    self.redirect("/faculty?facid="+s)
+        search = cgi.escape(self.request.get("Search"))
+        if len(search) == 0:
+            s = cgi.escape(self.request.get("id"))
+            if s == "admin" :
+                self.redirect("/admin")
+            else :
+                q = db.GqlQuery("SELECT * from Faculty")
+                for v in q :
+                    if (s == v.email) :
+                        current_user = s
+                        self.redirect("/faculty?facid="+s)
+        else:
+            self.redirect("/google?string="+search)
         self.get()
         self.response.out.write("""
         <style type="text/css">
@@ -129,7 +134,8 @@ def main () :
          ("/search", SearchPage.MainPage),
          ("/tester",Tester.MainPage),
          ("/public",Public.MainPage),
-         ("/search",SearchPage.MainPage)],
+         ("/search",SearchPage.MainPage),
+         ("/google",GooglePage.MainPage)],
         debug=True)
     run_wsgi_app(x)
 
