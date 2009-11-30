@@ -1,0 +1,38 @@
+= Introduction =
+
+This page explains how our Faculty Database works.
+
+= Main Page =
+
+When the user goes to the main page of our Database, they will see two things:
+1) A Login box in the top right corner of the page.
+2) A Search box in the center of the page.
+
+= Login =
+
+*Administrator*
+
+The administrator can log in to the database by typing the word "admin" in the login box.  Once logged in, the administrator can add/remove data such as Faculty emails, Faculty types, research areas, etc.  The administrator can also build (and remove) data about courses and graduate students.  The 'Submit' button needs to be pushed to undertake any of the aforementioned actions; once the data is filled into the appropriate fields, the submit button adds (or, if specified, removes) the data to the database.  There are also links at the bottom of the page to return to the main page, import faculty xml data, or export faculty xml data.
+
+_Import Faculty Data_
+
+The administrator must copy and paste the appropriate xml data into the text box and click on the 'Submit' button to import it into the database.  It should be noted that the importer can only import data on 1 faculty member each time.  There are also buttons to take the user back to the login page, the admin page, or the export faculty data page.
+
+_Export Faculty Data_
+
+This page simply has a buttion that prints out all of the data currently stored in the database into the appropriate xml format.
+
+
+*Faculty Member*
+
+Each faculty member can log into their personal profile in the database using their email address on the login box.  Once logged in, they can edit their own personal information, such as their name, email, phone number, website, degrees, etc.  The 'Submit' button at the bottom will save any changes made to any of the fields to the database.
+
+= Search =
+
+*Advanced (Filter) Search*
+
+This search can be accessed by clicking on the link just below the search box on the main page.  The page that comes up will contain the tables of the data in the database.  The user can then highlight as many items as they want from each of the tables (Ctrl+Shift is used to select more than one item from the same table).  At the bottom of the page are two buttons labeled AND and OR, as well as a 'Search' button.  Selecting OR and clicking 'Search' after the user has highlighted some data will return a union of all the data found in the database that matches at least one of the search parameters.  Selecting AND, on the other hand, will return an intersection of the data - that is, it will return the data which matches every one of the search parameters (or, it will return nothing if no data matches all of the search parameters).
+
+*Google-Like Search*
+
+The user simply needs to enter a word or phrase in the search box on the main page, and any data in the database that matches the aforementioned phrase will be returned.
