@@ -1,0 +1,8 @@
+= Introduction =
+
+Allows the user to search the database for information in a manner similar to performing a Google search.
+
+
+= Details =
+
+On the main page of the Faculty Database, the user simply types a word or phrase into the Search Box in the center, and the database is searched for the given query.
