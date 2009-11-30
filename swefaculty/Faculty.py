@@ -47,18 +47,26 @@ def filled(*t):
 #"""
 #Function for making generic drop down lists
 #"""
+#def dropDownListBAK(name,options,title=''):
+#    s = '<select title="'+title+'" name="'
+#    s+=name
+#    s+='">'
+#    for o in options:
+#        s+='<option value="'
+#        s+=o
+#        s+='">'
+#        s+=o
+#        s+='</option>'
+#    s+='</select>' 
+#    return s
+
+def concat(x,y): return x+y;
+def xmap(uf,i): return (uf(v) for v in i);
+def mapReduce(bf,uf,i,d=''): return reduce(bf,xmap(uf,i),d);
+
+
 def dropDownList(name,options,title=''):
-    s = '<select title="'+title+'" name="'
-    s+=name
-    s+='">'
-    for o in options:
-        s+='<option value="'
-        s+=o
-        s+='">'
-        s+=o
-        s+='</option>'
-    s+='</select>' 
-    return s
+    return '<select title="'+title+'" name="'+name+'">'+mapReduce(concat,lambda o:'<option value='+o+'>'+o+'</option>',options)+'</select>'
 
 #"""
 #Generically create a textinput
@@ -74,26 +82,25 @@ def textInputField(id,value='',title=''):
 def removeCheckBox(entry):
     return ' Remove:<input type="checkbox" title="'+tooltip["remove"]+'" name="R'+str(entry.key())+'"/>\n<br>'
 
-def getOnFac(table,facKey):
-    return table.gql("WHERE faculty=:1",facKey)
+def getOnFac(table,facKey): return table.gql("WHERE faculty=:1",facKey);
 
-def tab(i):
-    return '&nbsp;'*i
+def tab(i): return '&nbsp;'*i;
 
+#def makeListBAK(facKey, table, line,editable = True):
+#    q = getOnFac(table,facKey)
+#    s = ""
+#    for v in q:
+#        s+=line(v)
+#        s+= removeCheckBox(v) if editable else '<br>'
+#    return s
 def makeList(facKey, table, line,editable = True):
-    q = getOnFac(table,facKey)
-    s = ""
-    for v in q:
-        s+=line(v)
-        s+= removeCheckBox(v) if editable else '<br>'
-    return s
-
+    return mapReduce(concat,lambda v:line(v)+(removeCheckBox(v) if editable else '<br>'),getOnFac(table,facKey))
 
 awardLine = lambda a: tab(4)+a.title+", "+db.get(a.type.key()).award_type+", "+str(a.year)
 conferenceLine = lambda c : tab(4)+c.title+" for "+db.get(c.conference.key()).conference_name+" in "+db.get(c.conference.key()).conference_name+", "+str(c.year)
 articleLine = lambda a : tab(4)+a.title+" in "+db.get(a.journal.key()).journal_name+", "+a.date
 officeHourLine = lambda o :tab(4)+o.day+" from "+o.start+" to "+o.end
-studentLine = lambda s :tab(4)+db.get(s.student.key()).student_eid
+studentLine = lambda s :tab(4)+db.get(s.student.key()).first_name+" "+db.get(s.student.key()).last_name
 degreeLine = lambda d :tab(4)+db.get(d.type.key()).degree_type+" in "+db.get(d.major.key()).degree_name+" from "+db.get(d.institute.key()).institution
 courseLine = lambda c :tab(4)+str(c.unique)+": "+db.get(c.course.key()).course_number.course_number+", "+db.get(c.course.key()).course_name.course_name
 researchAreaLine = lambda ra : tab(4)+ db.get(ra.area.key()).research_area
@@ -109,40 +116,37 @@ courseList = lambda f: makeList(f,Datastore.CourseJoin,courseLine)
 researchAreaList = lambda f: makeList(f,Datastore.AreaJoin,researchAreaLine)
 bookList = lambda f: makeList(f,Datastore.BookJoin,bookLine)
 
-def dropDown(table,name,column,title='',selected=None):
-    entries = table.all()
-    s = '<select title="'+title+'" name="'
-    s+= name
-    s+='"><option value = ""></option>'
-    for e in entries:
-        s+='<option '
-        s+='selected="selected"' if selected == e.key() else ''
-        s+='value="'
-        s+=str(e.key())
-        s+='">'
-        s+=e.__dict__["_"+column]
-        s+='</option>'
-    s+='</select>' 
-    return s
+#def dropDownBAK(table,name,column,title='',selected=None):
+#    entries = table.all()
+#    s = '<select title="'+title+'" name="'
+#    s+= name
+#    s+='"><option value = ""></option>'
+#    for e in entries:
+#        s+='<option '
+#        s+='selected="selected"' if selected == e.key() else ''
+#        s+='value="'
+#        s+=str(e.key())
+#        s+='">'
+#        s+=e.__dict__["_"+column]
+#        s+='</option>'
+#    s+='</select>' 
+#    return s
+def dropDown(table,name,column,title='',selected=None,line=None):
+    return '<select title="'+title+'" name="'+name+'"><option value = ""></option>'+mapReduce(concat,(lambda e:'<option ' + ('selected="selected" value="' if selected == e.key() else ' value ="')+str(e.key())+'">'+e.__dict__['_'+column]+'</option>') if line is None else line,table.all())+'</select>'
 
 def courseDropDown():
-    entries = Datastore.course.all()
-    s = '<select name="'
-    s+= "course"
-    s+='"><option value = ""></option>'
-    for e in entries:
-        s+='<option value="'
-        s+=str(e.key())
-        s+='">'
-        s+=e.course_number.course_number + ", " + e.course_name.course_name + ", " + e.course_type.course_type
-        s+='</option>'
-    s+='</select>' 
-    return s
+    return dropDown(Datastore.course,"course",'',line = lambda e:'<option value="'+str(e.key())+'">'+e.course_number.course_number + ", " + e.course_name.course_name + ", " + e.course_type.course_type+'</option>')
+#    entries = Datastore.course.all()
+#    s = '<select name="course"><option value = ""></option>'+mapReduce()
+#    for e in entries:
+#        s+='<option value="'+str(e.key())+'">'+e.course_number.course_number + ", " + e.course_name.course_name + ", " + e.course_type.course_type+'</option>'
+#    s+='</select>' 
+#    return s
 
 style ="""
 <style type="text/css"> m{color: #ADADAD;} 
 </style type="text/css"><m>%s: </m>
-        """
+"""
 
 class MainPage (webapp.RequestHandler) :
     """
@@ -201,7 +205,7 @@ class MainPage (webapp.RequestHandler) :
         self.response.out.write(dropDown(Datastore.semester,"semester","semester",title=tooltip["semester"]))
         self.response.out.write('<br><br>Graduate Students<br>')
         self.response.out.write(studentList(key))
-        self.response.out.write(dropDown(Datastore.student_eid,"student_eid","student_eid",title=tooltip["student"]))
+        self.response.out.write(dropDown(Datastore.GraduateStudent,"student_last","last_name",title=tooltip["student"]))
         self.response.out.write('<br><br>Office Hours<br>')
         self.response.out.write(officeHourList(key))
         self.response.out.write(dropDownList("Day",["","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],title=tooltip["day"]))
@@ -259,7 +263,7 @@ class MainPage (webapp.RequestHandler) :
         fun(Datastore.AreaJoin,{"area":getKey('research_area')})
         fun(Datastore.BookJoin,{"title":get('bookTitle'),"publisher":getKey("publisher")})
         fun(Datastore.CourseJoin,{"unique":uniqueToInt(get('unique')),"course":getKey('course'),"semester":getKey('semester')})
-        fun(Datastore.StudentJoin,{"student":getKey('student_eid')})
+        fun(Datastore.StudentJoin,{"student":getKey('student_last')})
         fun(Datastore.OfficeHourJoin,{"day":get('Day'),"start":get('StartTime'),"end":get('EndTime')})
         fun(Datastore.ArticleJoin,{"title":get('articleTitle'),"date":get('articleDate'),'journal':getKey('journal_name')})
         fun(Datastore.ConferenceJoin,{"title":get('confTitle'),"year":yearToInt(get('confYear')),"conference":getKey("conference_name"),"location":getKey("location")})
