@@ -1,0 +1,7 @@
+= Introduction =
+
+This search allows the user to perform a filtered search through tables in the database.
+
+= Details =
+
+When the user clicks on the 'Advanced Search' link on the main page, they will go to a page with tables of information in the database (names, rooms, buildings, etc.).  They can the highlight the terms they want to filter their search by (Ctrl+Shift is used to highlight more than 1 term in a table).  At the bottom, there are two buttons labeled AND & OR.  If the user chooses OR and selects multiple search parameters from the tables, the database will return all information relating to ANY of the highlighted search parameters; if AND is selected, the database will only return information which relates to all of the search parameters (or, it will return nothing if there is no such data).
