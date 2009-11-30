@@ -11,7 +11,7 @@ Cool layout. Simple to find everything. The related links on the top are a nice 
 Logging in by professor email is easy and intuitive. Easy to read since the description page is split into sections with an edit button for each. Simple edit pages. Perfectly functional, but maybe not the prettiest layout.
 
 = Search =
-As of Nov 29th at 6pm, the search doesn't seem to do anything. The text field is cleared and I am returned to the home page.
+The search performs a Google custom search of the query entered, and returns links to professor profiles which contain data matching the query.  However, these links don't seem to be working because when I click on them, they take me to a blank query page.
 
 = Advanced Search = 
 The advanced search page lists all the professors currently in the database and has a link to each of their profile pages. Easy to find a professor if you're looking for a certain name, but not so easy to do advanced things like listing professors who teach a certain class, finding professors who attended a certain conference, etc.
