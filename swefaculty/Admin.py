@@ -7,6 +7,7 @@
 # --------
 
 import cgi
+import types
 
 from google.appengine.ext import db 
 from google.appengine.ext import webapp
@@ -21,8 +22,6 @@ functions below which access the information in queries,
 create new rows, etc all depend on this.
 '''
 
-class student_eid(db.Model) :
-    student_eid = db.StringProperty(required=True)
 class faculty_type(db.Model) :
     faculty_type = db.StringProperty(required=True)
 class research_area(db.Model) :
@@ -61,13 +60,20 @@ class course(db.Model) :
     course_name = db.ReferenceProperty(reference_class=course_name)
     course_type = db.ReferenceProperty(reference_class=course_type)
 
+class GraduateStudent(db.Model) :
+    first_name = db.StringProperty(required=True)
+    last_name = db.StringProperty(required=True)
+    student_type = db.ReferenceProperty(reference_class=student_type)
+    dissertation = db.StringProperty()
+    date = db.IntegerProperty()
+
 class Faculty(db.Model):
     name = db.StringProperty()
-    phone = db.StringProperty()
+    phone = db.PhoneNumberProperty()
     building = db.ReferenceProperty(building)
-    room = db.StringProperty()
+    room = db.StringProperty(validator=ValidateFaculty.room)
     email = db.EmailProperty(required=True)
-    website = db.StringProperty()
+    website = db.LinkProperty()
     type = db.ReferenceProperty(reference_class=faculty_type)
 
 
@@ -200,17 +206,51 @@ class MainPage (webapp.RequestHandler) :
         i.sort()
         for v in i :
             self.response.out.write("<option>" + v + "</option>")
-        self.response.out.write("</select><br /><div class='textstore' style='position:absolute; left: 20px'>")
-        if (course in textstore) :
-            self.response.out.write(textstore[course])
+        self.response.out.write("</select><br />")
+        self.response.out.write("""
+            Add Course<input type="checkbox" name="AddCourse"/>
+            Remove Course<input type="checkbox" name="RemoveCourse"/><br />
+            """)
+        self.response.out.write("<div class='textstore' style='position:absolute; left: 20px'>")
+        if ('course' in textstore) :
+            self.response.out.write(textstore['course'])
         self.response.out.write("</div><br />")
+
+
+    def grad_stud(self) :
+        self.response.out.write("<br />Add Graduate Student:")
+        self.response.out.write('<select style="position: absolute; left: 315px; width:300px;" >')
+        q = db.GqlQuery("SELECT * FROM GraduateStudent")
+        i = list()
+        for v in q :
+            i.append(v.first_name + " " + v.last_name)
+        i.sort()
+        for v in i :
+            self.response.out.write("<option>" + v + "</option>")
+        self.response.out.write("</select><br />")
+
+        self.response.out.write("First Name:")
+        self.response.out.write('<input type="text" name="gs_first_name" id="gs_first_name" style="position: absolute; left: 150px" /><br />')
+        self.response.out.write("Last Name:")
+        self.response.out.write('<input type="text" name="gs_last_name" id="gs_last_name" style="position: absolute; left: 150px" /><br />')
+
+        self.response.out.write("</select><div class='textstore' style='position:absolute; left: 20px'>")
+        self.response.out.write("""
+            Add Graduate Student<input type="checkbox" name="AddGradStud"/>
+            Remove Graduate Student<input type="checkbox" name="RemoveGradStud"/><br />
+            """)
+        if ('grad_stud' in textstore) :
+            self.response.out.write(textstore['grad_stud'])
+        self.response.out.write("</div><br />")
+
+
+
 
     def get (self) :
         self.response.out.write(javascript)
-        self.response.out.write('<font size="6" face="Georgia">Faculty Database Management</font>')
+        self.response.out.write('<font size="6">Admin Database Management</font>')
         self.response.out.write('<form action="/admin" method="post">')
         self.printfield('Faculty email', 'faculty_email')
-        self.printfield('Student EID', 'student_eid')
         self.printfield('Faculty Type', 'faculty_type')
         self.printfield('Research Area', 'research_area')
         self.printfield('Building Abbreviation', 'building')
@@ -231,9 +271,9 @@ class MainPage (webapp.RequestHandler) :
             <br />Remove item:<input type="checkbox" name="Remove"/><br />
             """)
         self.course()
+        self.grad_stud()
         self.response.out.write("""
-            Add Course<input type="checkbox" name="AddCourse"/>
-            Remove Course<input type="checkbox" name="RemoveCourse"/><br /><br />
+            <br />
             <input type="submit" value="Submit"/>
             </form>""")
         self.response.out.write("<a href=''>Login Page</a><br />")
@@ -288,7 +328,7 @@ class MainPage (webapp.RequestHandler) :
             ccnm = cgi.escape(self.request.get("course_course_name"))
             ccty = cgi.escape(self.request.get("course_course_type"))
             if ((ccno == "") or (ccnm == "") or (ccty == "")) :
-                textstore[course] = '<font color="color:red">Error adding course:  All fields must be filled in.</font>'
+                textstore['course'] = '<font color="color:red">Error adding course:  All fields must be filled in.</font>'
             else :
                 q = db.GqlQuery("SELECT * FROM course_number WHERE course_number = :1", ccno)
                 ccnoobj = q.get()
@@ -302,9 +342,9 @@ class MainPage (webapp.RequestHandler) :
                     if ((v.course_number.key() == ccnoobj.key()) and (v.course_name.key() == ccnmobj.key()) and (v.course_type.key() == cctyobj.key())) :
                         found = True
                 if (found) :
-                    textstore[course] = '<font color="color:red">Cannot add course, already in database</font>'
+                    textstore['course'] = '<font color="color:red">Cannot add course, already in database</font>'
                 else :
-                    textstore[course] = 'Added new course: ' + ccnoobj.course_number + ", " + ccnmobj.course_name + ", " + cctyobj.course_type + "<br />"
+                    textstore['course'] = 'Added new course: ' + ccnoobj.course_number + ", " + ccnmobj.course_name + ", " + cctyobj.course_type + "<br />"
                     c = course(course_number=ccnoobj.key(), course_name=ccnmobj.key(), course_type=cctyobj.key())
                     c.put()
 
@@ -314,9 +354,33 @@ class MainPage (webapp.RequestHandler) :
         if (cgi.escape(self.request.get("RemoveCourse")) == "on") :
             crs = cgi.escape(self.request.get("course"))
             if (crs == "") :
-                textstore[course] = '<font color="color:red">Error removing course:  None selected.</font>'
+                textstore['course'] = '<font color="color:red">Error removing course:  None selected.</font>'
             else:
-                textstore[course] = '<font color="color:red">Sorry, course removal not implemented yet.</font>'
+                textstore['course'] = '<font color="color:red">Sorry, course removal not implemented yet.</font>'
+
+
+    def addgradstud(self) :
+        global textstore
+        if (cgi.escape(self.request.get("AddGradStud")) == "on") :
+            fn = cgi.escape(self.request.get("gs_first_name"))
+            ln = cgi.escape(self.request.get("gs_last_name"))
+            if ((fn == "") or (ln == "")) :
+                textstore['course'] = '<font color="color:red">Error adding graduate student:  Must have both first and last name.</font>'
+            else :
+                q = db.GqlQuery("SELECT * FROM GraduateStudent WHERE first_name = :1 AND last_name = :2", fn, ln)
+                dd = q.get()
+                if (type(dd) is types.NoneType) :
+                    textstore['grad_stud'] = 'Added new graduate student: ' + fn + " " + ln + "<br />"
+                    c = GraduateStudent(first_name = fn, last_name = ln)
+                    c.put()
+                else :
+                    textstore['grad_stud'] = '<font color="color:red">Cannot add graduate student: ' + fn + ' ' + ln + ' already in database</font><br />'
+
+
+    def removegradstud(self) :
+        global textstore
+        if (cgi.escape(self.request.get("RemoveGradStud")) == "on") :
+            textstore['grad_stud'] = '<font color="color:red">Sorry, graduate student removal not implemented yet.</font>'
 
 
     '''
@@ -333,7 +397,6 @@ class MainPage (webapp.RequestHandler) :
         global textstore
         textstore = {}
         self.go('faculty_email', ValidateFaculty.email, Faculty)
-        self.go('student_eid', ValidateAdmin.student_eid, student_eid)
         self.go('faculty_type', ValidateAdmin.faculty_type, faculty_type)
         self.go('research_area', ValidateAdmin.research_area, research_area)
         self.go('building', ValidateAdmin.building, building)
@@ -352,6 +415,8 @@ class MainPage (webapp.RequestHandler) :
         self.go('award_type', ValidateAdmin.award_type, award_type)
         self.addcourse()
         self.removecourse()
+        self.addgradstud()
+        self.removegradstud()
         self.get()
 
 if __name__ == "__main__":
