@@ -13,7 +13,6 @@ from google.appengine.ext import webapp
 
 import ValidateAdmin
 import ValidateFaculty
-import ImporterPage
 from BeautifulSoup import BeautifulStoneSoup
 from BeautifulSoup import BeautifulSoup
 import Datastore
@@ -56,68 +55,119 @@ class Faculty() :
     books = []
     
 def export(f) :
-    xml = '<?xml version="1.0" encoding="UTF-8" standalone = "yes"?>'
+    if f.name is not None :
+        name = str(f.name)
+        name = name.partition(' ')
+        faculty_firstname =  name[0]
+        faculty_lastname = name[2]
+    if f.building is None :
+        office = ("","")
+    else :
+        building = f.building
+        office = (building.building,f.room)
+    if f.phone is not None :
+        phone_number = f.phone
+    email = f.email
+    if f.website is not None :
+        website = f.website
+    if f.type is not None :
+        type = f.type
+        faculty_type = type.faculty_type
+    # xml = '<?xml version="1.0" encoding="UTF-8" standalone = "yes"?>'
+    xml = ""
+    xml += "<faculty_member><faculty_firstname>" + faculty_firstname + "</faculty_firstname><faculty_lastname>"
+    xml += faculty_lastname + "</faculty_lastname><office><building>" + office[0] + "</building><room>" + office[1]
+    xml += "</room></office><phone_number>" + phone_number + "</phone_number><email>" + email + "</email><website>"
+    xml += website + "</website><faculty_type>" + faculty_type + "</faculty_type><research_areas>"
     
-    xml += "<faculty_member><faculty_firstname>" + f.faculty_firstname + "</faculty_firstname><faculty_lastname>"\
-    + f.faculty_lastname + "</faculty_lastname><office><building>" + f.office[0] + "</building><room>" + f.office[1]\
-    + "</room></office><phone_number>" + f.phone_number + "</phone_number><email>" + f.email + "</email><website>"\
-    + f.website + "</website><faculty_type>" + f.faculty_type + "</faculty_type><research_areas>"
-    
-    for ra in f.research_areas :
-        xml += "<research_area>" + ra + "</research_area>"
+    areas = Datastore.AreaJoin.gql("WHERE faculty=:1",f)
+    for ra in areas :
+        area = ra.area
+        xml += "<research_area>" + area.research_area + "</research_area>"
         
     xml += "</research_areas><office_hours>"
     
-    for oh in f.office_hours :
-        for day in oh.keys() :
-            xml += "<office_hour><day>" + day + "</day><start>" + oh[day][0] + "</start><end>" + oh[day][1] + "</end></office_hour>"
+    ohs = Datastore.OfficeHourJoin.gql("WHERE faculty=:1",f)
+    for oh in ohs :
+        xml += "<office_hour><day>" + oh.day + "</day><start>" + oh.start + "</start><end>" + oh.end + "</end></office_hour>"
     
     xml += "</office_hours><degrees>"
     
-    for deg in f.degrees : 
-        xml += "<degree><degree_type>" + deg[0] + "</degree_type><degree_name>" + deg[1] + "</degree_name><institution>" + deg[2]\
-        + "</institution><degree_date>" + deg[3] + "</degree_date></degree>"
+    degs = Datastore.DegreeJoin.gql("WHERE faculty=:1",f)
+    for deg in degs : 
+        type = deg.type
+        major = deg.major
+        institute = deg.institute
+        year = deg.year
+        xml += "<degree><degree_type>" + type.degree_type + "</degree_type><degree_name>" + major.degree_name + "</degree_name><institution>" + institute.institution\
+        + "</institution><degree_date>" + str(year) + "</degree_date></degree>"
     
     xml += "</degrees><conferences>"
     
-    for conf in f.conferences :
-        xml += "<conference><conference_name>" + conf[0] + "</conference_name><conference_date>" + conf[1] + "</conference_date><location>"\
-        + conf[2] + "</location><title>" + conf[3] + "</title></conference>"
+    confs = Datastore.ConferenceJoin.gql("WHERE faculty=:1",f)
+    for conf in confs :
+        conference = conf.conference
+        title = conf.title
+        location = conf.location
+        year = conf.year
+        xml += "<conference><conference_name>" + conference.conference_name + "</conference_name><conference_date>" + year + "</conference_date><location>"\
+        + location.location + "</location><title>" + title + "</title></conference>"
     
     xml += "</conferences><journals>"
     
-    for jour in f.journals :
-        xml += "<journal><journal_name>" + jour[0] + "</journal_name><article_title>" + jour[1] + "</article_title><journal_date>"\
-        + jour[2] + "</journal_date></journal>"
+    jours = Datastore.ArticleJoin.gql("WHERE faculty=:1",f)
+    for jour in jours :
+        journal = jour.journal
+        title = jour.title
+        date = jour.date
+        xml += "<journal><journal_name>" + journal.journal_name + "</journal_name><article_title>" + title + "</article_title><journal_date>"\
+        + date + "</journal_date></journal>"
     
     xml += "</journals><graduate_students>"
     
-    for gs in f.graduate_students : 
-        xml += "<graduate_student><student_firstname>" + gs[0] + "</student_firstname><student_lastname>" + gs[1]\
-        + "</student_lastname><student_type>" + gs[2] + "</student_type><dissertation>" + gs[3] + "</dissertation><student_date>"\
-        + gs[4] + "</student_date></graduate_student>"
+    gss = Datastore.StudentJoin.gql("WHERE faculty=:1",f)
+    for gs in gss :
+        student = gs.student
+        studenttype = student.student_type
+        xml += "<graduate_student><student_firstname>" + student.first_name + "</student_firstname><student_lastname>" + student.last_name\
+        + "</student_lastname><student_type>" + studenttype.student_type + "</student_type><dissertation>" + student.dissertation + "</dissertation><student_date>"\
+        + student.date + "</student_date></graduate_student>"
     
     xml += "</graduate_students><classes>"
     
-    for c in f.classes :
-        xml += "<class><class_name>" + c[0] + "</class_name><course_number>" + c[1] + "</course_number><class_type>" + c[2]\
-        + "</class_type><semester>" + c[3] + "</semester><unique>" + c[4] + "</unique></class>"
+    cs = Datastore.CourseJoin.gql("WHERE faculty=:1",f)
+    for c in cs :
+        course = c.course
+        semester = c.semester
+        xml += "<class><class_name>" + course.course_name + "</class_name><course_number>" + course.course_number + "</course_number><class_type>" + course.course_type\
+        + "</class_type><semester>" + semester.semester + "</semester><unique>" + course.unique + "</unique></class>"
     
     xml += "</classes><awards>"
     
-    for awd in f.awards :
-        xml += "<award><award_name>" + awd[0] + "</award_name><award_type>" + awd[1] + "</award_type><award_date>" + awd[2]\
+    awds = Datastore.AwardJoin.gql("WHERE faculty=:1",f)
+    for awd in awds :
+	type = awd.type
+        xml += "<award><award_name>" + awd.title + "</award_name><award_type>" + type.award_type + "</award_type><award_date>" + awd.year\
         + "</award_date></award>"
     
     xml += "</awards><books>"
     
-    for b in f.books : 
-        coauthors = b[1] #b[1] is the list of tuples of coauthors
+    bs = Datastore.BookJoin.gql("WHERE faculty=:1",f)
+    for b in bs :
+        title = b.title
+        publisher = b.publisher
+        coauthors = Datastore.BookJoin.gql("WHERE title=:1",title)
         c = ""
         for ca in coauthors :   # ca is each tuple of the coauthor's first and last names
-            c += "<coauthor><coauthor_firstname>" + ca[0] + "</coauthor_firstname><coauthor_lastname>" + ca[1]\
-            + "</coauthor_lastname></coauthor>"
-        xml += "<book><book_name>" + b[0] + "</book_name><coauthors>" + c + "</coauthors><publisher>" + b[2] + "</publisher></book>" 
+            if ca.name != f.name :
+                name = str(ca.name)
+                name = name.partition(' ')
+                cafn = name[0]
+                caln = name[2]
+                cafn
+                c += "<coauthor><coauthor_firstname>" + cafn + "</coauthor_firstname><coauthor_lastname>" + caln\
+                + "</coauthor_lastname></coauthor>"
+        xml += "<book><book_name>" + title + "</book_name><coauthors>" + c + "</coauthors><publisher>" + publisher.publisher + "</publisher></book>" 
         
     xml += "</books></faculty_member>"
     return xml
@@ -126,15 +176,7 @@ getEntry = lambda x : db.get(x.key())
 getBuilding = lambda k : '' if k.building == None else getEntry(k.building).building
 getType = lambda k : '' if k.type == None else getEntry(k.type).type
 def doExport(f) :
-    temp = Faculty()
-    temp.faculty_firstname = f.name
-    temp.office = (getBuilding(f),f.room)
-    temp.phone_number = f.phone
-    temp.email = f.email
-    temp.website = '' if f.website is None else f.website
-    temp.faculty_type = ' ' if f.type is None or db.get(f.type.key()).faculty_type is None  else db.get(f.type.key()).faculty_type
-    
-    return export(temp)
+    return export(f)
 
 class MainPage (webapp.RequestHandler) :
 
@@ -157,10 +199,13 @@ class MainPage (webapp.RequestHandler) :
         global textstore
 #        for v in rawxml.all():
 #            self.response.out.write(v.xml+'<br>')
+	self.response.out.write('<?xml version="1.0" encoding="UTF-8" standalone = "yes"?>')
+	self.response.out.write("<faculty_members>")
         for f in Datastore.Faculty.all():
             self.response.out.write(doExport(f))
+	self.response.out.write("</faculty_members>")
         textstore = ""
-        self.get()
+        #self.get()
 
 if __name__ == "__main__":
     main()
