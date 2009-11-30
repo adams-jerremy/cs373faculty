@@ -16,6 +16,7 @@ import ExporterPage
 import Tester
 import SearchPage
 import Public
+import SearchPage
 current_user = ""
 keywords = ""
 
@@ -127,7 +128,8 @@ def main () :
          ("/exporter", ExporterPage.MainPage),
          ("/search", SearchPage.MainPage),
          ("/tester",Tester.MainPage),
-         ("/public",Public.MainPage)],
+         ("/public",Public.MainPage),
+         ("/search",SearchPage.MainPage)],
         debug=True)
     run_wsgi_app(x)
 
