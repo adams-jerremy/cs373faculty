@@ -3,11 +3,13 @@ import types
 import re
 
 from google.appengine.ext        import db
+from google.appengine.ext        import search 
 from google.appengine.ext        import webapp
 from google.appengine.ext.webapp import template 
 import ValidateFaculty
 
-
+class institution(db.Model) :
+    institution = db.StringProperty(required=True)
 class student_eid(db.Model) :
     student_eid = db.StringProperty(required=True)
 class faculty_type(db.Model) :
@@ -20,8 +22,6 @@ class degree_type(db.Model) :
     degree_type = db.StringProperty(required=True)
 class degree_name(db.Model) :
     degree_name = db.StringProperty(required=True)
-class institution(db.Model) :
-    institution = db.StringProperty(required=True)
 class conference_name(db.Model) :
     conference_name = db.StringProperty(required=True)
 class location(db.Model) :
