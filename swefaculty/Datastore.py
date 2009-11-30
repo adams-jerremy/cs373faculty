@@ -10,8 +10,15 @@ import ValidateFaculty
 
 class institution(db.Model) :
     institution = db.StringProperty(required=True)
-class student_eid(db.Model) :
-    student_eid = db.StringProperty(required=True)
+class student_type(db.Model) :
+    student_type = db.StringProperty(required=True)
+class GraduateStudent(db.Model) :
+    first_name = db.StringProperty(required=True)
+    last_name = db.StringProperty(required=True)
+    student_type = db.ReferenceProperty(reference_class=student_type)
+    dissertation = db.StringProperty()
+    date = db.IntegerProperty()
+
 class faculty_type(db.Model) :
     faculty_type = db.StringProperty(required=True)
 class research_area(db.Model) :
@@ -71,7 +78,6 @@ class DegreeJoin(db.Model):
     major = db.ReferenceProperty(reference_class=degree_name)
     institute = db.ReferenceProperty(reference_class=institution)
     year = db.IntegerProperty(validator=ValidateFaculty.year)
-    print
     
 class AreaJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
@@ -79,7 +85,7 @@ class AreaJoin(db.Model):
     
 class StudentJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
-    student = db.ReferenceProperty(reference_class=student_eid)
+    student = db.ReferenceProperty(reference_class=GraduateStudent)
 
 class CourseJoin(db.Model):
     faculty = db.ReferenceProperty(reference_class=Faculty)
