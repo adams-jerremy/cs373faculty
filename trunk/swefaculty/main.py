@@ -14,9 +14,10 @@ import Faculty
 import ImporterPage
 import ExporterPage
 import Tester
+import SearchPage
 import Public
-
 current_user = ""
+keywords = ""
 
 class current_user(db.Model) :
     current_user = db.StringProperty(required=True)
@@ -36,34 +37,60 @@ class MainPage (webapp.RequestHandler) :
             color: #ADADAD;
             margin-top:180px;
             }
-            h2{
-            font-family:"Georgia", sans serif;
-            text-align:right;
-            font-size:15px;
-            color: #F0AE35;
-            }
             p1{
             font-size:5px;
             }
             body{
             text-align:center;
-            background-color: #000052
+            background-color: #000052;
+            }
+            a{
+            text-decoration:none;
+            font-family:"Georgia", sans serif;
+            color:#9999FF;
             }
             input.blue {
             background-color: #9999FF; 
             font-size: 15px;
             }
+            div.login {
+            position:absolute;
+            right:20px;
+            top:20px;
+            height:50px;
+            width:300px;
+            border:1px solid #9999FF;
+            }
+            div.button{
+            position:absolute;
+            right:5px;
+            top:15px;
+            }
+            div.input1{
+            position:absolute;
+            right:75px;
+            top: 10px
+            }
+            div.link1{
+            margin-right:175px;
+            margin-top:-13px;
+            font-size:.8em;
+            }
 
             </style>
             </head>
+            <form action="/" method="post">
+            <div class="login"><div class="input1"><input type="text" class="blue" name="id" style="width:200px" /></div>
+            <div class="button"><input type="submit" value ="Login" /></div></div>
             <h1> Faculty Database </h1>
             <br>
             <br>
-            <form action="/" method="post">
-            <input type="text" class="blue" name="id" />
-            <input type="submit" value ="Login" />
+            <input type="text" class="blue" name="Search"/>
+            <input type="submit" value ="Search" />
+            </form>
+            <div class="link1"><a href="/search">Advanced Search</a></div>
             </body>
-            </form>""")
+            """)
         
 
 
@@ -83,6 +110,7 @@ class MainPage (webapp.RequestHandler) :
         <style type="text/css">
         m{color: #D90000;}
         </style type="text/css">
+        <br><br><br>
         <m>Invalid ID.</m>
         """)
 
@@ -97,6 +125,7 @@ def main () :
          ("/faculty", Faculty.MainPage),
          ("/importer", ImporterPage.MainPage),
          ("/exporter", ExporterPage.MainPage),
+         ("/search", SearchPage.MainPage),
          ("/tester",Tester.MainPage),
          ("/public",Public.MainPage)],
         debug=True)
